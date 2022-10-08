@@ -1,3 +1,7 @@
+using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +17,8 @@ builder.Services.AddCors(
              )
          ); ;
 
+builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
