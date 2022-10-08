@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Repository", "src\ZID.Automat.Repository\ZID.Automat.Repository.csproj", "{8D215872-349E-46AC-B523-373599EC2A46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZID.Automat.Api.Test", "ZID.Automat.Api.Test\ZID.Automat.Api.Test.csproj", "{BF3B0AB2-B003-4594-AF26-B5A4BD752BC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8D215872-349E-46AC-B523-373599EC2A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D215872-349E-46AC-B523-373599EC2A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D215872-349E-46AC-B523-373599EC2A46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF3B0AB2-B003-4594-AF26-B5A4BD752BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF3B0AB2-B003-4594-AF26-B5A4BD752BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF3B0AB2-B003-4594-AF26-B5A4BD752BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF3B0AB2-B003-4594-AF26-B5A4BD752BC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

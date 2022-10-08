@@ -74,3 +74,19 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 ZID.Automat/.vs/ZID.Automat/v17/.suo
+
+# JetBrains Rider
+*.sln.iml
+*.v2
+*.vsidx
+ZID.Automat/.vs/ProjectEvaluation/zid.automat.metadata.v5.1
+ZID.Automat/.vs/ProjectEvaluation/zid.automat.projects.v5.1
+ZID.Automat/.vs/ZID.Automat/DesignTimeBuild/.dtbcache.v2
+ZID.Automat/.vs/ZID.Automat/FileContentIndex/33542c85-090a-4740-9214-b24c0da2b74f.vsidx
+ZID.Automat/.vs/ZID.Automat/FileContentIndex/4336c1e1-925d-43b1-b66e-ea6dc049db80.vsidx
+ZID.Automat/.vs/ZID.Automat/FileContentIndex/592b9e5f-f368-4544-8152-05808e210c79.vsidx
+ZID.Automat/.vs/ZID.Automat/FileContentIndex/aa284e9e-eb86-42df-b050-722cd018d3ba.vsidx
+ZID.Automat/.vs/ZID.Automat/v17/.suo
+
+ZID.Automat/.vs/
+ZID.Automat/.vs
