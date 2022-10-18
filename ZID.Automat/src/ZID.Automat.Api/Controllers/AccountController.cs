@@ -12,7 +12,7 @@ namespace ZID.Automat.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost("Login")]
+        [HttpPost("Login1")]
         public async Task<object> OnPostAsync()
         {
             var claims = new List<Claim>
@@ -41,5 +41,14 @@ namespace ZID.Automat.Api.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return "ja lol ey";
         }
+  
+        [HttpPost("Login")]
+        public AuthenticationEnum Login([FromBody]UserLogin UserLogin)
+        {
+
+            return AuthenticationEnum.Loginworked;
+        }
     }
+    
+    
 }
