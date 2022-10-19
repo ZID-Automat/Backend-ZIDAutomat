@@ -5,50 +5,29 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using ZID.Automat.Api.Models;
 using Microsoft.Net.Http.Headers;
+using ZID.Automat.Infrastructure;
+using ZID.Automat.Domain.Models;
 
 namespace ZID.Automat.Api.Controllers
 {
+    /// <summary>
+    /// This APIController is used to do any related Account operations
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost("Login1")]
-        public async Task<object> OnPostAsync()
-        {
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, "asd"),
-            new Claim("FullName", "asd"),
-            new Claim(ClaimTypes.Role, "Administrator"),
-        };
-
-            var claimsIdentity = new ClaimsIdentity(
-                claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties();
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-
-            return "super";
-        }
-
-        [HttpGet("Logout")]
-        public async Task<object> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return "ja lol ey";
-        }
-  
+       /// <summary>
+       /// Login Endpoint
+       /// </summary>
+       /// <returns>
+       /// bool which tells the User, if he is logged in
+       /// </returns>
         [HttpPost("Login")]
-        public AuthenticationEnum Login([FromBody]UserLogin UserLogin)
+        public ADUser Login([FromBody]UserLogin UserLogin)
         {
-
-            return AuthenticationEnum.Loginworked;
+            ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
+            return ADServicesVar.CurrentUser;
         }
     }
-    
-    
 }
