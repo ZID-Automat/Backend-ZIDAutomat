@@ -24,10 +24,17 @@ namespace ZID.Automat.Api.Controllers
        /// bool which tells the User, if he is logged in
        /// </returns>
         [HttpPost("Login")]
-        public ADUser Login([FromBody]UserLogin UserLogin)
+        public bool Login([FromBody]UserLogin UserLogin)
         {
-            ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
-            return ADServicesVar.CurrentUser;
+            try
+            {
+                ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
+                return true;
+            }
+            catch
+            {
+                return false;   
+            }
         }
     }
 }
