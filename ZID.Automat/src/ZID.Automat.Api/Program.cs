@@ -6,23 +6,19 @@ using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 string[] CorsOrigins = builder.Configuration.GetSection("CorsOrigin").Get<string[]>();
+string JWT = builder.Configuration.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(
-         option => option.AddDefaultPolicy(
-             builder => builder.WithOrigins(CorsOrigins).AllowAnyHeader().AllowAnyMethod()
-             )
-         ); ;
 
 
 builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -34,36 +30,33 @@ builder.Services.AddCors(
     )
 );
 
+
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
+}).AddJwtBearer(auth =>
 {
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
+    auth.RequireHttpsMetadata = false;
+    auth.SaveToken = true;
+    auth.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Secret"))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(JWT)),
+        ValidateIssuer = false,
+        ValidateAudience = false
     };
 });
 
-var app = builder.Build();
 
+
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    app.UseCors();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
 }
-
 
 app.UseCors();
 app.UseHttpsRedirection();

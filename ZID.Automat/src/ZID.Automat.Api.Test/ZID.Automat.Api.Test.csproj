@@ -22,7 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ZID.Automat.Api\ZID.Automat.Api.csproj" />
+    <ProjectReference Include="..\ZID.Automat.Api\ZID.Automat.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ControllerTests\User\" />
   </ItemGroup>
 
 </Project>
