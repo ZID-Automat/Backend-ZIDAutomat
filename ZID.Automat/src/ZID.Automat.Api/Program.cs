@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
@@ -7,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +50,8 @@ builder.Services.AddAuthentication(auth =>
 
 
 
+builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
