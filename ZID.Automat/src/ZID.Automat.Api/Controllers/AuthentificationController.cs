@@ -36,6 +36,8 @@ namespace ZID.Automat.Api.Controllers
         string TestUserName = "";
         string TestUserPassword = "";
 
+        [ActivatorUtilitiesConstructor]
+
         public AuthentificationController(IConfiguration configuration)
         {
             var JWTConf = configuration.GetSection("UserLoginConf").GetSection("JWT");
