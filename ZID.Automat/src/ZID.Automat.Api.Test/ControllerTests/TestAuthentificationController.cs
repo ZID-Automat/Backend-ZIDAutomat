@@ -16,6 +16,7 @@ namespace ZID.Automat.Api.Test.ControllerTests
 
             string? JWT2 = authController.UserLogin(new UserLogin() { Username = "TesUserName12", Password = "TestUserPassword12" });
             Assert.Null(JWT2);
+            Assert.True(false);
         }
 
     }
