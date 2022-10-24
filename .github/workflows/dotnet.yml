@@ -20,6 +20,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ZID.Automat
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ZID.Automat --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ZID.Automat --no-build --verbosity normal
