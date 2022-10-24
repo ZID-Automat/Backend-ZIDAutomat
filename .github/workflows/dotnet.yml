@@ -7,10 +7,10 @@ on:
     branches: [ "*" ]
 
 jobs:
-  build:
+ build:
 
     runs-on: ubuntu-latest
-
+   
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -23,3 +23,4 @@ jobs:
       run: dotnet build ZID.Automat --no-restore
     - name: Test
       run: dotnet test ZID.Automat --no-build --verbosity normal
+
