@@ -1,5 +1,6 @@
 using ZID.Automat.Api.Controllers;
 using ZID.Automat.Api.Models;
+using Xunit;
 
 namespace ZID.Automat.Api.Test.ControllerTests
 {
