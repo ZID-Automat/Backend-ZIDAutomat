@@ -1,36 +1,68 @@
 
-using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Text.Json.Serialization;
+#region usings
 using Microsoft.AspNetCore.Http.Json;
-
 using MvcJsonOptions = Microsoft.AspNetCore.Mvc.JsonOptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.Extensions.Configuration;
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using ZID.Automat.Infrastructure;
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Conf Vars
+var Conf = builder.Configuration;
 
-string[] CorsOrigins = builder.Configuration.GetSection("CorsOrigin").Get<string[]>();
-string JWT = builder.Configuration.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
+string[] CorsOrigins = Conf.GetSection("CorsOrigin").Get<string[]>();
+string JWT = Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
+
+
+var DBSection = Conf.GetSection("Database");
+string UseDb = DBSection.GetValue<string>("UseDatabase");
+string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
+#endregion
+
+#region ASPIntern
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+#endregion
 
+#region Configure Database
+builder.Services.AddDbContext<AutomatContext>(options =>
+{
+    if (UseDb == "MySQL")
+    {
+        options.UseMySQL(DbConnString);
+    }
+    else if (UseDb == "SQLite")
+    {
+        options.UseSqlite(DbConnString);
+    }
+    else
+    {
+        throw new Exception("No Database selected");
+    }
+});
+#endregion
 
-
+#region StringEnums
 builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+#endregion
 
+#region configure Cors
 builder.Services.AddCors(
     option => option.AddDefaultPolicy(
         builder => builder.WithOrigins(CorsOrigins).AllowAnyHeader().AllowAnyMethod()
     )
 );
+#endregion
 
-
+#region jwt
 builder.Services.AddAuthentication(auth =>
 {
     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -47,18 +79,17 @@ builder.Services.AddAuthentication(auth =>
         ValidateAudience = false
     };
 });
+#endregion
 
-
-
-builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 var app = builder.Build();
 
+#region Development Config  
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+#endregion
 
 app.UseCors();
 app.UseHttpsRedirection();
