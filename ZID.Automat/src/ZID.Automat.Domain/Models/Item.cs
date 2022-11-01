@@ -13,7 +13,7 @@ namespace ZID.Automat.Domain.Models
         public string SubName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         public Categorie Categorie = default!;
         public int CategorieId;

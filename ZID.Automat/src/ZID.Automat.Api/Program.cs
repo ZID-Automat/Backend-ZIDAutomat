@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
+using ZID.Automat.Application;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ string JWT = Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>
 var DBSection = Conf.GetSection("Database");
 string UseDb = DBSection.GetValue<string>("UseDatabase");
 string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
+
 #endregion
 
 #region ASPIntern
@@ -81,6 +83,10 @@ builder.Services.AddAuthentication(auth =>
 });
 #endregion
 
+#region Services
+builder.Services.AddScoped<ISeedService, SeedService>();
+#endregion
+
 var app = builder.Build();
 
 #region Development Config  
@@ -99,3 +105,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
+    
