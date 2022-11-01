@@ -18,6 +18,7 @@ namespace ZID.Automat.Infrastructure
         public DbSet<Borrow> Borrows => Set<Borrow>();
         public DbSet<Admonition> Admonitions => Set<Admonition>();
         public DbSet<AdmonitionType> AdmonitionTypes => Set<AdmonitionType>();
+        public DbSet<Categorie> Categories => Set<Categorie>();
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

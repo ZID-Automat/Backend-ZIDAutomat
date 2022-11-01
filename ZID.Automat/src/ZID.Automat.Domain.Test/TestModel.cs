@@ -39,12 +39,35 @@ namespace ZID.Automat.Domain.Test
             db.SaveChanges();
             Assert.True(db.Users.Count() == 1);
         }
+        
+
+        [Fact]
+        public void TestAddCategorie()
+        {
+            AutomatContext db = Context;
+
+            var cat = new Categorie() { Name = "Kabel", Description = "Kabel sind krass" };
+            db.Categories.Add(cat);
+            db.SaveChanges();
+            
+            Assert.Equal(1, db.Categories.Count());
+
+            Assert.ThrowsAny<ArgumentNullException>(()=> cat.AddItemToCategorie(null));
+
+            cat.AddItemToCategorie(new Item { Name = "Kabel", Description = "Das ist ein ganz besonderes Kabel", Image = "Hallo", Price = 99, SubName = "Subname" });
+
+        }
 
         [Fact]
         public void TestAddItem()
         {
             AutomatContext db = Context;
-            Item item = new Item() { Name = "TestItem", Description = "Test Description", Image = "asd", Price = 100 };
+
+            var cat = new Categorie() { Name = "Kabel", Description = "Kabel sind krass" };
+            db.Categories.Add(cat);
+            db.SaveChanges();
+
+            Item item = new Item() { Name = "TestItem", Description = "Test Description", Image = "asd", Price = 100, Categorie = cat };
             db.Items.Add(item);
             db.SaveChanges();
             Assert.True(db.Items.Count() == 1);

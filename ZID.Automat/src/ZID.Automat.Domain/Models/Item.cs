@@ -10,9 +10,13 @@ namespace ZID.Automat.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public string SubName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Image { get; set; } = string.Empty;
         public int Price { get; set; }
+
+        public Categorie Categorie = default!;
+        public int CategorieId;
 
         private List<ItemInstance> _ItemInstances { get; set; } = new List<ItemInstance>();
         public IReadOnlyList<ItemInstance> ItemInstances => _ItemInstances;
