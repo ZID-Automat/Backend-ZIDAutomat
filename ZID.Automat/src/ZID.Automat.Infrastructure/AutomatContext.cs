@@ -10,8 +10,9 @@ namespace ZID.Automat.Infrastructure
     {
         public AutomatContext(DbContextOptions<AutomatContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
-        
+
         public DbSet<User> Users => Set<User>();
         public DbSet<Item> Items => Set<Item>();
         public DbSet<ItemInstance> ItemInstances => Set<ItemInstance>();
@@ -24,11 +25,6 @@ namespace ZID.Automat.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasKey(e => e.Username);
-        }
-
-        public void Seed()
-        {
-            throw new NotImplementedException();
         }
     }
 }
