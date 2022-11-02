@@ -92,6 +92,7 @@ builder.Services.AddAuthentication(auth =>
 //builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
 //builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
 builder.Services.AddScoped<IUserPepository,UserRepository>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
 #endregion
 
 #region Services
