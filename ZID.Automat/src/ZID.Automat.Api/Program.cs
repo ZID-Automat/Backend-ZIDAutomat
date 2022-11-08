@@ -87,18 +87,15 @@ builder.Services.AddAuthentication(auth =>
 });
 #endregion
 
-<<<<<<< Updated upstream
-=======
 #region Repositories
-builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
-builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
+//builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
+//builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
 #endregion
 
->>>>>>> Stashed changes
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
-builder.Services.AddScoped<IAllDisplayItems, ItemService>();
-builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
+//builder.Services.AddScoped<IAllDisplayItems, ItemService>();
+//builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
 #endregion
 
 var app = builder.Build();
