@@ -1,6 +1,7 @@
 using ZID.Automat.Api.Controllers;
-using ZID.Automat.Api.Models;
+using ZID.Automat.Domain.Models;
 using Xunit;
+using ZID.Automat.Dto;
 
 namespace ZID.Automat.Api.Test.ControllerTests
 {
@@ -12,10 +13,10 @@ namespace ZID.Automat.Api.Test.ControllerTests
         public void TestuserLogin()
         {
             AuthentificationController authController = AuthController;
-            string? JWT1 = authController.UserLogin(new UserLogin() { Username = "TestUserName", Password = "TestUserPassword" });
+            string? JWT1 = authController.UserLogin(new UserLoginDto() { Username = "TestUserName", Password = "TestUserPassword" });
             Assert.NotNull(JWT1);
 
-            string? JWT2 = authController.UserLogin(new UserLogin() { Username = "TesUserName12", Password = "TestUserPassword12" });
+            string? JWT2 = authController.UserLogin(new UserLoginDto() { Username = "TesUserName12", Password = "TestUserPassword12" });
             Assert.Null(JWT2);
         }
 

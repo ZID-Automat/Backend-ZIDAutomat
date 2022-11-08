@@ -52,7 +52,11 @@ builder.Services.AddDbContext<AutomatContext>(options =>
 #endregion
 
 #region StringEnums
-builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+builder.Services.Configure<JsonOptions>(o =>
+{
+    o.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 #endregion
 
@@ -83,8 +87,18 @@ builder.Services.AddAuthentication(auth =>
 });
 #endregion
 
+<<<<<<< Updated upstream
+=======
+#region Repositories
+builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
+builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
+#endregion
+
+>>>>>>> Stashed changes
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
+builder.Services.AddScoped<IAllDisplayItems, ItemService>();
+builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
 #endregion
 
 var app = builder.Build();

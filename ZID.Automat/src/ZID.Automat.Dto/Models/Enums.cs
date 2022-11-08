@@ -1,9 +1,8 @@
-﻿namespace ZID.Automat.Api.Models
+﻿namespace ZID.Automat.Dto
 {
     public enum AuthenticationEnum
     {
         Loginworked,
         PasswordOrUsernameNotValid
-        
     }
 }

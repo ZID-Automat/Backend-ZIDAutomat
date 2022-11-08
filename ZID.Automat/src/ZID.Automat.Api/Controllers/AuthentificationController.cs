@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using ZID.Automat.Api.Models;
+using ZID.Automat.Dto;
 using Microsoft.Net.Http.Headers;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Domain.Models;
@@ -62,7 +62,7 @@ namespace ZID.Automat.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public string? UserLogin([FromBody] UserLogin UserLogin)
+        public string? UserLogin([FromBody] UserLoginDto UserLogin)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace ZID.Automat.Api.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[] {
                         new Claim("Username", user.Cn),
-                        new Claim("PupilId", user.PupilId??""),
+                        new Claim("PupId", user.PupilId??""),
                         new Claim(ClaimTypes.Role, "User")
 
                 }),
