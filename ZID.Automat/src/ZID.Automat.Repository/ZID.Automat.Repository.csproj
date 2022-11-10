@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ZID.Automat.Infrastructure\ZID.Automat.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

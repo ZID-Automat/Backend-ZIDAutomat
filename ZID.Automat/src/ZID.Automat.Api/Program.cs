@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
+using ZID.Automat.Repository;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -90,10 +91,12 @@ builder.Services.AddAuthentication(auth =>
 #region Repositories
 //builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
 //builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
+builder.Services.AddScoped<IUserPepository,UserRepository>();
 #endregion
 
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
+builder.Services.AddScoped<IUserAuth, AuthentificationService>();
 //builder.Services.AddScoped<IAllDisplayItems, ItemService>();
 //builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
 #endregion

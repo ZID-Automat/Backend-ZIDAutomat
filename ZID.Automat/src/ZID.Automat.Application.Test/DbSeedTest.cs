@@ -10,7 +10,7 @@ namespace ZID.Automat.Application.Test
             get
             {
                 DbContextOptions<AutomatContext> options = new DbContextOptionsBuilder<AutomatContext>()
-                .UseSqlite("Data Source=TestDb.db")
+                .UseSqlite("Data Source=TestDb2.db")
                 .Options;
 
                 AutomatContext db = new AutomatContext(options);

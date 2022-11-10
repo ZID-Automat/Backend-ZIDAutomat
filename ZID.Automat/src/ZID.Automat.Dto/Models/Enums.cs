@@ -1,4 +1,4 @@
-﻿namespace ZID.Automat.Dto
+﻿namespace ZID.Automat.Dto.Models
 {
     public enum AuthenticationEnum
     {

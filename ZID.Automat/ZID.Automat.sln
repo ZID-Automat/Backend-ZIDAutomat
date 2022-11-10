@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Domain.Test", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Application.Test", "src\ZID.Automat.Application.Test\ZID.Automat.Application.Test.csproj", "{89A836B9-B08A-4A15-BDE0-00A20822E28B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZID.Automat.Dto", "src\ZID.Automat.Dto\ZID.Automat.Dto.csproj", "{2F2B2832-AB6C-4101-83ED-81EF09E42F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Dto", "src\ZID.Automat.Dto\ZID.Automat.Dto.csproj", "{2F2B2832-AB6C-4101-83ED-81EF09E42F50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZID.Automat.Configuration", "src\ZID.Automat.Configuration\ZID.Automat.Configuration.csproj", "{C4C98B28-39E1-43C5-904F-2ADED4633B3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZID.Automat.Configuration\ZID.Automat.Configuration.csproj" />
     <ProjectReference Include="..\ZID.Automat.Dto\ZID.Automat.Dto.csproj" />
     <ProjectReference Include="..\ZID.Automat.Infrastructure\ZID.Automat.Infrastructure.csproj" />
     <ProjectReference Include="..\ZID.Automat.Repository\ZID.Automat.Repository.csproj" />
