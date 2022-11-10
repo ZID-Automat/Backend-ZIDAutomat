@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
+using ZID.Automat.Repository;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,7 +53,11 @@ builder.Services.AddDbContext<AutomatContext>(options =>
 #endregion
 
 #region StringEnums
-builder.Services.Configure<JsonOptions>(o => o.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+builder.Services.Configure<JsonOptions>(o =>
+{
+    o.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 builder.Services.Configure<MvcJsonOptions>(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 #endregion
 
@@ -83,8 +88,17 @@ builder.Services.AddAuthentication(auth =>
 });
 #endregion
 
+#region Repositories
+//builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
+//builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
+builder.Services.AddScoped<IUserPepository,UserRepository>();
+#endregion
+
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
+builder.Services.AddScoped<IUserAuth, AuthentificationService>();
+//builder.Services.AddScoped<IAllDisplayItems, ItemService>();
+//builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
 #endregion
 
 var app = builder.Build();

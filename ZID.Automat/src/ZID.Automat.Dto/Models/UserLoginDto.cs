@@ -1,6 +1,6 @@
-﻿namespace ZID.Automat.Api.Models
+﻿namespace ZID.Automat.Dto.Models
 {
-    public class UserLogin
+    public class UserLoginDto
     {
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;

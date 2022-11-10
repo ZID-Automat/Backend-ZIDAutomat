@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZID.Automat.Application\ZID.Automat.Application.csproj" />
+    <ProjectReference Include="..\ZID.Automat.Domain\ZID.Automat.Domain.csproj" />
     <ProjectReference Include="..\ZID.Automat.Infrastructure\ZID.Automat.Infrastructure.csproj" />
   </ItemGroup>
 
