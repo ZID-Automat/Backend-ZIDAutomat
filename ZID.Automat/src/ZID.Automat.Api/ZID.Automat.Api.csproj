@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ZID.Automat.Application\ZID.Automat.Application.csproj" />
     <ProjectReference Include="..\ZID.Automat.Infrastructure\ZID.Automat.Infrastructure.csproj" />
+    <ProjectReference Include="..\ZID.Automat.Repository\ZID.Automat.Repository.csproj" />
   </ItemGroup>
 
 </Project>

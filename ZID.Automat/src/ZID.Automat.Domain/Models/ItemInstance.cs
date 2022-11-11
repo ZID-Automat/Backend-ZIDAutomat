@@ -13,5 +13,8 @@ namespace ZID.Automat.Domain.Models
 
         public int ItemId { get; set; }
         public Item Item { get; set; } = null!;
+
+        private List<Borrow> _borrows = new List<Borrow>();
+        public IReadOnlyList<Borrow> Borrows => _borrows;
     }
 }

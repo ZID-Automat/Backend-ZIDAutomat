@@ -4,7 +4,6 @@ using ZID.Automat.Application;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
-    [AllowAnonymous]
     [Route("[controller]")]
     [ApiController]
     public class DebugController : ControllerBase

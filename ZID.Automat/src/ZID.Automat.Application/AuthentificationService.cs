@@ -15,9 +15,9 @@ namespace ZID.Automat.Application
 
         private readonly JWTCo _jwtCo;
         private readonly TestUserCo _testUserCo;
-        private readonly IUserPepository _userRepository;
+        private readonly IUserRepository _userRepository;
         
-        public AuthentificationService(JWTCo jwtCo,TestUserCo testUserCo, IUserPepository userRepository)
+        public AuthentificationService(JWTCo jwtCo,TestUserCo testUserCo, IUserRepository userRepository)
         {
             _jwtCo = jwtCo;
             _testUserCo = testUserCo;
@@ -50,9 +50,9 @@ namespace ZID.Automat.Application
                 SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[] {
-                        new Claim("Username", user.Cn),
+                        new Claim("Name", user.Cn),
                         new Claim("PupilId", user.PupilId??""),
-                        new Claim(ClaimTypes.Role, "User")
+                        new Claim(ClaimTypes.Role, "User"),
 
                 }),
                     Expires = ExpireTime,
@@ -61,11 +61,10 @@ namespace ZID.Automat.Application
                         SecurityAlgorithms.HmacSha256Signature
                         )
                 };
-
                 SecurityToken token = Handler.CreateToken(tokenDescriptor);
                 return Handler.WriteToken(token);
             }
-            catch (ApplicationException e)
+            catch (ApplicationException)
             {
                 return null!;
             }

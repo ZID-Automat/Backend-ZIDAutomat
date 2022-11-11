@@ -5,21 +5,15 @@ using ZID.Automat.Infrastructure;
 
 namespace ZID.Automat.Api.Controllers.User
 {
-    [AllowAnonymous]
-    [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
+    [Route("[controller]")]
     public class UserController
     {
-        AutomatContext AC1;
-        public UserController(AutomatContext AC)
+        public UserController()
         {
-            AC1 = AC;
         }
 
-        [HttpPost("Borrow")]
-        public bool borrow()
-        {
-            return true;
-        }
+
     }
 }

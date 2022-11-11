@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ZID.Automat.Repository
 {
-    public class UserRepository:IUserPepository
+    public class UserRepository:IUserRepository
     {
         private readonly AutomatContext _automatContext;
         public UserRepository(AutomatContext automatContext)
@@ -29,7 +29,7 @@ namespace ZID.Automat.Repository
         }
     }
     
-    public interface IUserPepository
+    public interface IUserRepository
     {
         public User? FindUser(string UserName);
 

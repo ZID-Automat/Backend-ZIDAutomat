@@ -4,8 +4,17 @@ using ZID.Automat.Infrastructure;
 
 namespace ZID.Automat.Application
 {
+    
     public class SeedService : ISeedService
     {
+        public const int CATE = 20;
+        public const int ITEMS = 20;
+        public const int ITEMSINSTANCE = 100;
+        public const int USERS = 20;
+        public const int BORROWS = 1000;
+        public const int ADMONTYPE = 20;
+        public const int ADMON = 20;
+
         private readonly AutomatContext Context;
 
         public SeedService(AutomatContext automatContext)
@@ -18,15 +27,15 @@ namespace ZID.Automat.Application
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
 
-            var cats = SeedCategories(20);
-            var items = SeedItems(100, cats);
-            var itemInstances = SeedItemInstances(500, items);
-            var users = SeedUsers(20);
+            var cats = SeedCategories(CATE);
+            var items = SeedItems(ITEMS, cats);
+            var itemInstances = SeedItemInstances(ITEMSINSTANCE, items);
+            var users = SeedUsers(USERS);
 
-            var borrows = SeedBorrows(100, users, itemInstances);
+            var borrows = SeedBorrows(BORROWS, users, itemInstances);
 
-            var admonitionTypes = SeedAdmonitionTypes(5);
-            var admonition = SeedAdmonitions(100,admonitionTypes, borrows);
+            var admonitionTypes = SeedAdmonitionTypes(ADMONTYPE);
+            var admonition = SeedAdmonitions(ADMON,admonitionTypes, borrows);
 
             Context.Categories.AddRange(cats);
             Context.Items.AddRange(items);
