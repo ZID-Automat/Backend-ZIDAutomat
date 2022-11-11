@@ -24,7 +24,6 @@ namespace ZID.Automat.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasKey(e => e.Username);
         }
     }
 }

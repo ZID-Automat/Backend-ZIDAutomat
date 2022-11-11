@@ -12,14 +12,14 @@ namespace ZID.Automat.Repository
             _context = automatContext;
         }
 
-        public List<Item> getItemWithItemInstance()
-        {
-            return _context.Items.Include(i => i.ItemInstances).ToList();
-        }
+        public IReadOnlyList<Item> getItemWithItemInstance() =>_context.Items.Include(i => i.ItemInstances).ToList();
+
+        public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserId) =>_context.Borrows.Include(b => b.ItemInstance.Item).Where(b => b.UserId == UserId).Select(s => s.ItemInstance.Item).ToList();
     }
 
     public interface IItemRepository
     {
-        public List<Item> getItemWithItemInstance();
+        public IReadOnlyList<Item> getItemWithItemInstance();
+        public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserID);
     }
 }

@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
 using ZID.Automat.Repository;
+using ZID.Automat.Configuration.Model;
+using System.Configuration;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +19,21 @@ var builder = WebApplication.CreateBuilder(args);
 #region Conf Vars
 var Conf = builder.Configuration;
 
-
 string[] CorsOrigins = Conf.GetSection("CorsOrigin").Get<string[]>();
 string JWT = Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
-
 var DBSection = Conf.GetSection("Database");
+var JWTConf = Conf.GetSection("UserLoginConf").GetSection("JWT");
+var DebugConf = Conf.GetSection("Debug");
+var TestUserConf = DebugConf.GetSection("UserAuth").GetSection("TestUser");
+
+float JWTExpireTime = JWTConf.GetValue<int>("JWTExpireTime");
+string JWTSecret = JWTConf.GetValue<string>("JWTSecret");
+
+bool UseDebug = DebugConf.GetValue<bool>("useDebug");
+string TestUserName = TestUserConf.GetValue<string>("TestUserName");
+string TestUserPassword = TestUserConf.GetValue<string>("TestUserPassword");
+
 string UseDb = DBSection.GetValue<string>("UseDatabase");
 string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
 
@@ -88,10 +99,15 @@ builder.Services.AddAuthentication(auth =>
 });
 #endregion
 
+#region Configuration
+builder.Services.AddSingleton<JWTCo>(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSecret = JWTSecret });
+builder.Services.AddSingleton<TestUserCo>(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
+#endregion
+
 #region Repositories
 //builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
 //builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
-builder.Services.AddScoped<IUserPepository,UserRepository>();
+builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 #endregion
 

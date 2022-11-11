@@ -4,6 +4,8 @@ using ZID.Automat.Repository;
 using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
 
+using Xunit;
+
 namespace ZID.Automat.Application.Test
 {
     public class TestAuthentificationService
