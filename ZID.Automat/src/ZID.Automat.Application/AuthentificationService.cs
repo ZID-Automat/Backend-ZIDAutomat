@@ -36,7 +36,7 @@ namespace ZID.Automat.Application
                 }
                 else
                 {
-                    user = new ADUser("VornameTestUser", "NachnameTestUser", "TestUser@Spengergasse.at", "TES99999", "Test", new string[] { "TestKlasse" });
+                    user = new ADUser("VornameTestUser", "NachnameTestUser", "TestUser@Spengergasse.at", _testUserCo.TestUserName, "Test", new string[] { "TestKlasse" });
                 }
 
                 if (!_userRepository.UserExists(UserLogin.Username))

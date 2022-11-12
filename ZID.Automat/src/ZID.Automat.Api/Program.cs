@@ -105,8 +105,6 @@ builder.Services.AddSingleton<TestUserCo>(new TestUserCo() {UseDebug = UseDebug,
 #endregion
 
 #region Repositories
-//builder.Services.AddScoped<IGetItemWithItemInstance, ItemRepository>();
-//builder.Services.AddScoped<IGetPrevBorrowedItemsOfUser, ItemRepository>();
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 #endregion
@@ -114,8 +112,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
 builder.Services.AddScoped<IUserAuth, AuthentificationService>();
-//builder.Services.AddScoped<IAllDisplayItems, ItemService>();
-//builder.Services.AddScoped<IPrevBorrowedDisplayItemsOfUser, ItemService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 #endregion
 
 var app = builder.Build();

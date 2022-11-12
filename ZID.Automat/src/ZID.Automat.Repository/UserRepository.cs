@@ -20,7 +20,7 @@ namespace ZID.Automat.Repository
 
         public User? FindUser(string UserName)
         {
-            return _automatContext.Users.FirstOrDefault(u => u.Username == UserName);
+            return _automatContext.Users.Where(u => u.Username == UserName).SingleOrDefault();
         }
 
         public bool UserExists(string UserName)

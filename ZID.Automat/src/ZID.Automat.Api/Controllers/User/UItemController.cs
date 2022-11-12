@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Security.Principal;
 using ZID.Automat.Application;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
@@ -23,11 +25,14 @@ namespace ZID.Automat.Api.Controllers.User
         {
             return _itemService.AllDisplayItems();
         }
-        
+
         [HttpGet("getPrevBorrowed")]
         public IReadOnlyList<ItemDisplayDto> getPrevBorrowed()
         {
-            return _itemService.PrevBorrowedDisplayItemsUser(User.Claims.First(c=>c.Issuer == "Name").Value);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            IEnumerable<Claim> claims = identity.Claims;
+            var cl = claims.First(c => c.Type == "Name");
+            return _itemService.PrevBorrowedDisplayItemsUser(cl.Value);
         }
     }
 }

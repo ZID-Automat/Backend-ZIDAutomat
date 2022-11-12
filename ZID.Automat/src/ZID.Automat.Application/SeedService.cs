@@ -62,7 +62,7 @@ namespace ZID.Automat.Application
             var ItemName = new[] { "LanKabel", "Powerbank", "RaspberryPi3", "KopfhörerInEar", "KopfährerOverEar", "Batterien", "UsbKabel", "USBCKabel", "Mikro USB Kabel", "Lautsprecher" };
             return new Faker<Item>()
                 .RuleFor(i => i.Name, f => f.PickRandom(ItemName))
-                .RuleFor(i => i.Description, f => f.Lorem.Sentence(25))
+                .RuleFor(i => i.Description, f => f.Lorem.Sentence(10))
                 .RuleFor(i => i.Image, f => f.Image.LoremFlickrUrl())
                 .RuleFor(i => i.Price, f => f.Random.Decimal(10, 100))
                 .RuleFor(i => i.SubName, f => f.Lorem.Sentence(5))

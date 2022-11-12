@@ -32,7 +32,8 @@ namespace ZID.Automat.Application
 
         public IReadOnlyList<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {
-            IReadOnlyList<Item> Items = _itemRepository.getPrevBorrowedItemsOfUser(_userRepository.FindUser(UserName)?.Id??throw new ArgumentNullException("No User with this UserName"));
+            var User = _userRepository.FindUser(UserName) ?? throw new ArgumentNullException("No User with this UserName");
+            IReadOnlyList<Item> Items = _itemRepository.getPrevBorrowedItemsOfUser(User.Id);
             List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
             {
                 Available = item.ItemInstances.Count() != 0,
