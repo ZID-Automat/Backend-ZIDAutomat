@@ -10,7 +10,7 @@ using ZID.Automat.Repository;
 namespace ZID.Automat.Api.Controllers.User
 {
     [ApiController]
-    [AllowAnonymous]
+    [Authorize(Roles = "User")]
     [Route("[controller]")]
     public class UItemController : Controller
     {
