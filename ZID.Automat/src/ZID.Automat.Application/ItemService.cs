@@ -44,11 +44,28 @@ namespace ZID.Automat.Application
             }).ToList();
             return itemDisplays;
         }
+        
+        public ItemDetailedDto DetailedItem(int ItemId)
+        {
+            var item = _itemRepository.getItem(ItemId);
+
+            return new ItemDetailedDto()
+            {
+                Available = item.ItemInstances.Count() != 0,
+                Name = item.Name,
+                Description = item.Description,
+                Image = item.Image,
+                SubName = item.SubName,
+                Categorie = item.Categorie?.Name,
+                Price = item.Price
+            };
+        }
     }
 
     public interface IItemService
     {
         public IReadOnlyList<ItemDisplayDto> AllDisplayItems();
         public IReadOnlyList<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
+        public ItemDetailedDto DetailedItem(int ItemId);
     }
 }
