@@ -5,7 +5,7 @@ using Xunit;
 
 namespace ZID.Automat.Application.Test
 {
-    public class TestDbSeed
+    public class TestDbSeedService
     {
         private AutomatContext Context
         {

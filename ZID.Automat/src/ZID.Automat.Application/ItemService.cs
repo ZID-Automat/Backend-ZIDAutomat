@@ -21,7 +21,7 @@ namespace ZID.Automat.Application
             IReadOnlyList<Item> Items = _itemRepository.getItemWithItemInstance();
             List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
             {
-                Available = item.ItemInstances.Count() != 0,
+                Available = _itemRepository.isItemAvalable(item.Id, DateTime.Now),
                 Name = item.Name,
                 Description = item.Description,
                 Image = item.Image,
@@ -36,7 +36,7 @@ namespace ZID.Automat.Application
             IReadOnlyList<Item> Items = _itemRepository.getPrevBorrowedItemsOfUser(User.Id);
             List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
             {
-                Available = item.ItemInstances.Count() != 0,
+                Available = _itemRepository.isItemAvalable(item.Id,DateTime.Now),
                 Name = item.Name,
                 Description = item.Description,
                 Image = item.Image,
