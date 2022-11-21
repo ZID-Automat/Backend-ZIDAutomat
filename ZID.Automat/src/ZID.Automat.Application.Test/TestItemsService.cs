@@ -4,6 +4,7 @@ using ZID.Automat.Configuration.Model;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Repository;
 using System.Linq;
+using ZID.Automat.Domain.Models;
 
 namespace ZID.Automat.Application.Test
 {
@@ -51,6 +52,10 @@ namespace ZID.Automat.Application.Test
             var u = context.Users.First();
             
             var item = new ItemService(new ItemRepository(context), new UserRepository(context));
+            u.AddBorrow(new Borrow() { ItemInstance = new ItemInstance() { Item = new Item() } ,BorrowDate = DateTime.Now, PredictedReturnDate = DateTime.Now});
+
+            context.SaveChanges();
+            
             var ADI = item.PrevBorrowedDisplayItemsUser(u.Username);
 
             Assert.NotNull(ADI);
