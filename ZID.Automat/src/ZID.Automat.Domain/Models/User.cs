@@ -10,7 +10,7 @@ namespace ZID.Automat.Domain.Models
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
-        public DateTime Joined { get; set; }
+        public DateTime Joined { get; set  ; }
 
         private List<Borrow> _Borrow { get; set; } = new List<Borrow>();
         public IReadOnlyList<Borrow> Borrow => _Borrow;
@@ -31,5 +31,7 @@ namespace ZID.Automat.Domain.Models
 
             _Borrow.Add(borrow);
         }
+
+      
     }
 }

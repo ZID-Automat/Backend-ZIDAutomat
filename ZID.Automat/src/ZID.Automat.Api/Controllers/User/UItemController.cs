@@ -2,11 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 
 using System.Security.Claims;
-using System.Security.Principal;
 using ZID.Automat.Application;
-using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
-using ZID.Automat.Repository;
 
 namespace ZID.Automat.Api.Controllers.User
 {
@@ -34,6 +31,12 @@ namespace ZID.Automat.Api.Controllers.User
             IEnumerable<Claim> claims = identity.Claims;
             var cl = claims.First(c => c.Type == "Name");
             return _itemService.PrevBorrowedDisplayItemsUser(cl.Value);
+        }
+
+        [HttpGet("getDetailedItem")]
+        public ItemDetailedDto getDetailedItem(int ItemId)
+        {
+            return _itemService.DetailedItem(ItemId); 
         }
     }
 }

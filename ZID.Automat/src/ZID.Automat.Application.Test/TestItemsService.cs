@@ -59,5 +59,15 @@ namespace ZID.Automat.Application.Test
             Assert.ThrowsAny<ArgumentNullException>(() => item.PrevBorrowedDisplayItemsUser(null!));
             Assert.ThrowsAny<ArgumentNullException>(() => item.PrevBorrowedDisplayItemsUser(""));
         }
+
+        [Fact]
+        public void TestTimeDetailed()
+        {
+            var context = Context;
+            var item = context.Items.First();
+            var i = new ItemService(new ItemRepository(context), new UserRepository(context));
+            var Det = i.DetailedItem(item.Id);
+            Assert.NotNull(Det);
+        }
     }
 }
