@@ -44,14 +44,14 @@ namespace ZID.Automat.Application
             }).ToList();
             return itemDisplays;
         }
-        
+
         public ItemDetailedDto DetailedItem(int ItemId)
         {
             var item = _itemRepository.getItem(ItemId);
 
             return new ItemDetailedDto()
             {
-                Available = item.ItemInstances.Count() != 0,
+                Available = _itemRepository.isItemAvalable(ItemId,DateTime.Now),
                 Name = item.Name,
                 Description = item.Description,
                 Image = item.Image,

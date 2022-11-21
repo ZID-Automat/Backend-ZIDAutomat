@@ -11,7 +11,7 @@ namespace ZID.Automat.Application
         public const int ITEMS = 20;
         public const int ITEMSINSTANCE = 100;
         public const int USERS = 20;
-        public const int BORROWS = 1000;
+        public const int BORROWS = 00;
         public const int ADMONTYPE = 20;
         public const int ADMON = 20;
 
@@ -106,6 +106,7 @@ namespace ZID.Automat.Application
 
         private List<Admonition> SeedAdmonitions(int count, List<AdmonitionType> admonitionTypes, List<Borrow> borrows)
         {
+            if (borrows.Count == 0) return new List<Admonition>();
             return new Faker<Admonition>()
                 .RuleFor(a => a.AdmonitionType, f => f.PickRandom(admonitionTypes))
                 .RuleFor(a => a.Comment, f => f.Lorem.Sentence(10))

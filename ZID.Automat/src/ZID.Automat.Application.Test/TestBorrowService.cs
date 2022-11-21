@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using ZID.Automat.Configuration;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Repository;
@@ -15,7 +16,7 @@ namespace ZID.Automat.Application.Test
         [Fact]
         public void TestBorrow()
         {
-            var BS = new BorrowService(new TestBorrowItemRepo(), new TestBorrowUserRepo());
+            var BS = new BorrowService(new TestBorrowItemRepo(), new TestBorrowUserRepo(), new BorrowCo() { MaxBorrowTime = 7});
             BS.Borrow(new BorrowDataDto() { DueTime = DateTime.Now.AddDays(4), ItemId = 0 }, "TestUser",DateTime.Now);
         }
     }

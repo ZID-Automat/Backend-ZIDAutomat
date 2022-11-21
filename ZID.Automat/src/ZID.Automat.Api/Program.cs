@@ -12,6 +12,7 @@ using ZID.Automat.Application;
 using ZID.Automat.Repository;
 using ZID.Automat.Configuration.Model;
 using System.Configuration;
+using ZID.Automat.Configuration;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,9 @@ string TestUserPassword = TestUserConf.GetValue<string>("TestUserPassword");
 
 string UseDb = DBSection.GetValue<string>("UseDatabase");
 string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
+
+var Borrow = Conf.GetSection("Borrow");
+int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
 
 #endregion
 
@@ -100,8 +104,9 @@ builder.Services.AddAuthentication(auth =>
 #endregion
 
 #region Configuration
-builder.Services.AddSingleton<JWTCo>(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSecret = JWTSecret });
-builder.Services.AddSingleton<TestUserCo>(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
+builder.Services.AddSingleton(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSecret = JWTSecret });
+builder.Services.AddSingleton(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
+builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 #endregion
 
 #region Repositories
