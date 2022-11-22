@@ -13,6 +13,8 @@ namespace ZID.Automat.Domain.Models
         public DateTime PredictedReturnDate { get; set; }
         public DateTime? ReturnDate { get; set; }
 
+        public string UUID { get; set; } = string.Empty;
+
         public int ItemInstanceId { get; set; }
         public ItemInstance ItemInstance { get; set; } = null!;
 
