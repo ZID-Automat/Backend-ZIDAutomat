@@ -25,7 +25,8 @@ namespace ZID.Automat.Application
                 Name = item.Name,
                 Description = item.Description,
                 Image = item.Image,
-                SubName = item.SubName
+                SubName = item.SubName,
+                Id = item.Id
             }).ToList();
             return itemDisplays;
         }
@@ -40,7 +41,8 @@ namespace ZID.Automat.Application
                 Name = item.Name,
                 Description = item.Description,
                 Image = item.Image,
-                SubName = item.SubName
+                SubName = item.SubName,
+                Id = item.Id
             }).ToList();
             return itemDisplays;
         }
@@ -52,12 +54,13 @@ namespace ZID.Automat.Application
             return new ItemDetailedDto()
             {
                 Available = _itemRepository.isItemAvalable(ItemId,DateTime.Now),
-                Name = item.Name,
+                Name = item.Name??"Name",
                 Description = item.Description,
                 Image = item.Image,
                 SubName = item.SubName,
-                Categorie = item.Categorie?.Name,
-                Price = item.Price
+                Categorie = item.Categorie?.Name??"Kabel",
+                Price = item.Price,
+                Id = item.Id
             };
         }
     }

@@ -11,9 +11,9 @@ namespace ZID.Automat.Application
         public const int ITEMS = 20;
         public const int ITEMSINSTANCE = 100;
         public const int USERS = 20;
-        public const int BORROWS = 00;
+        public const int BORROWS = 0;
         public const int ADMONTYPE = 20;
-        public const int ADMON = 20;
+        public const int ADMON = 0;
 
         private readonly AutomatContext Context;
 

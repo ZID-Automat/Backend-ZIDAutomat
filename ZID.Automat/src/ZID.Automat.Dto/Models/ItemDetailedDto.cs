@@ -8,6 +8,7 @@ namespace ZID.Automat.Dto.Models
 {
     public record ItemDetailedDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string SubName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

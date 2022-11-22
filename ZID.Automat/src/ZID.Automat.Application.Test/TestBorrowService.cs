@@ -16,7 +16,7 @@ namespace ZID.Automat.Application.Test
         [Fact]
         public void TestBorrow()
         {
-            var BS = new BorrowService(new TestBorrowItemRepo(), new TestBorrowUserRepo(), new BorrowCo() { MaxBorrowTime = 7});
+            var BS = new BorrowService(new TestBorrowItemRepo(), new TestBorrowUserRepo(), new BorrowCo() { MaxBorrowTime = 7},new SaveRep() );
             BS.Borrow(new BorrowDataDto() { DueTime = DateTime.Now.AddDays(4), ItemId = 0 }, "TestUser",DateTime.Now);
         }
     }
@@ -69,6 +69,13 @@ namespace ZID.Automat.Application.Test
         public bool isItemAvalable(int ItemID, DateTime t)
         {
             return ItemID == 0;
+        }
+    }
+
+    internal class SaveRep : ISaveDBRepository
+    {
+        public void SaveDb()
+        {
         }
     }
 }

@@ -13,6 +13,7 @@ using ZID.Automat.Repository;
 using ZID.Automat.Configuration.Model;
 using System.Configuration;
 using ZID.Automat.Configuration;
+using Microsoft.AspNetCore.Diagnostics;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -112,12 +113,14 @@ builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 #region Repositories
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
 #endregion
 
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
 builder.Services.AddScoped<IUserAuth, AuthentificationService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IBorrowService, BorrowService>();
 #endregion
 
 var app = builder.Build();
@@ -128,6 +131,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+#endregion
+
+#region Exception Handling
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features
+        .Get<IExceptionHandlerPathFeature>()
+        ?.Error;
+    var response = new { error = exception?.Message ??"Error" };
+    await context.Response.WriteAsJsonAsync(response);
+}));
 #endregion
 
 app.UseCors();

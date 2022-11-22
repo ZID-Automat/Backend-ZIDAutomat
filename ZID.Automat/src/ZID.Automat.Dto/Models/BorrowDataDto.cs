@@ -8,7 +8,7 @@ namespace ZID.Automat.Dto.Models
 {
     public record BorrowDataDto
     {
-        public DateTime DueTime;
-        public int ItemId;
+        public DateTime DueTime { get; set; }
+        public int ItemId { get; set; }
     }
 }
