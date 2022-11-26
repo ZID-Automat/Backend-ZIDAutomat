@@ -20,7 +20,7 @@ namespace ZID.Automat.Repository
 
         public IEnumerable<Borrow> getActiveBorrows()
         {
-            return _context.Borrows.Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).Where(b => b.CollectDate == null).ToList();
+            return _context.Borrows.Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).Where(b => b.CollectDate == null).OrderBy(b=>b.BorrowDate).ToList();
         }
     }
 
