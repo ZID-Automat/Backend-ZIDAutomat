@@ -114,6 +114,9 @@ builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
+
+builder.Services.AddScoped<IActiveBorrowsRepository, BorrowRepository>();
+
 #endregion
 
 #region Services
@@ -121,6 +124,9 @@ builder.Services.AddScoped<ISeedService, SeedService>();
 builder.Services.AddScoped<IUserAuth, AuthentificationService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
+
+builder.Services.AddScoped<IQrCodeAService, QrCodeService>();
+builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
 #endregion
 
 var app = builder.Build();

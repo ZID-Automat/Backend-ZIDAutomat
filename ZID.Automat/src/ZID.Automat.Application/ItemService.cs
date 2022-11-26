@@ -27,7 +27,7 @@ namespace ZID.Automat.Application
                 Image = item.Image,
                 SubName = item.SubName,
                 Id = item.Id
-            }).ToList();
+            }).ToList();   
             return itemDisplays;
         }
 

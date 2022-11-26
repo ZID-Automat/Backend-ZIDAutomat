@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZID.Automat.Dto.Models
 {
-    public record BorrowResponse
+    public record BorrowResponseDto
     {
         public string QRCode { get; set; } = string.Empty;
     }
