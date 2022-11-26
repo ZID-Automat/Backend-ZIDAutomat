@@ -35,6 +35,11 @@ namespace ZID.Automat.Application
                 ReturnDate = b.ReturnDate
             });
         }
+
+        public int OpenQrCodesCount()
+        {
+            return _activeBorrowsRepository.getActiveBorrowsCount();
+        }
     }
 
     public interface IQrCodeAService
@@ -45,5 +50,6 @@ namespace ZID.Automat.Application
     public interface IQrCodeUService
     {
         public IEnumerable<BorrowDto> OpenQrCodes();
+        public int OpenQrCodesCount();
     }
 }
