@@ -21,5 +21,11 @@ namespace ZID.Automat.Api.Controllers.User
         {
             return _qrCodeUService.OpenQrCodes();
         }
+
+        [HttpGet("ActiveQrCodesCount")]
+        public int getActiveQrCodesCount()
+        {
+            return _qrCodeUService.OpenQrCodesCount();
+        }
     }
 }
