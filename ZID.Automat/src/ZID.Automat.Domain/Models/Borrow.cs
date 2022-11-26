@@ -12,6 +12,7 @@ namespace ZID.Automat.Domain.Models
         public DateTime BorrowDate { get; set; }
         public DateTime PredictedReturnDate { get; set; }
         public DateTime? ReturnDate { get; set; }
+        public DateTime? CollectDate { get; set; }
 
         public string UUID { get; set; } = string.Empty;
 

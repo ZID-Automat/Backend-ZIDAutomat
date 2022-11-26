@@ -21,11 +21,11 @@ namespace ZID.Automat.Api.Controllers.User
         }
 
         [HttpPost("Borrow")]
-        public BorrowResponse Borrow(BorrowDataDto borrowData)
+        public BorrowResponseDto Borrow(BorrowDataDto borrowData)
         {
-            var username = User.Claims.First(c => c.Type == "Name");
+            var username = User.Claims.First(c => c.Type == "Name");    
             string qrCode = _borrowService.Borrow(borrowData, username.Value, DateTime.Now);
-            return new BorrowResponse() { QRCode = qrCode };
+            return new BorrowResponseDto() { QRCode = qrCode };
         }
     }
 }

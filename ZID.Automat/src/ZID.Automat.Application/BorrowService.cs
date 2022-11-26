@@ -10,7 +10,7 @@ using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
 {
-    public class BorrowService : IBorrowService
+    public class BorrowService : IBorrowService 
     {
         private readonly IItemRepository _itemRepository;
         private readonly IUserRepository _userRepository;
