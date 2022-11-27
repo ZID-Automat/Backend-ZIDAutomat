@@ -22,10 +22,17 @@ namespace ZID.Automat.Api.Controllers.User
             return _qrCodeUService.OpenQrCodes();
         }
 
+        [HttpGet("AllQrCodes")]
+        public IEnumerable<BorrowDto> getAllQrCodes()
+        {
+            return _qrCodeUService.AllQrCodes();
+        }
+
         [HttpGet("ActiveQrCodesCount")]
         public int getActiveQrCodesCount()
         {
             return _qrCodeUService.OpenQrCodesCount();
+
         }
     }
 }
