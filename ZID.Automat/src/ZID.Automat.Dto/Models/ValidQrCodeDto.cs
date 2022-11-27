@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZID.Automat.Dto.Models
 {
-    public record QrCodeDto
+    public record ValidQrCodeDto
     {
-        public string QRCode { get; set; } = string.Empty;
+        public bool valid { get; set; }
     }
 }

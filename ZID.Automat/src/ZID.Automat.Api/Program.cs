@@ -121,6 +121,7 @@ builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
 
 builder.Services.AddScoped<IActiveBorrowsRepository, BorrowRepository>();
 builder.Services.AddScoped<IAlllBorrowsRepository, BorrowRepository>();
+builder.Services.AddScoped<IControllerQrCodeRepository, BorrowRepository>();
 
 #endregion
 
@@ -133,7 +134,7 @@ builder.Services.AddScoped<IControllerAuthService, AuthentificationService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
 
-builder.Services.AddScoped<IQrCodeAService, QrCodeService>();
+builder.Services.AddScoped<IQrCodeCService, QrCodeService>();
 builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
 #endregion
 

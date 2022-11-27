@@ -63,6 +63,22 @@ namespace ZID.Automat.Application
                 Id = item.Id
             };
         }
+        public ItemDetailedDto DetailedItem(string QrCode)
+        {
+            int id = _itemRepository.loadItemFromQrCode(QrCode)?? throw new ArgumentException("Item not found");
+            var item = _itemRepository.getItem(id);
+            return new ItemDetailedDto()
+            {
+                Available = _itemRepository.isItemAvalable(id, DateTime.Now),
+                Name = item.Name ?? "Name",
+                Description = item.Description,
+                Image = item.Image,
+                SubName = item.SubName,
+                Categorie = item.Categorie?.Name ?? "Kabel",
+                Price = item.Price,
+                Id = item.Id
+            };
+        }
     }
 
     public interface IItemService
@@ -70,5 +86,7 @@ namespace ZID.Automat.Application
         public IReadOnlyList<ItemDisplayDto> AllDisplayItems();
         public IReadOnlyList<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
         public ItemDetailedDto DetailedItem(int ItemId);
+
+        public ItemDetailedDto DetailedItem(string QrCode);
     }
 }

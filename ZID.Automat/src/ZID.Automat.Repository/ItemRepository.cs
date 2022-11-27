@@ -18,11 +18,14 @@ namespace ZID.Automat.Repository
 
         public IReadOnlyList<ItemInstance> getFreeItemInstances(int itemId, DateTime t) => _context.ItemInstances.Where(II => II.ItemId == itemId && ((II.Borrows.Count() != 0)?II.Borrows.OrderBy(B => B.ReturnDate).First().ReturnDate < t:true)).ToList();
         public ItemInstance? getFreeItemInstance(int itemId,DateTime t) => _context.ItemInstances.Where(II => II.ItemId == itemId && ((II.Borrows.Count() != 0) ? II.Borrows.OrderBy(B => B.ReturnDate).First().ReturnDate < t : true)).FirstOrDefault();
+
+        public int? loadItemFromQrCode(string QrCode) => _context.Borrows.Include(b=>b.ItemInstance).Where(b => b.UUID == QrCode).SingleOrDefault()?.ItemInstance.ItemId;
     }
 
     public interface IItemRepository
     {
         public Item? getItem(int ItemId);
+        public int? loadItemFromQrCode(string QrCode);
         public IReadOnlyList<Item> getItemWithItemInstance();
         public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserID);
 
