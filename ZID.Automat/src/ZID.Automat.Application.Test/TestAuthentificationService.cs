@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ZID.Automat.Infrastructure;
 
 using Xunit;
+using ZID.Automat.Configuration;
 
 namespace ZID.Automat.Application.Test
 {
@@ -27,7 +28,7 @@ namespace ZID.Automat.Application.Test
                 return db;
             }
         }
-        private AuthentificationService AuthService => new AuthentificationService(new JWTCo() { JWTExpireTime = 1,JWTSecret = "Test Secret das ist ein Secret"},new TestUserCo() { UseDebug = true, TestUserName = "TestUserName",TestUserPassword = "TestUserPassword" },new UserRepository(Context));
+        private AuthentificationService AuthService => new AuthentificationService(new JWTCo() { JWTExpireTime = 1,JWTSecret = "Test Secret das ist ein Secret"},new TestUserCo() { UseDebug = true, TestUserName = "TestUserName",TestUserPassword = "TestUserPassword" },new UserRepository(Context), new AutomatCo() { Password = "Test"});
 
         [Fact]
         public void TestuserLogin()

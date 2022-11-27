@@ -20,16 +20,24 @@ namespace ZID.Automat.Api.Controllers
     [ApiController]
     public class AuthentificationController : ControllerBase
     {
-        private readonly IUserAuth _userAuth;
-        public AuthentificationController(IUserAuth userAuth)
+        private readonly IUserAuthService _userAuth;
+        private readonly IControllerAuthService _controllerAuthService;
+        public AuthentificationController(IUserAuthService userAuth, IControllerAuthService controllerAuthService)
         {
             _userAuth = userAuth;
+            _controllerAuthService = controllerAuthService;
         }
 
-        [HttpPost("Login")]
+        [HttpPost("UserLogin")]
         public string? UserLogin([FromBody] UserLoginDto UserLogin)
         {
             return _userAuth.AuthUser(UserLogin);
+        }
+
+        [HttpPost("AutomatLogin")]
+        public string? ControllerPost([FromBody] ControllerLoginDto ControllerLogin)
+        {
+            return _controllerAuthService.AuthController(ControllerLogin);
         }
     }
 }

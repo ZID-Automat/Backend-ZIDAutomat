@@ -25,16 +25,19 @@ string[] CorsOrigins = Conf.GetSection("CorsOrigin").Get<string[]>();
 string JWT = Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
 var DBSection = Conf.GetSection("Database");
-var JWTConf = Conf.GetSection("UserLoginConf").GetSection("JWT");
-var DebugConf = Conf.GetSection("Debug");
-var TestUserConf = DebugConf.GetSection("UserAuth").GetSection("TestUser");
+var AuthConfSection = Conf.GetSection("AuthConf");
+var JWTConfSection = AuthConfSection.GetSection("JWT");
+var DebugConfSection = Conf.GetSection("Debug");
+var TestUserConfSection = DebugConfSection.GetSection("UserAuth").GetSection("TestUser");
 
-float JWTExpireTime = JWTConf.GetValue<int>("JWTExpireTime");
-string JWTSecret = JWTConf.GetValue<string>("JWTSecret");
+float JWTExpireTime = JWTConfSection.GetValue<int>("JWTExpireTime");
+string JWTSecret = JWTConfSection.GetValue<string>("JWTSecret");
 
-bool UseDebug = DebugConf.GetValue<bool>("useDebug");
-string TestUserName = TestUserConf.GetValue<string>("TestUserName");
-string TestUserPassword = TestUserConf.GetValue<string>("TestUserPassword");
+string AutomatPassword = AuthConfSection.GetValue<string>("AutomatPassword");
+
+bool UseDebug = DebugConfSection.GetValue<bool>("useDebug");
+string TestUserName = TestUserConfSection.GetValue<string>("TestUserName");
+string TestUserPassword = TestUserConfSection.GetValue<string>("TestUserPassword");
 
 string UseDb = DBSection.GetValue<string>("UseDatabase");
 string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
@@ -108,6 +111,7 @@ builder.Services.AddAuthentication(auth =>
 builder.Services.AddSingleton(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSecret = JWTSecret });
 builder.Services.AddSingleton(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
 builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
+builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
 #endregion
 
 #region Repositories
@@ -122,7 +126,10 @@ builder.Services.AddScoped<IAlllBorrowsRepository, BorrowRepository>();
 
 #region Services
 builder.Services.AddScoped<ISeedService, SeedService>();
-builder.Services.AddScoped<IUserAuth, AuthentificationService>();
+
+builder.Services.AddScoped<IUserAuthService, AuthentificationService>();
+builder.Services.AddScoped<IControllerAuthService, AuthentificationService>();
+
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
 

@@ -7,23 +7,28 @@ using ZID.Automat.Configuration.Model;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using ZID.Automat.Repository;
+using ZID.Automat.Configuration;
 
 namespace ZID.Automat.Application
 {
-    public class AuthentificationService : IUserAuth
+    public class AuthentificationService : IUserAuthService, IControllerAuthService
     {
 
         private readonly JWTCo _jwtCo;
         private readonly TestUserCo _testUserCo;
+        private readonly AutomatCo _automatCo;
+
+
         private readonly IUserRepository _userRepository;
-        
-        public AuthentificationService(JWTCo jwtCo,TestUserCo testUserCo, IUserRepository userRepository)
+
+        public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, IUserRepository userRepository, AutomatCo automatCo)
         {
             _jwtCo = jwtCo;
             _testUserCo = testUserCo;
             _userRepository = userRepository;
+            _automatCo = automatCo;
         }
-            
+
         public string AuthUser(UserLoginDto UserLogin)
         {
             try
@@ -43,7 +48,7 @@ namespace ZID.Automat.Application
                 {
                     _userRepository.AddUser(new User() { Username = UserLogin.Username, Joined = DateTime.Now });
                 }
-                
+
                 JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
                 byte[] tokenKey = Encoding.ASCII.GetBytes(_jwtCo.JWTSecret);
                 DateTime ExpireTime = DateTime.Now.AddHours(_jwtCo.JWTExpireTime);
@@ -69,11 +74,42 @@ namespace ZID.Automat.Application
                 return null!;
             }
         }
+
+        public string AuthController(ControllerLoginDto ControllerLoginDto)
+        {
+            if (ControllerLoginDto.ControllerPassword != _automatCo.Password)
+            {
+                throw new ArgumentException("Automat Password is not valid");
+            }
+
+            JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
+            byte[] tokenKey = Encoding.ASCII.GetBytes(_jwtCo.JWTSecret);
+            DateTime ExpireTime = DateTime.Now.AddHours(_jwtCo.JWTExpireTime);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[] {
+                        new Claim(ClaimTypes.Role, "Controller"),
+
+                }),
+                Expires = ExpireTime,
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(tokenKey),
+                    SecurityAlgorithms.HmacSha256Signature
+                    )
+            };
+            SecurityToken token = Handler.CreateToken(tokenDescriptor);
+            return Handler.WriteToken(token);
+        }
     }
 
-    public interface IUserAuth
+    public interface IUserAuthService
     {
         public string AuthUser(UserLoginDto userLoginDto);
     }
-        
+
+    public interface IControllerAuthService
+    {
+        public string AuthController(ControllerLoginDto ControllerLoginDto);
+    }
+
 }
