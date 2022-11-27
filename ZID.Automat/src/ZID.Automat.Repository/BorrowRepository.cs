@@ -9,7 +9,7 @@ using ZID.Automat.Infrastructure;
 
 namespace ZID.Automat.Repository
 {
-    public class BorrowRepository : IActiveBorrowsRepository
+    public class BorrowRepository : IActiveBorrowsRepository, IAlllBorrowsRepository
     {
         private readonly AutomatContext _context;
 
@@ -23,15 +23,26 @@ namespace ZID.Automat.Repository
             return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).ToList();
         }
 
+        public IEnumerable<Borrow> getAllBorrows()
+        {
+            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).OrderBy(b => b.BorrowDate).ToList();
+        }
+
+
         public int getActiveBorrowsCount()
         {
             return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).Count();
         }
     }
 
-        public interface IActiveBorrowsRepository
-        {
-            public IEnumerable<Borrow> getActiveBorrows();
-            public int getActiveBorrowsCount();
-        }
-    }   
+    public interface IActiveBorrowsRepository
+    {
+        public IEnumerable<Borrow> getActiveBorrows();
+        public int getActiveBorrowsCount();
+    }
+
+    public interface IAlllBorrowsRepository
+    {
+        public IEnumerable<Borrow> getAllBorrows();
+    }
+}

@@ -116,6 +116,7 @@ builder.Services.AddScoped<IItemRepository, ItemRepository>();
 builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
 
 builder.Services.AddScoped<IActiveBorrowsRepository, BorrowRepository>();
+builder.Services.AddScoped<IAlllBorrowsRepository, BorrowRepository>();
 
 #endregion
 

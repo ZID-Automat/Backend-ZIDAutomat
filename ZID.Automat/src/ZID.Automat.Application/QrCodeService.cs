@@ -11,10 +11,12 @@ namespace ZID.Automat.Application
     public class QrCodeService : IQrCodeAService, IQrCodeUService
     {
         private readonly IActiveBorrowsRepository _activeBorrowsRepository;
+        private readonly IAlllBorrowsRepository _alllBorrowsRepository;
         private readonly IUserRepository _userRepository;
-        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository)
+        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository, IAlllBorrowsRepository alllBorrowsRepository)
         {
             _activeBorrowsRepository = activeBorrowsRepository;
+            _alllBorrowsRepository = alllBorrowsRepository;
             _userRepository = userRepository;
         }
 
@@ -36,6 +38,20 @@ namespace ZID.Automat.Application
             });
         }
 
+        public IEnumerable<BorrowDto> AllQrCodes()
+        {
+            return _alllBorrowsRepository.getAllBorrows().Select(b => new BorrowDto()
+            {
+                BorrowDate = b.BorrowDate,
+                CollectDate = b.CollectDate,
+                DueDate = b.PredictedReturnDate,
+                ItemId = b.Id,
+                ItemInstanceId = b.ItemInstance.ItemId,
+                ItemName = b.ItemInstance.Item.Name,
+                ReturnDate = b.ReturnDate
+            });
+        }
+
         public int OpenQrCodesCount()
         {
             return _activeBorrowsRepository.getActiveBorrowsCount();
@@ -46,10 +62,11 @@ namespace ZID.Automat.Application
     {
         public bool IsValidQrCode();
     }
- 
+        
     public interface IQrCodeUService
     {
         public IEnumerable<BorrowDto> OpenQrCodes();
+        public IEnumerable<BorrowDto> AllQrCodes();
         public int OpenQrCodesCount();
     }
 }
