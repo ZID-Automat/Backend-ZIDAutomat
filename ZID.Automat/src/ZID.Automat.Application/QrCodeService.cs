@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,22 +9,38 @@ using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
 {
-    public class QrCodeService : IQrCodeAService, IQrCodeUService
+    public class QrCodeService : IQrCodeCService, IQrCodeUService
     {
         private readonly IActiveBorrowsRepository _activeBorrowsRepository;
         private readonly IAlllBorrowsRepository _alllBorrowsRepository;
         private readonly IUserRepository _userRepository;
-        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository, IAlllBorrowsRepository alllBorrowsRepository)
+        private readonly IControllerQrCodeRepository _cQrCodeRepository;
+        private readonly ISaveDBRepository _saveRepository;
+        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository, IAlllBorrowsRepository alllBorrowsRepository, IControllerQrCodeRepository cQrCodeRepository,ISaveDBRepository saveRepository)
         {
             _activeBorrowsRepository = activeBorrowsRepository;
             _alllBorrowsRepository = alllBorrowsRepository;
             _userRepository = userRepository;
+            _saveRepository = saveRepository;
+            _cQrCodeRepository = cQrCodeRepository;
         }
 
-        public bool IsValidQrCode()
+        public bool IsValidQrCode(QrCodeDto qrCode)
         {
-            return false;
+            return _cQrCodeRepository.isValidQrCode(qrCode.QRCode) != null;
         }
+        
+        public void InvalidateQrCode(QrCodeDto qrCode,DateTime now)
+        {
+            var bo = _cQrCodeRepository.getBorrow(qrCode.QRCode);
+            if(bo == null)
+            {
+                throw new ArgumentException("No Borrow with that qrCode");
+            } 
+            bo.CollectDate = now;
+            _saveRepository.SaveDb();
+        } 
+        
         public IEnumerable<BorrowDto> OpenQrCodes()
         {
             return _activeBorrowsRepository.getActiveBorrows().Select(b => new BorrowDto()
@@ -58,9 +75,10 @@ namespace ZID.Automat.Application
         }
     }
 
-    public interface IQrCodeAService
+    public interface IQrCodeCService
     {
-        public bool IsValidQrCode();
+        public bool IsValidQrCode(QrCodeDto qrCode);
+        public void InvalidateQrCode(QrCodeDto qrCode, DateTime now);
     }
         
     public interface IQrCodeUService

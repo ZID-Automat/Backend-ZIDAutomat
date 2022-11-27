@@ -10,7 +10,7 @@ namespace ZID.Automat.Api.Controllers.User
     [ApiController]
     [Authorize(Roles = "User")]
     [Route("[controller]")]
-    public class UItemController : Controller
+    public class UItemController : ControllerBase
     {
         private readonly IItemService _itemService;
         public UItemController(IItemService itemService)

@@ -70,6 +70,11 @@ namespace ZID.Automat.Application.Test
         {
             return ItemID == 0;
         }
+
+        public int? loadItemFromQrCode(string QrCode)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class SaveRep : ISaveDBRepository

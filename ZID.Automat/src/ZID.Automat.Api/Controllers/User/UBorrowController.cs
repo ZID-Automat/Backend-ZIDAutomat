@@ -12,7 +12,7 @@ namespace ZID.Automat.Api.Controllers.User
     [ApiController]
     [Authorize(Roles = "User")]
     [Route("[controller]")]
-    public class UBorrowController: Controller
+    public class UBorrowController: ControllerBase
     {
         public readonly IBorrowService _borrowService;
         public UBorrowController(IBorrowService borrowService)
@@ -21,11 +21,11 @@ namespace ZID.Automat.Api.Controllers.User
         }
 
         [HttpPost("Borrow")]
-        public BorrowResponseDto Borrow(BorrowDataDto borrowData)
+        public QrCodeDto Borrow(BorrowDataDto borrowData)
         {
             var username = User.Claims.First(c => c.Type == "Name");    
             string qrCode = _borrowService.Borrow(borrowData, username.Value, DateTime.Now);
-            return new BorrowResponseDto() { QRCode = qrCode };
+            return new QrCodeDto() { QRCode = qrCode };
         }
     }
 }
