@@ -17,7 +17,7 @@ namespace ZID.Automat.Application.Test
             get
             {
                 DbContextOptions<AutomatContext> options = new DbContextOptionsBuilder<AutomatContext>()
-                .UseSqlite("Data Source=TestDbii.db")
+                .UseSqlite("Data Source=TestDbiiii.db")
                 .Options;
 
                 AutomatContext db = new AutomatContext(options);
@@ -52,7 +52,7 @@ namespace ZID.Automat.Application.Test
             var u = context.Users.First();
             
             var item = new ItemService(new ItemRepository(context), new UserRepository(context));
-            u.AddBorrow(new Borrow() { ItemInstance = new ItemInstance() { Item = new Item() } ,BorrowDate = DateTime.Now, PredictedReturnDate = DateTime.Now});
+            u.AddBorrow(new Borrow() { Item = new Item(), BorrowDate = DateTime.Now, PredictedReturnDate = DateTime.Now});
 
             context.SaveChanges();
             

@@ -20,22 +20,22 @@ namespace ZID.Automat.Repository
 
         public IEnumerable<Borrow> getActiveBorrows()
         {
-            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).ToList();
+            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).ToList();
         }
 
         public IEnumerable<Borrow> getAllBorrows()
         {
-            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).OrderBy(b => b.BorrowDate).ToList();
+            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.Item).OrderBy(b => b.BorrowDate).ToList();
         }
 
         public int getActiveBorrowsCount()
         {
-            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.ItemInstance.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).Count();
+            return _context.Borrows.Include(b => b.ItemInstance).Include(b => b.Item).Where(b => b.CollectDate == null).OrderBy(b => b.BorrowDate).Count();
         }
 
         public Borrow? isValidQrCode(string UUID)
         {
-            return _context.Borrows.Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).SingleOrDefault(b => b.UUID == UUID && b.CollectDate == null);
+            return _context.Borrows.Include(b=>b.ItemInstance).Include(b=>b.Item).SingleOrDefault(b => b.UUID == UUID && b.CollectDate == null);
         }
 
         public Borrow? getBorrow(string UUID)
