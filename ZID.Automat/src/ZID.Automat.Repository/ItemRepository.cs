@@ -13,7 +13,7 @@ namespace ZID.Automat.Repository
         }
         public Item? getItem(int ItemId) => _context.Items.SingleOrDefault(i => i.Id == ItemId);
         public IReadOnlyList<Item> getItemWithItemInstance() =>_context.Items.Include(i => i.ItemInstances).ToList();
-        public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserId) =>_context.Borrows.Include(b => b.Item).Include(b => b.ItemInstance).Where(b => b.UserId == UserId).Select(s => s.Item).Distinct().ToList();
+        public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserId) =>_context.Borrows.Include(b => b.Item).Include(b => b.ItemInstance).Where(b => b.UserId == UserId).Select(s => s.Item).ToList();
         public bool isItemAvalable(int ItemID, DateTime t) => _context.ItemInstances.Include(b => b.Item).Include(II => II.Borrows).DefaultIfEmpty().Where(II => II.ItemId == ItemID && (II.Borrows.Count() != 0? II.Borrows.OrderBy(B => B.ReturnDate).First().ReturnDate < t:true)).FirstOrDefault() != null;
 
         public IReadOnlyList<ItemInstance> getFreeItemInstances(int itemId, DateTime t) => _context.ItemInstances.Where(II => II.ItemId == itemId && ((II.Borrows.Count() != 0)?II.Borrows.OrderBy(B => B.ReturnDate).First().ReturnDate < t:true)).ToList();
