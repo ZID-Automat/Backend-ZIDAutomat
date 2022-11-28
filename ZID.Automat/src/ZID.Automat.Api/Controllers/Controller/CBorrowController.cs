@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZID.Automat.Application;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Repository;
 
 namespace ZID.Automat.Api.Controllers.Controller
 {
+    [ApiController]
+    [Authorize(Roles = "Controller")]
+    [Route("[controller]")]
     public class CBorrowController:ControllerBase
     {
         public readonly IItemService _itemService;
