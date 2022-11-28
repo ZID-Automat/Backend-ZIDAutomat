@@ -20,16 +20,16 @@ namespace ZID.Automat.Api.Controllers.Controller
             _qrCodeService = qrCodeService;
         }
         
-        [HttpGet("ValidateQrCode")]
+        [HttpPost("ValidateQrCode")]
         public ValidQrCodeDto ValidateQrCode(QrCodeDto qrCodeDto)
         {
-            return new ValidQrCodeDto() { valid = _qrCodeService.IsValidQrCode(qrCodeDto) };
+            return _qrCodeService.IsValidQrCode(qrCodeDto);
         }
 
         [HttpGet("LoadItemData")]
-        public ItemDetailedDto LoadItemData(QrCodeDto qrCodeDto)
+        public ItemDetailedDto LoadItemData(int item)
         {
-            return _itemService.DetailedItem(qrCodeDto.QRCode);
+            return _itemService.DetailedItem(item);
         }
         
         [HttpPut("InvalidateQrCode")]

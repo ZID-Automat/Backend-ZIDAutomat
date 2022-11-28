@@ -35,7 +35,7 @@ namespace ZID.Automat.Repository
 
         public Borrow? isValidQrCode(string UUID)
         {
-            return _context.Borrows.SingleOrDefault(b => b.UUID == UUID && b.CollectDate != null);
+            return _context.Borrows.Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).SingleOrDefault(b => b.UUID == UUID && b.CollectDate == null);
         }
 
         public Borrow? getBorrow(string UUID)

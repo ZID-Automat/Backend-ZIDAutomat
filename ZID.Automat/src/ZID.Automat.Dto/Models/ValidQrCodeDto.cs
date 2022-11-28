@@ -9,5 +9,6 @@ namespace ZID.Automat.Dto.Models
     public record ValidQrCodeDto
     {
         public bool valid { get; set; }
+        public int ItemId { get; set; }
     }
 }

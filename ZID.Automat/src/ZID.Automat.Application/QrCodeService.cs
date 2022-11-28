@@ -4,6 +4,7 @@ using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Repository;
 
@@ -25,13 +26,14 @@ namespace ZID.Automat.Application
             _cQrCodeRepository = cQrCodeRepository;
         }
 
-        public bool IsValidQrCode(QrCodeDto qrCode)
+        public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
         {
-            return _cQrCodeRepository.isValidQrCode(qrCode.QRCode) != null;
+            var borrow = _cQrCodeRepository.isValidQrCode(qrCode.QRCode);
+            return new ValidQrCodeDto() { valid = borrow == null?false:borrow.CollectDate == null, ItemId = borrow?.ItemInstance.ItemId??0 };
         }
         
         public void InvalidateQrCode(QrCodeDto qrCode,DateTime now)
-        {
+        {   
             var bo = _cQrCodeRepository.getBorrow(qrCode.QRCode);
             if(bo == null)
             {
@@ -77,7 +79,7 @@ namespace ZID.Automat.Application
 
     public interface IQrCodeCService
     {
-        public bool IsValidQrCode(QrCodeDto qrCode);
+        public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode);
         public void InvalidateQrCode(QrCodeDto qrCode, DateTime now);
     }
         
