@@ -11,6 +11,8 @@ namespace ZID.Automat.Repository
         {
             _context = automatContext;
         }
+
+        public ItemInstance? getItemInstance(int IIID) => _context.ItemInstances.SingleOrDefault(II => II.Id == IIID);
         public Item? getItem(int ItemId) => _context.Items.SingleOrDefault(i => i.Id == ItemId);
         public IReadOnlyList<Item> getItemWithItemInstance() =>_context.Items.Include(i => i.ItemInstances).ToList();
         public IReadOnlyList<Item> getPrevBorrowedItemsOfUser(int UserId) =>_context.Borrows.Include(b => b.ItemInstance.Item).Where(b => b.UserId == UserId).Select(s => s.ItemInstance.Item).Distinct().ToList();
@@ -33,5 +35,7 @@ namespace ZID.Automat.Repository
 
         public IReadOnlyList<ItemInstance> getFreeItemInstances(int itemId, DateTime t);
         public ItemInstance? getFreeItemInstance(int itemId, DateTime t);
+        public ItemInstance? getItemInstance(int IIID);
+
     }
 }

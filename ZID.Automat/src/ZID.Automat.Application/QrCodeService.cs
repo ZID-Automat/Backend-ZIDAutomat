@@ -17,13 +17,15 @@ namespace ZID.Automat.Application
         private readonly IUserRepository _userRepository;
         private readonly IControllerQrCodeRepository _cQrCodeRepository;
         private readonly ISaveDBRepository _saveRepository;
-        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository, IAlllBorrowsRepository alllBorrowsRepository, IControllerQrCodeRepository cQrCodeRepository,ISaveDBRepository saveRepository)
+        private readonly IItemRepository _itemRepository;
+        public QrCodeService(IUserRepository userRepository, IActiveBorrowsRepository activeBorrowsRepository, IAlllBorrowsRepository alllBorrowsRepository, IControllerQrCodeRepository cQrCodeRepository,ISaveDBRepository saveRepository,IItemRepository itemRepository)
         {
             _activeBorrowsRepository = activeBorrowsRepository;
             _alllBorrowsRepository = alllBorrowsRepository;
             _userRepository = userRepository;
             _saveRepository = saveRepository;
             _cQrCodeRepository = cQrCodeRepository;
+            _itemRepository = itemRepository;          
         }
 
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
@@ -32,13 +34,10 @@ namespace ZID.Automat.Application
             return new ValidQrCodeDto() { valid = borrow == null?false:borrow.CollectDate == null, ItemId = borrow?.ItemInstance.ItemId??0 };
         }
         
-        public void InvalidateQrCode(QrCodeDto qrCode,DateTime now)
+        public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)
         {   
-            var bo = _cQrCodeRepository.getBorrow(qrCode.QRCode);
-            if(bo == null)
-            {
-                throw new ArgumentException("No Borrow with that qrCode");
-            } 
+            var bo = _cQrCodeRepository.getBorrow(InvalidateQrCode.QrCode)?? throw new ArgumentException("No Borrow with that qrCode");
+            bo.ItemInstance = _itemRepository.getItemInstance(InvalidateQrCode.ItemInstanceId) ?? throw new ArgumentException("ItemInstance ist nicht gefunden worden");
             bo.CollectDate = now;
             _saveRepository.SaveDb();
         } 
@@ -80,7 +79,7 @@ namespace ZID.Automat.Application
     public interface IQrCodeCService
     {
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode);
-        public void InvalidateQrCode(QrCodeDto qrCode, DateTime now);
+        public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode, DateTime now);
     }
         
     public interface IQrCodeUService
