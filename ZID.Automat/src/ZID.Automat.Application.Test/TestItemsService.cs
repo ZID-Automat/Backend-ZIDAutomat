@@ -51,18 +51,18 @@ namespace ZID.Automat.Application.Test
 
             var u = context.Users.First();
             
-            var item = new ItemService(new ItemRepository(context), new UserRepository(context));
+            var itemS = new ItemService(new ItemRepository(context), new UserRepository(context));
             u.AddBorrow(new Borrow() { Item = new Item(), BorrowDate = DateTime.Now, PredictedReturnDate = DateTime.Now});
 
             context.SaveChanges();
             
-            var ADI = item.PrevBorrowedDisplayItemsUser(u.Username);
+            var ADI = itemS.PrevBorrowedDisplayItemsUser(u.Username);
 
             Assert.NotNull(ADI);
             Assert.True(ADI.Count() > 0);
 
-            Assert.ThrowsAny<ArgumentNullException>(() => item.PrevBorrowedDisplayItemsUser(null!));
-            Assert.ThrowsAny<ArgumentNullException>(() => item.PrevBorrowedDisplayItemsUser(""));
+            Assert.ThrowsAny<ArgumentNullException>(() => itemS.PrevBorrowedDisplayItemsUser(null!));
+            Assert.ThrowsAny<ArgumentNullException>(() => itemS.PrevBorrowedDisplayItemsUser(""));
         }
 
         [Fact]

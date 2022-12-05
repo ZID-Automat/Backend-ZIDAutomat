@@ -146,9 +146,3 @@ namespace ZID.Automat.Repository.Test
         }
     }
 }
-
-
-
-// Seed Service is in Application but I need it in the Repository test
-//Code wiederholung verhindern(DbContext) in Tests
-//User.Claims.First(c=>c.Issuer == "Name").Value ersetzen
