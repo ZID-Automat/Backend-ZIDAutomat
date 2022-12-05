@@ -35,14 +35,15 @@ namespace ZID.Automat.Application
         {
             var User = _userRepository.FindUser(UserName) ?? throw new ArgumentNullException("No User with this UserName");
             IReadOnlyList<Item> Items = _itemRepository.getPrevBorrowedItemsOfUser(User.Id);
+            
             List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
             {
                 Available = _itemRepository.isItemAvalable(item.Id,DateTime.Now),
-                Name = item.Name,
-                Description = item.Description,
-                Image = item.Image,
-                SubName = item.SubName,
-                Id = item.Id
+                Name = item?.Name ?? string.Empty,
+                Description = item?.Description ?? string.Empty,
+                Image = item?.Image??string.Empty,
+                SubName = item?.SubName??string.Empty,
+                Id = item?.Id??-1
             }).ToList();
             return itemDisplays;
         }

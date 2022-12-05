@@ -29,7 +29,7 @@ namespace ZID.Automat.Application
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
         {
             var borrow = _cQrCodeRepository.isValidQrCode(qrCode.QRCode);
-            return new ValidQrCodeDto() { valid = borrow == null?false:borrow.CollectDate == null, ItemId = borrow?.ItemInstance.ItemId??0 };
+            return new ValidQrCodeDto() { valid = borrow == null?false:borrow.CollectDate == null, ItemId = borrow?.Item.Id??0 };
         }
         
         public void InvalidateQrCode(QrCodeDto qrCode,DateTime now)
@@ -51,8 +51,8 @@ namespace ZID.Automat.Application
                 CollectDate = b.CollectDate,
                 DueDate = b.PredictedReturnDate,
                 ItemId = b.Id,
-                ItemInstanceId = b.ItemInstance.ItemId,
-                ItemName = b.ItemInstance.Item.Name,
+                ItemInstanceId = b.Item.Id,
+                ItemName = b.Item.Name,
                 ReturnDate = b.ReturnDate
             });
         }
@@ -65,8 +65,8 @@ namespace ZID.Automat.Application
                 CollectDate = b.CollectDate,
                 DueDate = b.PredictedReturnDate,
                 ItemId = b.Id,
-                ItemInstanceId = b.ItemInstance.ItemId,
-                ItemName = b.ItemInstance.Item.Name,
+                ItemInstanceId = b.Item.Id,
+                ItemName = b.Item.Name,
                 ReturnDate = b.ReturnDate
             });
         }

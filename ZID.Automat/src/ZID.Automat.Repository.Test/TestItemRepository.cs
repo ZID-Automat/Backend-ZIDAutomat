@@ -12,7 +12,7 @@ namespace ZID.Automat.Repository.Test
             get
             {
                 DbContextOptions<AutomatContext> options = new DbContextOptionsBuilder<AutomatContext>()
-                .UseSqlite("Data Source=Test5Db.db")
+                .UseSqlite("Data Source=Test6Db.db")
                 .Options;
 
                 AutomatContext db = new AutomatContext(options);
@@ -62,8 +62,8 @@ namespace ZID.Automat.Repository.Test
 
             Item i = new Item();
             var II = new ItemInstance() { Item = i};
-            var b = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
-            var b1 = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
+            var b = new Borrow() { ItemInstance = II,Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
+            var b1 = new Borrow() { ItemInstance = II, Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
 
             context.ItemInstances.Add(II);
             context.Borrows.Add(b);
@@ -85,8 +85,8 @@ namespace ZID.Automat.Repository.Test
             Item i = new Item();
             var II = new ItemInstance() { Item = i };
             var II2 = new ItemInstance() { Item = i };
-            var b = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
-            var b1 = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
+            var b = new Borrow() { ItemInstance = II, Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
+            var b1 = new Borrow() { ItemInstance = II, Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
 
             context.ItemInstances.Add(II);
             context.ItemInstances.Add(II2);
@@ -112,8 +112,8 @@ namespace ZID.Automat.Repository.Test
             Item i = new Item();
             var II = new ItemInstance() { Item = i };
             var II2 = new ItemInstance() { Item = i };
-            var b = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
-            var b1 = new Borrow() { ItemInstance = II, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
+            var b = new Borrow() { ItemInstance = II,Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-1) };
+            var b1 = new Borrow() { ItemInstance = II, Item = i, User = new User(), ReturnDate = DateTime.Now.AddDays(-2) };
 
             context.ItemInstances.Add(II);
             context.ItemInstances.Add(II2);
@@ -146,9 +146,3 @@ namespace ZID.Automat.Repository.Test
         }
     }
 }
-
-
-
-// Seed Service is in Application but I need it in the Repository test
-//Code wiederholung verhindern(DbContext) in Tests
-//User.Claims.First(c=>c.Issuer == "Name").Value ersetzen

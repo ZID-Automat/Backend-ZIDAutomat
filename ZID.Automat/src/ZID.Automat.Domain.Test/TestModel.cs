@@ -13,7 +13,7 @@ namespace ZID.Automat.Domain.Test
             get
             {
                 DbContextOptions<AutomatContext> options = new DbContextOptionsBuilder<AutomatContext>()
-                .UseSqlite("Data Source=TestDb.db")
+                .UseSqlite("Data Source=TestDb1.db")
                 .Options;
 
                 AutomatContext db = new AutomatContext(options);
@@ -145,7 +145,8 @@ namespace ZID.Automat.Domain.Test
                 BorrowDate = DateTime.Now,
                 ItemInstance = II,
                 PredictedReturnDate = DateTime.Now.AddDays(3),
-                User = user
+                User = user,
+                Item = item
             };
             db.Borrows.Add(b);
             db.SaveChanges();
@@ -179,7 +180,7 @@ namespace ZID.Automat.Domain.Test
             item.AddItemInstance(II);
             db.SaveChanges();
 
-            Borrow b = new Borrow{BorrowDate = DateTime.Now,ItemInstance = II, PredictedReturnDate = DateTime.Now.AddDays(3)};
+            Borrow b = new Borrow{ Item = item, BorrowDate = DateTime.Now,ItemInstance = II, PredictedReturnDate = DateTime.Now.AddDays(3)};
             user.AddBorrow(b);
             db.SaveChanges();
             b.ReturnDate = DateTime.Now.AddDays(1);
@@ -223,7 +224,7 @@ namespace ZID.Automat.Domain.Test
             item.AddItemInstance(II);
             db.SaveChanges();
 
-            Borrow b = new Borrow { BorrowDate = DateTime.Now, ItemInstance = II, PredictedReturnDate = DateTime.Now.AddDays(3) };
+            Borrow b = new Borrow {Item=item, BorrowDate = DateTime.Now, ItemInstance = II, PredictedReturnDate = DateTime.Now.AddDays(3) };
             user.AddBorrow(b);
             db.SaveChanges();
             b.ReturnDate = DateTime.Now.AddDays(1);

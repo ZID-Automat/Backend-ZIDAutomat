@@ -40,11 +40,10 @@ namespace ZID.Automat.Application
             if (!_itemRepository.isItemAvalable(BData.ItemId, now)) throw new InvalidOperationException("This Item is currently not avalable");
             if (now.AddDays(_borrowCo.MaxBorrowTime) < BData.DueTime) throw new ArgumentException("The DueTime is to long. The maximum is " + _borrowCo.MaxBorrowTime + " days.");
             var user = _userRepository.FindUser(UserName) ?? throw new ArgumentException("Der Username ist nicht bekannt.");
-            var II = _itemRepository.getFreeItemInstance(BData.ItemId, now);
 
             string UUID = Guid.NewGuid().ToString();
-            
-            II?.AddBorrow(new Borrow() {UUID=UUID, PredictedReturnDate = BData.DueTime, BorrowDate = DateTime.Now, User = user, ItemInstance = II, ReturnDate = null }, DateTime.Now);
+            var item = _itemRepository.getItem(BData.ItemId) ?? throw new ArgumentException("Item not found");
+            item.AddBorrow(new Borrow() {UUID=UUID, PredictedReturnDate = BData.DueTime, BorrowDate = DateTime.Now, User = user, Item = item, ReturnDate = null }, DateTime.Now);
             _saveRepository.SaveDb();
             return UUID;
         }
