@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Ubiety.Dns.Core;
 using ZID.Automat.Application;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Repository;
@@ -33,9 +34,10 @@ namespace ZID.Automat.Api.Controllers.Controller
         }
         
         [HttpPut("InvalidateQrCode")]
-        public void InvalidateQrCode(QrCodeDto qrCodeDto)
+        public IActionResult InvalidateQrCode(InvalidateQrCodeDto qrCodeDto)
         {
             _qrCodeService.InvalidateQrCode(qrCodeDto, DateTime.Now);
+            return new OkResult();
         }
     }
 }

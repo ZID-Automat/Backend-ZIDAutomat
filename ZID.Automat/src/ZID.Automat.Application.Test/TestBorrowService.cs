@@ -56,6 +56,11 @@ namespace ZID.Automat.Application.Test
             return new Item();
         }
 
+        public ItemInstance? getItemInstance(int IIID)
+        {
+            throw new NotImplementedException();
+        }
+
         public IReadOnlyList<Item> getItemWithItemInstance()
         {
             throw new NotImplementedException();
