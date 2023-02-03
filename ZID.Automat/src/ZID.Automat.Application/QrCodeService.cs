@@ -52,8 +52,9 @@ namespace ZID.Automat.Application
                 ItemId = b.Id,
                 ItemInstanceId = b.Item.Id,
                 ItemName = b.Item.Name,
-                ReturnDate = b.ReturnDate
-            });
+                ReturnDate = b.ReturnDate,
+                UUID = b.UUID
+            }); ;
         }
 
         public IEnumerable<BorrowDto> AllQrCodes()
@@ -66,7 +67,8 @@ namespace ZID.Automat.Application
                 ItemId = b.Id,
                 ItemInstanceId = b.Item.Id,
                 ItemName = b.Item.Name,
-                ReturnDate = b.ReturnDate
+                ReturnDate = b.ReturnDate,
+                UUID = b.UUID
             });
         }
 

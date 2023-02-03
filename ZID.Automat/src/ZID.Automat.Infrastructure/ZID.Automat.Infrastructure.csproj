@@ -16,6 +16,9 @@
     </PackageReference>
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     <PackageReference Include="Novell.Directory.Ldap.NETStandard2_0" Version="3.1.0" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="6.21.90" />
+    <PackageReference Include="Oracle.ManagedDataAccess" Version="21.9.0" />
+    <PackageReference Include="Oracle.ManagedDataAccess.EntityFramework" Version="21.9.0" />
   </ItemGroup>
 
   <ItemGroup>

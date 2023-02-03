@@ -64,6 +64,10 @@ builder.Services.AddDbContext<AutomatContext>(options =>
     {
         options.UseSqlite(DbConnString);
     }
+    else if (UseDb == "PLSQL")
+    {
+        options.UseOracle(DbConnString);
+    }
     else
     {
         throw new Exception("No Database selected");
