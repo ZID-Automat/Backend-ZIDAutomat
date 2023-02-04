@@ -23,7 +23,6 @@ namespace ZID.Automat.Application
             {
                 Available = _itemRepository.isItemAvalable(item.Id, DateTime.Now),
                 Name = item.Name,
-                Description = item.Description,
                 Image = item.Image,
                 SubName = item.SubName,
                 Id = item.Id
@@ -40,7 +39,6 @@ namespace ZID.Automat.Application
             {
                 Available = _itemRepository.isItemAvalable(item.Id,DateTime.Now),
                 Name = item?.Name ?? string.Empty,
-                Description = item?.Description ?? string.Empty,
                 Image = item?.Image??string.Empty,
                 SubName = item?.SubName??string.Empty,
                 Id = item?.Id??-1
