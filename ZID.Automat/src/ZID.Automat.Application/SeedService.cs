@@ -59,6 +59,7 @@ namespace ZID.Automat.Application
 
         private List<Item> SeedItems(int count, List<Categorie> categories)
         {
+            var Al = new[] { "A", "C", "D", "E", "F", "G", "H", "I", "J" };
             var ItemName = new[] { "LanKabel", "Powerbank", "RaspberryPi3", "KopfhörerInEar", "KopfährerOverEar", "Batterien", "UsbKabel", "USBCKabel", "Mikro USB Kabel", "Lautsprecher" };
             return new Faker<Item>()
                 .RuleFor(i => i.Name, f => f.PickRandom(ItemName))
@@ -67,6 +68,7 @@ namespace ZID.Automat.Application
                 .RuleFor(i => i.Price, f => f.Random.Decimal(10, 100))
                 .RuleFor(i => i.SubName, f => f.Lorem.Sentence(5))
                 .RuleFor(i => i.Categorie, f => f.PickRandom(categories))
+                .RuleFor(i => i.LocationImAutomat, f => f.PickRandom(Al) + f.PickRandom(Al))
                 .Generate(count);
         }
 

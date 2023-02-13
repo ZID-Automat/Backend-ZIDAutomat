@@ -27,17 +27,23 @@ namespace ZID.Automat.Api.Controllers.Controller
             return _qrCodeService.IsValidQrCode(qrCodeDto);
         }
 
-        [HttpGet("LoadItemData")]
-        public ItemDetailedDto LoadItemData(int item)
+        [HttpGet("LoadItemData/{item}")]
+        public ItemDetailedDto LoadItemData([FromRoute]int item)
         {
             return _itemService.DetailedItem(item);
         }
         
-        [HttpPut("InvalidateQrCode")]
+        [HttpPatch("InvalidateQrCode")]
         public IActionResult InvalidateQrCode(InvalidateQrCodeDto qrCodeDto)
         {
             _qrCodeService.InvalidateQrCode(qrCodeDto, DateTime.Now);
-            return new OkResult();
+            return Ok();
+        }
+
+        [HttpGet("ItemLocation/{itemId}")]
+        public IActionResult ItemLocation([FromRoute]int itemId)
+        {
+            return Ok(_qrCodeService.ItemLocation(itemId));
         }
     }
 }

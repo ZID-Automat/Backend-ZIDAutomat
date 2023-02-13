@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ZID.Automat.Dto.Models
 {
-    public record InvalidateQrCodeDto
-    {
-        public string QrCode { get; set; } = string.Empty;
+    public record ControllerItemLocationDto { 
+        public int ItemId { get; set; }
+        public string location { get; set; } = string.Empty;
     }
 }

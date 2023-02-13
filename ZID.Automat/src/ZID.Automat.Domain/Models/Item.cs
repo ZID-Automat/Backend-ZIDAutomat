@@ -15,6 +15,9 @@ namespace ZID.Automat.Domain.Models
         public string Image { get; set; } = string.Empty;
         public decimal Price { get; set; }
 
+        //noch besser machen(historisierung)
+        public string LocationImAutomat { get; set; } = string.Empty;
+
         public Categorie Categorie = default!;
         public int CategorieId;
 

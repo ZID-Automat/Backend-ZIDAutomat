@@ -37,7 +37,6 @@ namespace ZID.Automat.Application
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)
         {   
             var bo = _cQrCodeRepository.getBorrow(InvalidateQrCode.QrCode)?? throw new ArgumentException("No Borrow with that qrCode");
-            bo.ItemInstance = _itemRepository.getItemInstance(InvalidateQrCode.ItemInstanceId) ?? throw new ArgumentException("ItemInstance ist nicht gefunden worden");
             bo.CollectDate = now;
             _saveRepository.SaveDb();
         } 
@@ -74,12 +73,20 @@ namespace ZID.Automat.Application
         {
             return _activeBorrowsRepository.getActiveBorrowsCount();
         }
+
+        public ControllerItemLocationDto ItemLocation(int itemId)
+        {
+            var item = _itemRepository.getItem(itemId);
+            return new ControllerItemLocationDto() { ItemId = itemId, location = item.LocationImAutomat };
+        }
     }
 
     public interface IQrCodeCService
     {
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode);
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode, DateTime now);
+
+        public ControllerItemLocationDto ItemLocation(int itemId);
     }
         
     public interface IQrCodeUService
