@@ -11,6 +11,7 @@ using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
 using ZID.Automat.Repository;
 using ZID.Automat.Configuration.Model;
+using ZID.Automat.Extension;
 using System.Configuration;
 using ZID.Automat.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
@@ -54,21 +55,8 @@ builder.Services.AddSwaggerGen();
 #endregion
 
 #region Configure Database
-builder.Services.AddDbContext<AutomatContext>(options =>
-{
-    if (UseDb == "MySQL")
-    {
-        options.UseMySQL(DbConnString);
-    }
-    else if (UseDb == "SQLite")
-    {
-        options.UseSqlite(DbConnString);
-    }
-    else
-    {
-        throw new Exception("No Database selected");
-    }
-});
+builder.Services.ConfigureDB(DbConnString, UseDb);
+
 #endregion
 
 #region StringEnums
