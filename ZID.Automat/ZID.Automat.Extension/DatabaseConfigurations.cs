@@ -24,7 +24,6 @@ namespace ZID.Automat.Extension
                     {
                         throw new Exception("No Database selected");
                     }
-                    options.UseSqlite(connectionString);
                 }
             });
         }
