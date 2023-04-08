@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using ZID.Automat.Infrastructure;
 
 namespace ZID.Automat.Extension
@@ -10,6 +11,7 @@ namespace ZID.Automat.Extension
         {
             services.AddDbContext<AutomatContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 if (!options.IsConfigured)
                 {
                     if (useDb == "MySQL")

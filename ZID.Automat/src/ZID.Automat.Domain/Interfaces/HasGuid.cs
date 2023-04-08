@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZID.Automat.Dto.Models
+namespace ZID.Automat.Domain.Interfaces
 {
-    public record InvalidateQrCodeDto
+    public interface HasGuid
     {
-        public Guid QrCode { get; set; } = Guid.Empty;
+        public Guid GUID { get; set; }
     }
 }

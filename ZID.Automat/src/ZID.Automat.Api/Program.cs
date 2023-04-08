@@ -103,13 +103,8 @@ builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
 #endregion
 
 #region Repositories
-builder.Services.AddScoped<IUserRepository,UserRepository>();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
-
-builder.Services.AddScoped<IActiveBorrowsRepository, BorrowRepository>();
-builder.Services.AddScoped<IAlllBorrowsRepository, BorrowRepository>();
-builder.Services.AddScoped<IControllerQrCodeRepository, BorrowRepository>();
+builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
+builder.Services.AddScoped<IRepositoryWrite, GenericRepository>();
 
 #endregion
 

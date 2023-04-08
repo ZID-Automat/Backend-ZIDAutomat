@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using ZID.Automat.Repository;
 using ZID.Automat.Configuration;
+using ZID.Automat.Extension;
 
 namespace ZID.Automat.Application
 {
@@ -17,80 +18,69 @@ namespace ZID.Automat.Application
         private readonly JWTCo _jwtCo;
         private readonly TestUserCo _testUserCo;
         private readonly AutomatCo _automatCo;
+        private readonly IRepositoryRead _readRepo;
+        private readonly IRepositoryWrite _writeRepo;
 
 
-        private readonly IUserRepository _userRepository;
 
-        public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, IUserRepository userRepository, AutomatCo automatCo)
+        public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, AutomatCo automatCo, IRepositoryRead readRepo, IRepositoryWrite writeRepo)
         {
             _jwtCo = jwtCo;
             _testUserCo = testUserCo;
-            _userRepository = userRepository;
             _automatCo = automatCo;
+            _readRepo = readRepo;
+            _writeRepo = writeRepo;
         }
 
         public string AuthUser(UserLoginDto UserLogin)
         {
-            try
+            ADUser user = default!;
+            if (!(_testUserCo.UseDebug && UserLogin.Username == _testUserCo.TestUserName && UserLogin.Password == _testUserCo.TestUserPassword))
             {
-                ADUser user = default!;
-                if (!(_testUserCo.UseDebug && UserLogin.Username == _testUserCo.TestUserName && UserLogin.Password == _testUserCo.TestUserPassword))
-                {
-                    ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
-                    user = ADServicesVar.CurrentUser;
-                }
-                else
-                {
-                    user = new ADUser("VornameTestUser", "NachnameTestUser", "TestUser@Spengergasse.at", _testUserCo.TestUserName, "Test", new string[] { "TestKlasse" });
-                }
-
-                if (!_userRepository.UserExists(UserLogin.Username))
-                {
-                    _userRepository.AddUser(new User() { Username = UserLogin.Username, Joined = DateTime.Now });
-                }
-
-                JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
-                byte[] tokenKey = Encoding.ASCII.GetBytes(_jwtCo.JWTSecret);
-                DateTime ExpireTime = DateTime.Now.AddHours(_jwtCo.JWTExpireTime);
-                SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[] {
-                        new Claim("Name", user.Cn),
-                        new Claim("PupilId", user.PupilId??""),
-                        new Claim(ClaimTypes.Role, "User"),
-
-                }),
-                    Expires = ExpireTime,
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(tokenKey),
-                        SecurityAlgorithms.HmacSha256Signature
-                        )
-                };
-                SecurityToken token = Handler.CreateToken(tokenDescriptor);
-                return Handler.WriteToken(token);
+                ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
+                user = ADServicesVar.CurrentUser;
             }
-            catch (ApplicationException)
+            else
             {
-                return null!;
+                user = new ADUser("VornameTestUser", "NachnameTestUser", "TestUser@Spengergasse.at", _testUserCo.TestUserName, "Test", new string[] { "TestKlasse" });
             }
+
+            var userDb = _readRepo.FindAllByName<User>(UserLogin.Username);
+            if (userDb == null)
+            {
+                _writeRepo.Add(new User() { Name = UserLogin.Username, Joined = DateTime.Now });
+            }
+
+
+            return GenJWT(
+                new ClaimsIdentity(new Claim[]
+                    {
+                            new Claim("Name", user.Cn),
+                            new Claim("PupilId", user.PupilId ?? ""),
+                            new Claim(ClaimTypes.Role, "User")
+                    }))??throw new PasswordWrongException();
         }
 
         public string AuthController(ControllerLoginDto ControllerLoginDto)
         {
             if (ControllerLoginDto.ControllerPassword != _automatCo.Password)
             {
-                throw new ArgumentException("Automat Password is not valid");
+                throw new PasswordWrongException();
             }
 
+            return GenJWT(new ClaimsIdentity(new Claim[] {
+                        new Claim(ClaimTypes.Role, "Controller"),
+                }));
+        }
+
+        private string GenJWT(ClaimsIdentity claimsIdentity)
+        {
             JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
             byte[] tokenKey = Encoding.ASCII.GetBytes(_jwtCo.JWTSecret);
             DateTime ExpireTime = DateTime.Now.AddHours(_jwtCo.JWTExpireTime);
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                        new Claim(ClaimTypes.Role, "Controller"),
-
-                }),
+                Subject = claimsIdentity,
                 Expires = ExpireTime,
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(tokenKey),
@@ -101,7 +91,6 @@ namespace ZID.Automat.Application
             return Handler.WriteToken(token);
         }
     }
-
     public interface IUserAuthService
     {
         public string AuthUser(UserLoginDto userLoginDto);
@@ -111,5 +100,6 @@ namespace ZID.Automat.Application
     {
         public string AuthController(ControllerLoginDto ControllerLoginDto);
     }
-
 }
+
+  

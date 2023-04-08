@@ -3,89 +3,54 @@ using ZID.Automat.Dto;
 using ZID.Automat.Repository;
 using System.Linq;
 using ZID.Automat.Dto.Models;
+using AutoMapper;
+using ZID.Automat.Extension;
 
 namespace ZID.Automat.Application
 {
     public class ItemService: IItemService
     {
-        private readonly IItemRepository _itemRepository;
-        private readonly IUserRepository _userRepository;
-        public ItemService(IItemRepository itemRepository,IUserRepository userRepository)
+        private readonly IRepositoryRead _repositoryRead;
+        private readonly IRepositoryWrite _repositoryWrite;
+        private readonly IMapper _mapper;
+
+        public ItemService(IRepositoryRead repositoryRead, IRepositoryWrite repositoryWrite, IMapper mapper)
         {
-            _itemRepository = itemRepository;
-            _userRepository = userRepository;
-        }
-                
-        public IReadOnlyList<ItemDisplayDto> AllDisplayItems()
-        {
-            IReadOnlyList<Item> Items = _itemRepository.getItemWithItemInstance();
-            List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
-            {
-                Available = _itemRepository.isItemAvalable(item.Id, DateTime.Now),
-                Name = item.Name,
-                Image = item.Image,
-                SubName = item.SubName,
-                Id = item.Id
-            }).ToList();   
-            return itemDisplays;
+            _repositoryRead = repositoryRead;
+            _repositoryWrite = repositoryWrite;
+            _mapper = mapper;
         }
 
-        public IReadOnlyList<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
+        public IEnumerable<ItemDisplayDto> AllDisplayItems()
         {
-            var User = _userRepository.FindUser(UserName) ?? throw new ArgumentNullException("No User with this UserName");
-            IReadOnlyList<Item> Items = _itemRepository.getPrevBorrowedItemsOfUser(User.Id);
-            
-            List<ItemDisplayDto> itemDisplays = Items.Select(item => new ItemDisplayDto()
-            {
-                Available = _itemRepository.isItemAvalable(item.Id,DateTime.Now),
-                Name = item?.Name ?? string.Empty,
-                Image = item?.Image??string.Empty,
-                SubName = item?.SubName??string.Empty,
-                Id = item?.Id??-1
-            }).ToList();
-            return itemDisplays;
+            IEnumerable<Item> Items = _repositoryRead.GetAll<Item>();
+            return _mapper.Map<IEnumerable<Item>, IEnumerable<ItemDisplayDto>>(Items);
+        }
+
+        public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
+        {
+            IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
+            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b.Item);
+            return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
         public ItemDetailedDto DetailedItem(int ItemId)
         {
-            var item = _itemRepository.getItem(ItemId);
-
-            return new ItemDetailedDto()
-            {
-                Available = _itemRepository.isItemAvalable(ItemId,DateTime.Now),
-                Name = item.Name??"Name",
-                Description = item.Description,
-                Image = item.Image,
-                SubName = item.SubName,
-                Categorie = item.Categorie?.Name??"Kabel",
-                Price = item.Price,
-                Id = item.Id
-            };
+            var item = _repositoryRead.FindById<Item>(ItemId);
+            return _mapper.Map<ItemDetailedDto>(item);
         }
-        public ItemDetailedDto DetailedItem(string QrCode)
+        public ItemDetailedDto DetailedItem(Guid QrCode)
         {
-            int id = _itemRepository.loadItemFromQrCode(QrCode)?? throw new ArgumentException("Item not found");
-            var item = _itemRepository.getItem(id);
-            return new ItemDetailedDto()
-            {
-                Available = _itemRepository.isItemAvalable(id, DateTime.Now),
-                Name = item.Name ?? "Name",
-                Description = item.Description,
-                Image = item.Image,
-                SubName = item.SubName,
-                Categorie = item.Categorie?.Name ?? "Kabel",
-                Price = item.Price,
-                Id = item.Id
-            };
+            var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException()).Item;
+            return _mapper.Map<ItemDetailedDto>(item);
         }
     }
 
     public interface IItemService
     {
-        public IReadOnlyList<ItemDisplayDto> AllDisplayItems();
-        public IReadOnlyList<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
+        public IEnumerable<ItemDisplayDto> AllDisplayItems();
+        public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
         public ItemDetailedDto DetailedItem(int ItemId);
-
-        public ItemDetailedDto DetailedItem(string QrCode);
+        public ItemDetailedDto DetailedItem(Guid QrCode);
     }
 }

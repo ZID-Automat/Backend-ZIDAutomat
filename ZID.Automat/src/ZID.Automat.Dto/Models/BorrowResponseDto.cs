@@ -8,6 +8,6 @@ namespace ZID.Automat.Dto.Models
 {
     public record QrCodeDto
     {
-        public string QRCode { get; set; } = string.Empty;
+        public Guid QRCode { get; set; } = Guid.Empty;
     }
 }
