@@ -63,7 +63,7 @@ namespace ZID.Automat.AutoMapper.Test
                     new ItemInstance()
                         {
                             Id = 0,
-                            borrow = null
+                            borrow = new Borrow()
                         }
                     })
             };
@@ -121,7 +121,7 @@ namespace ZID.Automat.AutoMapper.Test
         }
 
         [Fact]
-        public void ItemToItemDetaieldDto_ShouldMapCorrectly_NotAvalable()
+        public void ItemToItemDetaieldDto_ShouldMapCorrectly_NotAvalable() 
         {
             // Arrange
             var item = new Item()
@@ -140,7 +140,7 @@ namespace ZID.Automat.AutoMapper.Test
                     new ItemInstance()
                         {
                             Id = 0,
-                            borrow = null
+                            borrow = new Borrow()
                         }
                     })
             };
@@ -157,6 +157,6 @@ namespace ZID.Automat.AutoMapper.Test
             Assert.Equal(ItemDto.Categorie, item.Categorie.Name);
             Assert.Equal(ItemDto.Description, item.Description);
             Assert.False(ItemDto.Available);
-        }
+        } 
     }
 }

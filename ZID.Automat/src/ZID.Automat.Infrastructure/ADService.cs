@@ -25,7 +25,7 @@ namespace ZID.Automat.Infrastructure
         /// <summary>
         /// Liefert eine aktive Serverbindung mit den Rechten des angemeldeten Benutzers.
         /// </summary>
-        protected static LdapConnection GetConnection(string cn, string password)
+        protected static LdapConnection? GetConnection(string cn, string password)
         {
             var connection = new LdapConnection
             {
@@ -35,9 +35,9 @@ namespace ZID.Automat.Infrastructure
             try
             {
                 try { connection.Connect(Hostname, 636); }
-                catch { throw new ApplicationException($"Der Anmeldeserver ist nicht erreichbar."); }
+                catch { return null; }
                 try { connection.Bind($"{cn}@{Domain}", password); }
-                catch { throw new ApplicationException($"Ungültiger Benutzername oder Passwort."); }
+                catch { return null; }
 
                 return connection;
             }
@@ -47,18 +47,21 @@ namespace ZID.Automat.Infrastructure
         /// <summary>
         /// Führt ein Login am Active Directory durch.
         /// </summary>
-        public static ADService Login(string cn, string password, string? currentUserCn = null)
+        public static ADService? Login(string cn, string password, string? currentUserCn = null)
         {
             var connection = GetConnection(cn, password);
+            if(connection == null)
+            {
+                return null;
+            }
             var result = connection.Search(
                         BaseDn,
                         LdapConnection.SCOPE_SUB,
                         $"(&(objectClass=user)(objectClass=person)(cn={currentUserCn ?? cn}))",
                         new string[] { "cn", "givenName", "sn", "mail", "employeeid", "memberof", "description" },
                         false);
-            LdapEntry loginUser = result.FirstOrDefault() ?? throw new ApplicationException("Der Benutzer wurde nicht gefunden.");
-            var user = new ADUser(loginUser);
-            return new ADService(user, connection);
+            LdapEntry? loginUser = result.FirstOrDefault();
+            return (loginUser == null)?null:new ADService(new ADUser(loginUser), connection);
         }
 
         private ADService(ADUser currentUser, LdapConnection connection)

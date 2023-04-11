@@ -21,7 +21,6 @@ namespace ZID.Automat.Application
         private readonly IRepositoryWrite _writeRepo;
 
 
-
         public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, AutomatCo automatCo, IRepositoryRead readRepo, IRepositoryWrite writeRepo)
         {
             _jwtCo = jwtCo;
@@ -36,7 +35,7 @@ namespace ZID.Automat.Application
             ADUser user = default!;
             if (!(_testUserCo.UseDebug && UserLogin.Username == _testUserCo.TestUserName && UserLogin.Password == _testUserCo.TestUserPassword))
             {
-                ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password);
+                ADService ADServicesVar = ADService.Login(UserLogin.Username, UserLogin.Password)??throw new PasswordWrongException();
                 user = ADServicesVar.CurrentUser;
             }
             else
@@ -44,7 +43,7 @@ namespace ZID.Automat.Application
                 user = new ADUser("VornameTestUser", "NachnameTestUser", "TestUser@Spengergasse.at", _testUserCo.TestUserName, "Test", new string[] { "TestKlasse" });
             }
 
-            var userDb = _readRepo.FindAllByName<User>(UserLogin.Username);
+            var userDb = _readRepo.FindByName<User>(UserLogin.Username);
             if (userDb == null)
             {
                 _writeRepo.Add(new User() { Name = UserLogin.Username, Joined = DateTime.Now });
