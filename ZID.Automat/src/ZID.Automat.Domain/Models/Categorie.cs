@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace ZID.Automat.Domain.Models
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
-        private List<Item> _Items { get; set; } = new List<Item>();
-        public IReadOnlyList<Item> Items => _Items;
+        public virtual List<Item> Items { get; set; } = new List<Item>();
     }
 }

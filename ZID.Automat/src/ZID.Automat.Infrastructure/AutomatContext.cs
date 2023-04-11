@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using ZID.Automat.Domain.Models;
+using System.Reflection.Metadata;
 
 namespace ZID.Automat.Infrastructure
 {

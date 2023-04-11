@@ -18,14 +18,10 @@ namespace ZID.Automat.Domain.Models
         public Guid GUID { get; set; } =Guid.Empty;
 
         public int? ItemInstanceId { get; set; }
-        public ItemInstance? ItemInstance { get; set; } = null!;
-
-        public int ItemId { get; set; }
-        public Item Item { get; set; } = null!;
-
+        public virtual ItemInstance? ItemInstance { get; set; } = null!;
 
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZID.Automat.Configuration;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
-using ZID.Automat.Extension;
+using ZID.Automat.Exceptions;
 using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
@@ -32,18 +32,24 @@ namespace ZID.Automat.Application
         {
             var item = _repositoryRead.FindById<Item>(BData.ItemId) ?? throw new NotFoundException("Item");
             var ItemInstances = item.ItemInstances;
-            var Count = ItemInstances.Count(I => I._borrows is null);
+            var Count = ItemInstances.Count(I => I.borrow is null);
 
             if (Count == 0)
             {
                 throw new NoItemAvailable();
             }
 
-            var user = _repositoryRead.FindByName<User>(UserName);
+            var user = _repositoryRead.FindByName<User>(UserName)??throw new NoUserFoundException();
             var GUID = Guid.NewGuid();
 
-            var borrow = _mapper.Map<Borrow>(BData);
-            // TODO: hier richtig mappen
+            var borrow = new Borrow()
+            {
+                GUID = GUID,
+                PredictedReturnDate = BData.DueTime,
+                BorrowDate = DateTime.Now,
+                User = user,
+                ReturnDate = null
+            };
 
             _repositoryWrite.Add(borrow);
             return GUID;

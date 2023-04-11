@@ -7,7 +7,6 @@ using ZID.Automat.Infrastructure;
 using ZID.Automat.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using ZID.Automat.Dto.Models;
-using ZID.Automat.Configuration.Model;
 using ZID.Automat.Application;
 
 namespace ZID.Automat.Api.Controllers

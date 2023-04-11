@@ -13,17 +13,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Infrastructure"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Repository", "src\ZID.Automat.Repository\ZID.Automat.Repository.csproj", "{8D215872-349E-46AC-B523-373599EC2A46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Domain.Test", "src\ZID.Automat.Domain.Test\ZID.Automat.Domain.Test.csproj", "{9D86B73A-1C88-4A15-B97A-63447299E99D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Application.Test", "src\ZID.Automat.Application.Test\ZID.Automat.Application.Test.csproj", "{89A836B9-B08A-4A15-BDE0-00A20822E28B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Dto", "src\ZID.Automat.Dto\ZID.Automat.Dto.csproj", "{2F2B2832-AB6C-4101-83ED-81EF09E42F50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Configuration", "src\ZID.Automat.Configuration\ZID.Automat.Configuration.csproj", "{C4C98B28-39E1-43C5-904F-2ADED4633B3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Repository.Test", "src\ZID.Automat.Repository.Test\ZID.Automat.Repository.Test.csproj", "{7864A8F2-DB75-4613-B9AB-A3FF3C840134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.DatabaseExtension", "src\ZID.Automat.Extension\ZID.Automat.DatabaseExtension.csproj", "{1695963E-D0BD-4DE8-B791-4A525ACDF116}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZID.Automat.Extension", "ZID.Automat.Extension\ZID.Automat.Extension.csproj", "{1695963E-D0BD-4DE8-B791-4A525ACDF116}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.AutoMapper", "src\ZID.Automat.AutoMapper\ZID.Automat.AutoMapper.csproj", "{C8B30AEF-2BE1-4B7B-ABA0-49970F37317E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.Exceptions", "src\ZID.Automat.Exceptions\ZID.Automat.Exceptions.csproj", "{516AC696-4C10-4C2A-8167-EB625F89050A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZID.Automat.AutoMapper.Test", "test\ZID.Automat.AutoMapper.Test\ZID.Automat.AutoMapper.Test.csproj", "{55EFFD8B-1F5F-47C7-A80E-FD97C777D0B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZID.Automat.Application.Test", "test\ZID.Automat.Application.Test\ZID.Automat.Application.Test.csproj", "{BD047939-A255-4E8E-8544-4B482B74CE47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,14 +53,6 @@ Global
 		{8D215872-349E-46AC-B523-373599EC2A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D215872-349E-46AC-B523-373599EC2A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D215872-349E-46AC-B523-373599EC2A46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D86B73A-1C88-4A15-B97A-63447299E99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D86B73A-1C88-4A15-B97A-63447299E99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D86B73A-1C88-4A15-B97A-63447299E99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D86B73A-1C88-4A15-B97A-63447299E99D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89A836B9-B08A-4A15-BDE0-00A20822E28B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89A836B9-B08A-4A15-BDE0-00A20822E28B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89A836B9-B08A-4A15-BDE0-00A20822E28B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89A836B9-B08A-4A15-BDE0-00A20822E28B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F2B2832-AB6C-4101-83ED-81EF09E42F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -67,14 +61,26 @@ Global
 		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C98B28-39E1-43C5-904F-2ADED4633B3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7864A8F2-DB75-4613-B9AB-A3FF3C840134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7864A8F2-DB75-4613-B9AB-A3FF3C840134}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7864A8F2-DB75-4613-B9AB-A3FF3C840134}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7864A8F2-DB75-4613-B9AB-A3FF3C840134}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1695963E-D0BD-4DE8-B791-4A525ACDF116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1695963E-D0BD-4DE8-B791-4A525ACDF116}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1695963E-D0BD-4DE8-B791-4A525ACDF116}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1695963E-D0BD-4DE8-B791-4A525ACDF116}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8B30AEF-2BE1-4B7B-ABA0-49970F37317E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8B30AEF-2BE1-4B7B-ABA0-49970F37317E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8B30AEF-2BE1-4B7B-ABA0-49970F37317E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8B30AEF-2BE1-4B7B-ABA0-49970F37317E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516AC696-4C10-4C2A-8167-EB625F89050A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516AC696-4C10-4C2A-8167-EB625F89050A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516AC696-4C10-4C2A-8167-EB625F89050A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516AC696-4C10-4C2A-8167-EB625F89050A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EFFD8B-1F5F-47C7-A80E-FD97C777D0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EFFD8B-1F5F-47C7-A80E-FD97C777D0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EFFD8B-1F5F-47C7-A80E-FD97C777D0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EFFD8B-1F5F-47C7-A80E-FD97C777D0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD047939-A255-4E8E-8544-4B482B74CE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD047939-A255-4E8E-8544-4B482B74CE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD047939-A255-4E8E-8544-4B482B74CE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD047939-A255-4E8E-8544-4B482B74CE47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

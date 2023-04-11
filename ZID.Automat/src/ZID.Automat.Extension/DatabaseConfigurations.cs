@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using ZID.Automat.Infrastructure;
 
-namespace ZID.Automat.Extension
+namespace ZID.Automat.DatabaseExtension
 {
     public static class DatabaseConfigurations
     {
@@ -11,7 +11,6 @@ namespace ZID.Automat.Extension
         {
             services.AddDbContext<AutomatContext>(options =>
             {
-                options.UseLazyLoadingProxies();
                 if (!options.IsConfigured)
                 {
                     if (useDb == "MySQL")
@@ -26,6 +25,7 @@ namespace ZID.Automat.Extension
                     {
                         throw new Exception("No Database selected");
                     }
+                    options.UseLazyLoadingProxies();
                 }
             });
         }

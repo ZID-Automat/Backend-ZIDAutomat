@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace ZID.Automat.Domain.Models
         public string Name { get; set; } = string.Empty;
         public DateTime Joined { get; set  ; }
 
-        private List<Borrow> _Borrow { get; set; } = new List<Borrow>();
-        public IReadOnlyList<Borrow> Borrow => _Borrow;
+        public virtual List<Borrow> Borrow { get; set; } = new List<Borrow>();
     }
 }

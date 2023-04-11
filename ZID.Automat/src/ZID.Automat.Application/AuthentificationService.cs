@@ -3,12 +3,11 @@ using System.Text;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Infrastructure;
 using ZID.Automat.Dto.Models;
-using ZID.Automat.Configuration.Model;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using ZID.Automat.Repository;
 using ZID.Automat.Configuration;
-using ZID.Automat.Extension;
+using ZID.Automat.Exceptions;
 
 namespace ZID.Automat.Application
 {

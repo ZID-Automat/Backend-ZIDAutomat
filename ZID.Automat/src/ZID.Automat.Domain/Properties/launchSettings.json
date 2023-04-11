@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ZID.Automat.Domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51747;http://localhost:51748"
+    }
+  }
+}

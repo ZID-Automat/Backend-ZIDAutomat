@@ -6,15 +6,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
-using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
 using ZID.Automat.Repository;
-using ZID.Automat.Configuration.Model;
-using ZID.Automat.Extension;
-using System.Configuration;
 using ZID.Automat.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
+using ZID.Automat.DatabaseExtension;
+using ZID.Automat.AutoMapper;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,6 +97,13 @@ builder.Services.AddSingleton(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSe
 builder.Services.AddSingleton(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
 builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
+#endregion
+
+#region
+builder.Services.AddAutoMapper(c => {
+    c.AddProfile<BorrowProfile>();
+    c.AddProfile<ItemProfile>();
+});
 #endregion
 
 #region Repositories

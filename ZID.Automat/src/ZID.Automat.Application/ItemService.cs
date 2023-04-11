@@ -4,7 +4,7 @@ using ZID.Automat.Repository;
 using System.Linq;
 using ZID.Automat.Dto.Models;
 using AutoMapper;
-using ZID.Automat.Extension;
+using ZID.Automat.Exceptions;
 
 namespace ZID.Automat.Application
 {
@@ -30,7 +30,7 @@ namespace ZID.Automat.Application
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {
             IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
-            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b.Item);
+            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance.Item);
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
@@ -41,7 +41,7 @@ namespace ZID.Automat.Application
         }
         public ItemDetailedDto DetailedItem(Guid QrCode)
         {
-            var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException()).Item;
+            var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException()).ItemInstance.Item;
             return _mapper.Map<ItemDetailedDto>(item);
         }
     }

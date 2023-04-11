@@ -1,6 +1,6 @@
 ﻿//using System.Web.Http;
 
-namespace ZID.Automat.Extension
+namespace ZID.Automat.Exceptions
 {
     public class NotFoundException : Exception 
     {

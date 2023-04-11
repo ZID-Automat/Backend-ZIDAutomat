@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
-using ZID.Automat.Extension;
+using ZID.Automat.Exceptions;
 using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
@@ -28,7 +28,7 @@ namespace ZID.Automat.Application
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
         {
             var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == qrCode.QRCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
-            return new ValidQrCodeDto() { valid = borrow.ReturnDate == null, ItemId = borrow?.Item.Id??0 };
+            return new ValidQrCodeDto() { valid = borrow.ReturnDate == null, ItemId = borrow?.ItemInstance.Item.Id??0 };
         }
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)

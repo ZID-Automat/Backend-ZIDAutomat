@@ -12,8 +12,8 @@ namespace ZID.Automat.Domain.Models
         public DateTime FirstAdded { get; set; }
 
         public int ItemId { get; set; }
-        public Item Item { get; set; } = null!;
+        public virtual Item Item { get; set; } = null!;
 
-        public Borrow? _borrows { get; set; } = default;
+        public virtual Borrow? borrow { get; set; } = default;
     }
 }
