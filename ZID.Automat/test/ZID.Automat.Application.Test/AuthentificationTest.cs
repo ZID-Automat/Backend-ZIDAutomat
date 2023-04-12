@@ -226,9 +226,6 @@ namespace ZID.Automat.Application.Test
 
             //act + assert
             Assert.Throws<PasswordWrongException>(()=> auth.AuthController(new ControllerLoginDto() { ControllerPassword = "LALALA" }));
-
-
-
         }
     }
 }
