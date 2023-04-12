@@ -34,16 +34,12 @@ namespace ZID.Automat.Application
 
             var borrows = SeedBorrows(BORROWS, users, itemInstances);
 
-            var admonitionTypes = SeedAdmonitionTypes(ADMONTYPE);
-            var admonition = SeedAdmonitions(ADMON,admonitionTypes, borrows);
 
             Context.Categories.AddRange(cats);
             Context.Items.AddRange(items);
             Context.ItemInstances.AddRange(itemInstances);
             Context.Users.AddRange(users);
             Context.Borrows.AddRange(borrows);
-            Context.AdmonitionTypes.AddRange(admonitionTypes);
-            Context.Admonitions.AddRange(admonition);
 
             Context.SaveChanges();
             
@@ -83,17 +79,9 @@ namespace ZID.Automat.Application
         private List<User> SeedUsers(int count)
         {
             return new Faker<User>()
-                    .RuleFor(u => u.Username, f => f.Internet.UserName())
+                    .RuleFor(u => u.Name, f => f.Internet.UserName())
                     .RuleFor(u => u.Joined, f => f.Date.Past())
                     .Generate(count);
-        }
-
-        private List<AdmonitionType> SeedAdmonitionTypes(int count)
-        {
-            return new Faker<AdmonitionType>()
-                .RuleFor(a => a.Name, f => f.Commerce.Categories(1).First())
-                .RuleFor(a => a.Description, f => f.Lorem.Sentence(10))
-                .Generate(count);
         }
 
         private List<Borrow> SeedBorrows(int count, List<User> users, List<ItemInstance> itemInstances)
@@ -103,17 +91,6 @@ namespace ZID.Automat.Application
                 .RuleFor(b => b.ItemInstance, f => f.PickRandom(itemInstances))
                 .RuleFor(b => b.BorrowDate, f => f.Date.Past())
                 .RuleFor(b => b.ReturnDate, f => f.Date.Future())
-                .Generate(count);
-        }
-
-        private List<Admonition> SeedAdmonitions(int count, List<AdmonitionType> admonitionTypes, List<Borrow> borrows)
-        {
-            if (borrows.Count == 0) return new List<Admonition>();
-            return new Faker<Admonition>()
-                .RuleFor(a => a.AdmonitionType, f => f.PickRandom(admonitionTypes))
-                .RuleFor(a => a.Comment, f => f.Lorem.Sentence(10))
-                .RuleFor(a => a.Borrow, f => f.PickRandom(borrows))
-                .RuleFor(a => a.AdmonitionDate, f => f.Date.Past())
                 .Generate(count);
         }
     }

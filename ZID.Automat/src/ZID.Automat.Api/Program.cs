@@ -6,15 +6,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
-using ZID.Automat.Infrastructure;
 using ZID.Automat.Application;
 using ZID.Automat.Repository;
-using ZID.Automat.Configuration.Model;
-using ZID.Automat.Extension;
-using System.Configuration;
 using ZID.Automat.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
+using ZID.Automat.DatabaseExtension;
+using ZID.Automat.AutoMapper;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -102,14 +99,16 @@ builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
 #endregion
 
-#region Repositories
-builder.Services.AddScoped<IUserRepository,UserRepository>();
-builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddScoped<ISaveDBRepository, SaveRepository>();
+#region
+builder.Services.AddAutoMapper(c => {
+    c.AddProfile<BorrowProfile>();
+    c.AddProfile<ItemProfile>();
+});
+#endregion
 
-builder.Services.AddScoped<IActiveBorrowsRepository, BorrowRepository>();
-builder.Services.AddScoped<IAlllBorrowsRepository, BorrowRepository>();
-builder.Services.AddScoped<IControllerQrCodeRepository, BorrowRepository>();
+#region Repositories
+builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
+builder.Services.AddScoped<IRepositoryWrite, GenericRepository>();
 
 #endregion
 

@@ -19,13 +19,13 @@ namespace ZID.Automat.Api.Controllers.User
         }
 
         [HttpGet("getAllItems")]
-        public IReadOnlyList<ItemDisplayDto> getAllItems()
+        public IEnumerable<ItemDisplayDto> getAllItems()
         {
             return _itemService.AllDisplayItems();
         }
 
         [HttpGet("getPrevBorrowed")]
-        public IReadOnlyList<ItemDisplayDto> getPrevBorrowed()
+        public IEnumerable<ItemDisplayDto> getPrevBorrowed()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             IEnumerable<Claim> claims = identity.Claims;

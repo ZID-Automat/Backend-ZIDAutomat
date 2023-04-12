@@ -24,7 +24,7 @@ namespace ZID.Automat.Api.Controllers.User
         public QrCodeDto Borrow(BorrowDataDto borrowData)
         {
             var username = User.Claims.First(c => c.Type == "Name");    
-            string qrCode = _borrowService.Borrow(borrowData, username.Value, DateTime.Now);
+            Guid qrCode = _borrowService.Borrow(borrowData, username.Value, DateTime.Now);
             return new QrCodeDto() { QRCode = qrCode };
         }
     }

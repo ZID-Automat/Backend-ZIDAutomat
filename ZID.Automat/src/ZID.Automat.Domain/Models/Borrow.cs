@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZID.Automat.Domain.Interfaces;
 
 namespace ZID.Automat.Domain.Models
 {
-    public class Borrow
+    public class Borrow : HasGuid
     {
         public int Id { get; set; }
         public DateTime BorrowDate { get; set; }
@@ -14,36 +15,13 @@ namespace ZID.Automat.Domain.Models
         public DateTime? ReturnDate { get; set; }
         public DateTime? CollectDate { get; set; }
 
-        public string UUID { get; set; } = string.Empty;
+        public Guid GUID { get; set; } =Guid.Empty;
 
         public int? ItemInstanceId { get; set; }
-        public ItemInstance? ItemInstance { get; set; } = null!;
-
-        public int ItemId { get; set; }
-        public Item Item { get; set; } = null!;
-
+        public virtual ItemInstance? ItemInstance { get; set; } = null!;
 
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
         
-        public int AdmonitionId { get; set; }
-       
-        private List<Admonition> _Admonition { get; set; } = new List<Admonition>();
-        public IReadOnlyList<Admonition> Admonition => _Admonition;
-
-        public void AddAdmonition(Admonition admonition)
-        {
-            if (admonition == null)
-                throw new ArgumentNullException("Can't add new Admonition, because it is null");
-
-            if (admonition.AdmonitionDate < BorrowDate)
-                throw new ArgumentException("Can't add new Admonition, because it is older than BorrowDate");
-
-            if(admonition.AdmonitionType == null)
-            {
-                throw new ArgumentException("Can't add new Admonition, because AdmonitionType is null");
-            }
-            _Admonition.Add(admonition);
-        }
     }
 }

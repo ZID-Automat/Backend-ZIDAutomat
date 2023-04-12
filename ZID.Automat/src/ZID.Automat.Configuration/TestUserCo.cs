@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZID.Automat.Configuration.Model
+namespace ZID.Automat.Configuration
 {
     public record TestUserCo
     {
