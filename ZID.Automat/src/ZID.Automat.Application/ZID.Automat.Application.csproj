@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ZID.Automat.AutoMapper\ZID.Automat.AutoMapper.csproj" />
     <ProjectReference Include="..\ZID.Automat.Configuration\ZID.Automat.Configuration.csproj" />
-    <ProjectReference Include="..\ZID.Automat.Dto\ZID.Automat.Dto.csproj" />
     <ProjectReference Include="..\ZID.Automat.Exceptions\ZID.Automat.Exceptions.csproj" />
     <ProjectReference Include="..\ZID.Automat.Repository\ZID.Automat.Repository.csproj" />
   </ItemGroup>
