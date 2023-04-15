@@ -15,5 +15,6 @@ namespace ZID.Automat.Dto.Models
         public DateTime? ReturnDate { get; set;}
         public DateTime? CollectDate { get; set; }
         public string ItemName { get; set; } = string.Empty;
+        public Guid GUID { get; set; } = Guid.Empty;
     }
 }

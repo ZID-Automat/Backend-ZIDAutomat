@@ -62,7 +62,7 @@ namespace ZID.Automat.Application
 
         public string AuthController(ControllerLoginDto ControllerLoginDto)
         {
-            if (ControllerLoginDto.ControllerPassword != _automatCo.Password)
+            if (ControllerLoginDto.ControllerPassword != _automatCo.Password)   
             {
                 throw new PasswordWrongException();
             }
