@@ -12,6 +12,7 @@ using ZID.Automat.Configuration;
 using Microsoft.AspNetCore.Diagnostics;
 using ZID.Automat.DatabaseExtension;
 using ZID.Automat.AutoMapper;
+using ZID.Automat.Api.ExceptionFilters;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,7 +47,10 @@ int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
 #endregion
 
 #region ASPIntern
-builder.Services.AddControllers();
+builder.Services.AddControllers((register) =>
+{
+    register.Filters.Add<ExceptionFilter>();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 #endregion
@@ -106,6 +110,7 @@ builder.Services.AddAutoMapper(c => {
 });
 #endregion
 
+
 #region Repositories
 builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
 builder.Services.AddScoped<IRepositoryWrite, GenericRepository>();
@@ -124,6 +129,7 @@ builder.Services.AddScoped<IBorrowService, BorrowService>();
 builder.Services.AddScoped<IQrCodeCService, QrCodeService>();
 builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
 #endregion
+
 
 var app = builder.Build();
 

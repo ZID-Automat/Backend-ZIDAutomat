@@ -158,7 +158,7 @@ namespace ZID.Automat.Application.Test
 
             //act
             Guid guid = Guid.Empty;
-            Assert.ThrowsAny<NoUserFoundException>(() =>
+            Assert.ThrowsAny<NotFoundException>(() =>
             {
                 guid = borrow.Borrow(dto, Username, now);
             });
@@ -170,8 +170,5 @@ namespace ZID.Automat.Application.Test
 
             writemock.Verify(w => w.Add(It.IsAny<Borrow>()), Times.Never);
         }
-
-
-
     }
 }

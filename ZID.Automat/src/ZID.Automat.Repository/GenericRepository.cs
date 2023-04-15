@@ -25,7 +25,7 @@ namespace ZID.Automat.Repository
 
         public IEnumerable<T> GetAll<T>() where T : class
         {
-            return _context.Set<T>().ToList();
+            return _context.Set<T>();
         }
 
         public T? FindByGuid<T>(Guid guid) where T : class, HasGuid
@@ -35,7 +35,7 @@ namespace ZID.Automat.Repository
 
         public IEnumerable<T> FindAllByGuid<T>(Guid guid) where T : class, HasGuid
         {
-            return _context.Set<T>().Where(t => t.GUID == guid).ToList();
+            return _context.Set<T>().Where(t => t.GUID == guid);
         }
 
         public void Add<T>(T entity) where T : class

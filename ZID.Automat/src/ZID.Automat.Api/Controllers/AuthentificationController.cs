@@ -37,6 +37,7 @@ namespace ZID.Automat.Api.Controllers
         public string? ControllerPost([FromBody] ControllerLoginDto ControllerLogin)
         {
             return _controllerAuthService.AuthController(ControllerLogin);
+
         }
     }
 }

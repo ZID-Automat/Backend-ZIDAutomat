@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using ZID.Automat.Repository;
 using ZID.Automat.Configuration;
 using ZID.Automat.Exceptions;
+using System.Net;
 
 namespace ZID.Automat.Application
 {

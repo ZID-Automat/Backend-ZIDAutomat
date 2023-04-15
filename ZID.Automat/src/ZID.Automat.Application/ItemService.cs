@@ -28,9 +28,9 @@ namespace ZID.Automat.Application
         }
 
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
-        {
+        {   
             IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
-            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance.Item);
+            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct();
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
@@ -41,11 +41,11 @@ namespace ZID.Automat.Application
         }
         public ItemDetailedDto DetailedItem(Guid QrCode)
         {
-            var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException()).ItemInstance.Item;
+            var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException())?.ItemInstance?.Item;
             return _mapper.Map<ItemDetailedDto>(item);
         }
     }
-
+    
     public interface IItemService
     {
         public IEnumerable<ItemDisplayDto> AllDisplayItems();

@@ -39,7 +39,7 @@ namespace ZID.Automat.Application
                 throw new NoItemAvailable();
             }
 
-            var user = _repositoryRead.FindByName<User>(UserName)??throw new NoUserFoundException();
+            var user = _repositoryRead.FindByName<User>(UserName)??throw new NotFoundException("User");
             var GUID = Guid.NewGuid();
 
             if (BData.DueTime < now || BData.DueTime > now.AddDays(_borrowCo.MaxBorrowTime))
