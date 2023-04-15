@@ -8,9 +8,9 @@
 
   <ItemGroup>
 
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
 
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ZID.Automat.Application\ZID.Automat.Application.csproj" />
     <ProjectReference Include="..\ZID.Automat.Extension\ZID.Automat.DatabaseExtension.csproj" />
-    <ProjectReference Include="..\ZID.Automat.Repository\ZID.Automat.Repository.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

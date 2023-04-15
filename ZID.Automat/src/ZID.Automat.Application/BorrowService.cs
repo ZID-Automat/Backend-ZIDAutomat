@@ -39,16 +39,23 @@ namespace ZID.Automat.Application
                 throw new NoItemAvailable();
             }
 
-            var user = _repositoryRead.FindByName<User>(UserName)??throw new NoUserFoundException();
+            var user = _repositoryRead.FindByName<User>(UserName)??throw new NotFoundException("User");
             var GUID = Guid.NewGuid();
+
+            if (BData.DueTime < now || BData.DueTime > now.AddDays(_borrowCo.MaxBorrowTime))
+            {
+                throw new BorrowDueTimeInvalidException();
+            }
+
 
             var borrow = new Borrow()
             {
                 GUID = GUID,
                 PredictedReturnDate = BData.DueTime,
-                BorrowDate = DateTime.Now,
+                BorrowDate = now,
                 User = user,
-                ReturnDate = null
+                ReturnDate = null,
+                ItemInstance = ItemInstances.Where(I => I.borrow is null).First()
             };
 
             _repositoryWrite.Add(borrow);
