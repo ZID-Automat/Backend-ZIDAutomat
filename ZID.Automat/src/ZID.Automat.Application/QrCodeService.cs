@@ -28,7 +28,7 @@ namespace ZID.Automat.Application
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
         {
             var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == qrCode.QRCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
-            return new ValidQrCodeDto() { valid = borrow.ReturnDate == null, ItemId = borrow?.ItemInstance.Item.Id??0 };
+            return new ValidQrCodeDto() { valid = borrow.CollectDate == null, ItemId = borrow?.ItemInstance.Item.Id??0 };
         }
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)

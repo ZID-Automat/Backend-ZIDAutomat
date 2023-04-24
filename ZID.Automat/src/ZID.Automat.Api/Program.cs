@@ -13,9 +13,29 @@ using Microsoft.AspNetCore.Diagnostics;
 using ZID.Automat.DatabaseExtension;
 using ZID.Automat.AutoMapper;
 using ZID.Automat.Api.ExceptionFilters;
+using System.Net.NetworkInformation;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Sockets;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
+
+#region configure IP address
+var ipAddresses = NetworkInterface.GetAllNetworkInterfaces()
+    .Where(i => i.OperationalStatus == OperationalStatus.Up)
+    .ToList();
+var urls = new List<string>();
+ipAddresses.ForEach(i => {
+    i.GetIPProperties().UnicastAddresses
+    .Where(u => u.Address.AddressFamily == AddressFamily.InterNetwork)
+    .ToList().ForEach(u =>
+    {
+        urls.Add($"http://{u.Address}:5141");
+        urls.Add($"https://{u.Address}:7141");
+    });
+  });
+builder.WebHost.UseUrls(urls.ToArray());
+#endregion
 
 #region Conf Vars
 var Conf = builder.Configuration;
@@ -153,7 +173,6 @@ app.UseExceptionHandler(c => c.Run(async context =>
 #endregion
 
 app.UseCors();
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
