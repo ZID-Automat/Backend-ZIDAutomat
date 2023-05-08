@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZID.Automat.Application;
+using ZID.Automat.Dto.Models;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
@@ -8,15 +9,17 @@ namespace ZID.Automat.Api.Controllers.Admin
     [ApiController]
     public class AAnalyticsController : ControllerBase
     {
-        public AAnalyticsController()
+        private readonly AnalyticsService _analyticsService;
+        public AAnalyticsController(AnalyticsService analyticsService)
         {
+            _analyticsService = analyticsService;
         }
 
-        [HttpGet("AnalyticsItems")]
+        [HttpGet("GetAnalyticsItems")]
         //[Authorize]
         public IActionResult GetAnalyticsItems()
         {
-            var items = AnalyticsService.GetAnalyticsItems();
+            IEnumerable<AnalyticItemDto> items = _analyticsService.GetAnalyticsItems();
             return Ok(items);
         }
     }
