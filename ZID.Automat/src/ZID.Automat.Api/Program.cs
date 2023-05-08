@@ -115,7 +115,7 @@ builder.Services.AddAutoMapper(c => {
 builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
 builder.Services.AddScoped<IRepositoryWrite, GenericRepository>();
 
-builder.Services.AddScoped <IAnalyticsRepository, AnalyticsRepository()>;
+builder.Services.AddScoped <IAnalyticsRepository, AnalyticsRepository>();
 
 #endregion
 
@@ -131,7 +131,7 @@ builder.Services.AddScoped<IBorrowService, BorrowService>();
 builder.Services.AddScoped<IQrCodeCService, QrCodeService>();
 builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
 
-builder.Services.AddScoped<IAnalyticsService, AnalyticsService()>;
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 #endregion
 
 

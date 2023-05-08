@@ -9,8 +9,8 @@ namespace ZID.Automat.Api.Controllers.Admin
     [ApiController]
     public class AAnalyticsController : ControllerBase
     {
-        private readonly AnalyticsService _analyticsService;
-        public AAnalyticsController(AnalyticsService analyticsService)
+        private readonly IAnalyticsService _analyticsService;
+        public AAnalyticsController(IAnalyticsService analyticsService)
         {
             _analyticsService = analyticsService;
         }
