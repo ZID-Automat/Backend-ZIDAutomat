@@ -64,7 +64,7 @@ namespace ZID.Automat.Application
                 .RuleFor(i => i.Price, f => f.Random.Decimal(10, 100))
                 .RuleFor(i => i.SubName, f => f.Lorem.Sentence(5))
                 .RuleFor(i => i.Categorie, f => f.PickRandom(categories))
-                .RuleFor(i => i.LocationImAutomat, f => f.PickRandom(Al) + f.PickRandom(Al))
+                .RuleFor(i => i.LocationImAutomat, f => "AB")
                 .Generate(count);
         }
 
