@@ -148,6 +148,9 @@ builder.Services.AddScoped<IBorrowService, BorrowService>();
 
 builder.Services.AddScoped<IQrCodeCService, QrCodeService>();
 builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
+
+builder.Services.AddScoped<IAutomatLoggingService, AutomatLoggingService>();
+
 #endregion
 
 
