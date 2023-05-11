@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZID.Automat.Dto\ZID.Automat.Dto.csproj" />
     <ProjectReference Include="..\ZID.Automat.Infrastructure\ZID.Automat.Infrastructure.csproj" />
   </ItemGroup>
 
