@@ -19,14 +19,22 @@ namespace ZID.Automat.Repository
             _context = Db;
         }
 
-        public IEnumerable<AnalyticItemDto> GetAnalyticsItems()
+        public IEnumerable<AnalyticItemDto> GetAnalyticsItems(DateTime date)
         {
+            //Set wanted Monate
+            var months = Enumerable.Range(0, (DateTime.Now.Year - date.Year) * 12 + DateTime.Now.Month - date.Month + 1);
+
+
+            
             //Get every Item and join it to borrows and get for every month how many borrows there are
             return _context.Items
                 .Select(item => new AnalyticItemDto
                 {
                     Name = item.Name,
-                    Monate = new List<AnalyticItemMonth>()
+                    Monate =
+                    {
+                        
+                    }
                 })
                 .ToList();
         }
@@ -34,6 +42,6 @@ namespace ZID.Automat.Repository
 
     public interface IAnalyticsRepository
     {
-        public IEnumerable<AnalyticItemDto> GetAnalyticsItems();
+        public IEnumerable<AnalyticItemDto> GetAnalyticsItems(DateTime date);
     }
 }
