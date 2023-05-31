@@ -70,7 +70,7 @@ int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
 #region ASPIntern
 builder.Services.AddControllers((register) =>
 {
-    register.Filters.Add<ExceptionFilter>();
+   // register.Filters.Add<ExceptionFilter>();
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -156,6 +156,8 @@ builder.Services.AddScoped<IAutomatLoggingService, AutomatLoggingService>();
 
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+
+builder.Services.AddScoped<IAdminBorrowService, AdminBorrowService>();
 #endregion
 
 
