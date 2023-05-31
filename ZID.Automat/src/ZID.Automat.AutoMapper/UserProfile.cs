@@ -11,6 +11,12 @@ namespace ZID.Automat.AutoMapper
         {
             CreateMap<User, UserAdminGetAll>()
              .ForMember(dest => dest.BorrowCount, opt => opt.Ignore());
+
+
+            CreateMap<User, UserAdminDetailedDto>()
+              .ForMember(dest => dest.Borrow, opt => opt.Ignore());
+
+
         }
     }
 }

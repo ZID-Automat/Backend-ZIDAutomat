@@ -17,12 +17,16 @@ namespace ZID.Automat.Api.Controllers.Admin
             _adminUserService = adminUserService;
         }
 
-        [HttpGet("User")]
-        //[Authorize]
-        public IEnumerable<UserAdminGetAll> GetAnalyticsItems()
+        [HttpGet("GetAllUsers")]
+        public IEnumerable<UserAdminGetAll> GetAllUsers()
         {
-            var us = _adminUserService.GetAllUsers();
-            return us;
+            return _adminUserService.GetAllUsers();
+        }
+
+        [HttpGet("DetailedUser")]
+        public UserAdminDetailedDto DetailedUser (int id)
+        {
+            return _adminUserService.GetDetailedUser(id);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ZID.Automat.Application
         public const int ITEMS = 20;
         public const int ITEMSINSTANCE = 100;
         public const int USERS = 20;
-        public const int BORROWS = 0;
+        public const int BORROWS = 100;
         public const int ADMONTYPE = 20;
         public const int ADMON = 0;
 
@@ -39,10 +39,11 @@ namespace ZID.Automat.Application
             Context.Items.AddRange(items);
             Context.ItemInstances.AddRange(itemInstances);
             Context.Users.AddRange(users);
+            Context.SaveChanges();
             Context.Borrows.AddRange(borrows);
 
             Context.SaveChanges();
-            
+
         }
 
         private List<Categorie> SeedCategories(int count)
@@ -85,7 +86,7 @@ namespace ZID.Automat.Application
                     .RuleFor(u => u.Nachname, f => f.Name.LastName())
                     .RuleFor(u => u.Joined, f => f.Date.Past())
                     .Generate(count);
-        }
+        }   
 
         private List<Borrow> SeedBorrows(int count, List<User> users, List<ItemInstance> itemInstances)
         {

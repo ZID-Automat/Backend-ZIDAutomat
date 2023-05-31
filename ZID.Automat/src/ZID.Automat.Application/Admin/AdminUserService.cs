@@ -13,6 +13,7 @@ namespace ZID.Automat.Application.Admin
     public interface IAdminUserService
     {
         IEnumerable<UserAdminGetAll> GetAllUsers();
+        UserAdminDetailedDto GetDetailedUser(int id);
     }
 
     public class AdminUserService : IAdminUserService
@@ -34,6 +35,21 @@ namespace ZID.Automat.Application.Admin
                 mapi.BorrowCount = m.Borrow.Count();
                 return mapi;
             }));
+        }
+
+        public UserAdminDetailedDto GetDetailedUser(int id)
+        {
+            var User = _repositoryRead.FindById<User>(id) ?? throw new Exception("User not found");
+            var mappi = _mapper.Map<User, UserAdminDetailedDto>(User);
+
+            var bors = User.Borrow.Select((b) =>
+            {
+                var bo = _mapper.Map<Borrow, UserAdmiBorrowDto>(b);
+                return bo ?? null!;
+            });
+            mappi.Borrow = new List<UserAdmiBorrowDto>(bors);
+
+            return mappi;
         }
     }
 }
