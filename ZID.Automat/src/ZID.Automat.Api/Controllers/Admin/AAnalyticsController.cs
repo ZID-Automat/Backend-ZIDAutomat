@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ZID.Automat.Application;
-using ZID.Automat.Dto.Models;
+using ZID.Automat.Dto.Models.Analytics;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {

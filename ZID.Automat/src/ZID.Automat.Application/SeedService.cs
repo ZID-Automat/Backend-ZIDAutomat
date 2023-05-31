@@ -79,7 +79,10 @@ namespace ZID.Automat.Application
         private List<User> SeedUsers(int count)
         {
             return new Faker<User>()
+                    .RuleFor(u => u.Id, f => f.Random.Int(0,100000))
                     .RuleFor(u => u.Name, f => f.Internet.UserName())
+                    .RuleFor(u => u.Vorname, f => f.Name.FirstName())
+                    .RuleFor(u => u.Nachname, f => f.Name.LastName())
                     .RuleFor(u => u.Joined, f => f.Date.Past())
                     .Generate(count);
         }

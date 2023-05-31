@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZID.Automat.Domain.Models;
-using ZID.Automat.Dto.Models;
+using ZID.Automat.Dto.Models.Analytics;
 using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application

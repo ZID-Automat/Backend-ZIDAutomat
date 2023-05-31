@@ -16,6 +16,7 @@ using ZID.Automat.Api.ExceptionFilters;
 using System.Net.NetworkInformation;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Sockets;
+using ZID.Automat.Application.Admin;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -127,9 +128,9 @@ builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
 builder.Services.AddAutoMapper(c => {
     c.AddProfile<BorrowProfile>();
     c.AddProfile<ItemProfile>();
+    c.AddProfile<UserProfile>();
 });
 #endregion
-
 
 #region Repositories
 builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
@@ -154,6 +155,7 @@ builder.Services.AddScoped<IQrCodeUService, QrCodeService>();
 builder.Services.AddScoped<IAutomatLoggingService, AutomatLoggingService>();
 
 builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 #endregion
 
 

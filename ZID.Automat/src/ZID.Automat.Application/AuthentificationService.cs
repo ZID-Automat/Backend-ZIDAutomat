@@ -47,7 +47,7 @@ namespace ZID.Automat.Application
             var userDb = _readRepo.FindByName<User>(UserLogin.Username);
             if (userDb == null)
             {
-                _writeRepo.Add(new User() { Name = UserLogin.Username, Joined = DateTime.Now });
+                _writeRepo.Add(new User() { Name = UserLogin.Username, Vorname = user.Firstname, Nachname=user.Lastname, Joined = DateTime.Now });
             }
 
 
