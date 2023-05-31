@@ -14,6 +14,8 @@ namespace ZID.Automat.Dto.Models.Analytics.User
         public virtual List<UserAdmiBorrowDto> Borrow { get; set; } = new List<UserAdmiBorrowDto>();
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
+        public bool Blockiert { get; set; }
+
     }
 
     public class UserAdmiBorrowDto

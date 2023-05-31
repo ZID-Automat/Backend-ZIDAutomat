@@ -40,6 +40,12 @@ namespace ZID.Automat.Application
             }
 
             var user = _repositoryRead.FindByName<User>(UserName)??throw new NotFoundException("User");
+
+            if (user.Blockiert)
+            {
+                throw new UserBlockedException();
+            }
+
             var GUID = Guid.NewGuid();
 
             if (BData.DueTime < now || BData.DueTime > now.AddDays(_borrowCo.MaxBorrowTime))

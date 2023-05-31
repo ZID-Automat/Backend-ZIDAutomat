@@ -14,5 +14,6 @@ namespace ZID.Automat.Dto.Models.Analytics.User
         public int BorrowCount { get; set; }
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
+        public bool Blockiert { get; set; } = false;
     }
 }

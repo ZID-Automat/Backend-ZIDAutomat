@@ -50,6 +50,10 @@ namespace ZID.Automat.Application
                 _writeRepo.Add(new User() { Name = UserLogin.Username, Vorname = user.Firstname, Nachname=user.Lastname, Joined = DateTime.Now });
             }
 
+            if (userDb?.Blockiert==false)
+            {
+                throw new UserBlockedException();
+            }
 
             return GenJWT(
                 new ClaimsIdentity(new Claim[]

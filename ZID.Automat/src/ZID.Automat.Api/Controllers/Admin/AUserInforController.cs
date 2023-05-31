@@ -28,5 +28,11 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             return _adminUserService.GetDetailedUser(id);
         }
+
+        [HttpPost("SetBlockiert")]
+        public void SetBlockiert(BlockiertStateDto blockiertState)
+        {
+            _adminUserService.SetBlockiert(blockiertState.Id, blockiertState.Blockiert);
+        }
     }
 }

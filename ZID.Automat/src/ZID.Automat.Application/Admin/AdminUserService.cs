@@ -14,17 +14,22 @@ namespace ZID.Automat.Application.Admin
     {
         IEnumerable<UserAdminGetAll> GetAllUsers();
         UserAdminDetailedDto GetDetailedUser(int id);
+        public void SetBlockiert(int id, bool blockiert);
+
     }
 
     public class AdminUserService : IAdminUserService
     {
         private readonly IRepositoryRead _repositoryRead;
+        private readonly IRepositoryWrite _repositoryWrite;
+
         private readonly IMapper _mapper;
 
-        public AdminUserService(IRepositoryRead repositoryRead, IMapper mapper)
+        public AdminUserService(IRepositoryRead repositoryRead, IMapper mapper, IRepositoryWrite repositoryWrite)
         {
             _repositoryRead = repositoryRead;
             _mapper = mapper;
+            _repositoryWrite = repositoryWrite;
         }
         public IEnumerable<UserAdminGetAll> GetAllUsers()
         {
@@ -35,6 +40,13 @@ namespace ZID.Automat.Application.Admin
                 mapi.BorrowCount = m.Borrow.Count();
                 return mapi;
             }));
+        }
+
+        public void SetBlockiert(int id, bool blockiert)
+        {
+            var User = _repositoryRead.FindById<User>(id) ?? throw new Exception("User not found");
+            User.Blockiert = blockiert;
+            _repositoryWrite.Update(User);
         }
 
         public UserAdminDetailedDto GetDetailedUser(int id)

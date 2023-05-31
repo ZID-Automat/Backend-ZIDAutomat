@@ -19,5 +19,7 @@ namespace ZID.Automat.Domain.Models
 
         public string Vorname { get; set; } = string.Empty;
         public string Nachname { get; set; } = string.Empty;
+
+        public bool Blockiert { get; set; } = false;
     }
 }
