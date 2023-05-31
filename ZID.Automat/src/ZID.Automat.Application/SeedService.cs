@@ -9,9 +9,9 @@ namespace ZID.Automat.Application
     {
         public const int CATE = 20;
         public const int ITEMS = 20;
-        public const int ITEMSINSTANCE = 100;
+        public const int ITEMSINSTANCE = 1000;
         public const int USERS = 20;
-        public const int BORROWS = 100;
+        public const int BORROWS = 400;
         public const int ADMONTYPE = 20;
         public const int ADMON = 0;
 
@@ -94,7 +94,7 @@ namespace ZID.Automat.Application
                 .RuleFor(b => b.User, f => f.PickRandom(users))
                 .RuleFor(b => b.ItemInstance, f => f.PickRandom(itemInstances))
                 .RuleFor(b => b.BorrowDate, f => f.Date.Past())
-                .RuleFor(b => b.ReturnDate, f => f.Date.Future())
+                .RuleFor(b => b.ReturnDate, f => (new Random().NextDouble() < 0.2) ? (DateTime?)null : DateTime.Now.AddDays(new Random().Next(1, 365)))
                 .Generate(count);
         }
     }

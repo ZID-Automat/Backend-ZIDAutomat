@@ -20,7 +20,7 @@ namespace ZID.Automat.Dto.Models.Analytics.User
     {
         public int Id { get; set; }
         public DateTime BorrowDate { get; set; }
-        public bool Returned { get; set; }
+        public int Stati { get; set; }
         public string Itemname { get; set; } = string.Empty;
     }
 }
