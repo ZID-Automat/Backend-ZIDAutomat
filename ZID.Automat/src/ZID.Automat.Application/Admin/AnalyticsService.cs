@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bogus.DataSets;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models.Analytics;
+using ZID.Automat.Dto.Models.Analytics.User;
 using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
@@ -21,15 +23,27 @@ namespace ZID.Automat.Application
             _repositoryRead = repositoryRead;
         }
 
+
+        public IEnumerable<GesammtBorrowsDto> GesammtBorrows()
+        {
+            var result1 = _repositoryRead
+            .GetAll<Item>()
+            .Select(item => new GesammtBorrowsDto() { Value = item.ItemInstances.Where(i => i.borrow != null).Count(), Label = item.Name});
+            return result1;
+        }
+
         public IEnumerable<AnalyticItemDto> GetAnalyticsItems()
         {
             int months = 10;
             DateTime date = DateTime.Now.AddMonths(-months);
-            
-            //List of all moths form now till date
-            
-            
-            var result1 = _repositoryRead.GetAll<Item>().Select(e =>
+
+            var resultRoh = _repositoryRead
+                .GetAll<Item>()
+                .OrderByDescending(i => i.ItemInstances.Where(el => el?.borrow?.BorrowDate > date).Count())
+                .Take(3)
+                .ToList();
+                
+            var result1 = resultRoh.Select(e =>
             {
                 var monthsi = new List<AnalyticItemMonth>();
                 for (int i = 0; i  < months; i++)
@@ -52,5 +66,7 @@ namespace ZID.Automat.Application
     public interface IAnalyticsService
     {
         public IEnumerable<AnalyticItemDto> GetAnalyticsItems();
+        public IEnumerable<GesammtBorrowsDto> GesammtBorrows();
+
     }
 }

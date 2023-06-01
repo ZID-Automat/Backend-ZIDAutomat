@@ -158,7 +158,7 @@ namespace ZID.Automat.Application.Test
 
             //act
             Guid guid = Guid.Empty;
-            Assert.ThrowsAny<NotFoundException>(() =>
+            Assert.ThrowsAny<NotFoundException >(() =>
             {
                 guid = borrow.Borrow(dto, Username, now);
             });

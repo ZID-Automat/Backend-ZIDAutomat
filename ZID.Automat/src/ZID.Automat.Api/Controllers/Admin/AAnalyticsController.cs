@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ZID.Automat.Application;
 using ZID.Automat.Dto.Models.Analytics;
+using ZID.Automat.Dto.Models.Analytics.User;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
@@ -16,11 +18,15 @@ namespace ZID.Automat.Api.Controllers.Admin
         }
 
         [HttpGet("GetAnalyticsItems")]
-        //[Authorize]
-        public IActionResult GetAnalyticsItems()
+        public IEnumerable<AnalyticItemDto> GetAnalyticsItems()
         {
-            IEnumerable<AnalyticItemDto> items = _analyticsService.GetAnalyticsItems();
-            return Ok(items);
+            return _analyticsService.GetAnalyticsItems();
+        }
+
+        [HttpGet("GesamtBorrows")]
+        public IEnumerable<GesammtBorrowsDto> GesammtBorrow()
+        {
+            return _analyticsService.GesammtBorrows();
         }
     }
 }

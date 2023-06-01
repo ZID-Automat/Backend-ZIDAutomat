@@ -8,10 +8,10 @@ namespace ZID.Automat.Application
     public class SeedService : ISeedService
     {
         public const int CATE = 20;
-        public const int ITEMS = 20;
-        public const int ITEMSINSTANCE = 1000;
+        public const int ITEMS = 10;
+        public const int ITEMSINSTANCE = 100;
         public const int USERS = 20;
-        public const int BORROWS = 400;
+        public const int BORROWS = 80;
         public const int ADMONTYPE = 20;
         public const int ADMON = 0;
 
