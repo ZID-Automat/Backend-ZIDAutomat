@@ -57,8 +57,6 @@ namespace ZID.Automat.Application
                     Monate = monthsi
                 };
             });
-            //return _analyticsRepository.GetAnalyticsItems(DateTime.Now)
-
             return result1;
         }
     }
@@ -67,6 +65,5 @@ namespace ZID.Automat.Application
     {
         public IEnumerable<AnalyticItemDto> GetAnalyticsItems();
         public IEnumerable<GesammtBorrowsDto> GesammtBorrows();
-
     }
 }

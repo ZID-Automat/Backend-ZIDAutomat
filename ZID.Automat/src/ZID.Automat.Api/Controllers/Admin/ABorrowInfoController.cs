@@ -18,5 +18,19 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
            return _adminBorrowService.BorrowDetailed(id);
         }
+
+
+        [HttpPost("Entschuldigt")]
+        public void Entschuldigt(ValIdObjectDto ob )
+        {
+             _adminBorrowService.Entschuldigt(ob.Id, ob.Value);
+        }
+
+
+        [HttpPost("Zurueckgeben")]
+        public DateTime? Zurueckgeben(ValIdObjectDto ob)
+        {
+            return _adminBorrowService.Zurueckgeben(ob.Id,ob.Value);
+        }
     }
 }

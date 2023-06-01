@@ -25,5 +25,9 @@ namespace ZID.Automat.Dto.Models.Analytics.User
 
         public int UserId { get; set; }
         public string UserName { get; set; } = string.Empty;
+
+        public bool entschuldigt { get; set; }
+
+        public bool late { get; set; }
     }
 }
