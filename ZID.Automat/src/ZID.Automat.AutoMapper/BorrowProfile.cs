@@ -17,7 +17,10 @@ namespace ZID.Automat.AutoMapper
 
             CreateMap<Borrow, UserAdmiBorrowDto>()
                 .ForMember(dest => dest.Itemname, opt => opt.MapFrom(src => (src.ItemInstance != null) ? src.ItemInstance!.Item.Name : ""))
-                .ForMember(dest => dest.Stati, opt => opt.Ignore());
+                .ForMember(dest => dest.Stati, opt => opt.MapFrom(src=>src.Status()));
+
+
+         
 
 
             CreateMap<Borrow, BorrowAdminDetailedDto>()

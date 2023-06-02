@@ -57,21 +57,7 @@ namespace ZID.Automat.Application.Admin
             var bors = User.Borrow.Select((b) =>
             {
                 var bo = _mapper.Map<Borrow, UserAdmiBorrowDto>(b);
-                if(b.PredictedReturnDate < b.ReturnDate || b.PredictedReturnDate < DateTime.Now)
-                {
-                    bo.Stati = 0;
-                    if (b.entschuldigt)
-                    {
-                        bo.Stati = 2;
-                    }
-                }else if (b.ReturnDate == null)
-                {
-                    bo.Stati = 1;
-                }
-                else
-                {
-                    bo.Stati = 2;
-                }
+               
                 return bo ?? null!;
             });
             mappi.Borrow = new List<UserAdmiBorrowDto>(bors);

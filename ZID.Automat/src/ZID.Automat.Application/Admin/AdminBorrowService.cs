@@ -12,9 +12,13 @@ namespace ZID.Automat.Application.Admin
 {
     public interface IAdminBorrowService
     {
+        IEnumerable<UserAdmiBorrowDto> AllBorrows();
         BorrowAdminDetailedDto BorrowDetailed(int id);
-        public void Entschuldigt(int id, bool state);
-        public DateTime? Zurueckgeben(int id, bool state);
+        void Entschuldigt(int id, bool state);
+        IEnumerable<UserAdmiBorrowDto> FinishedBorrows();
+        IEnumerable<UserAdmiBorrowDto> OpenBorrows();
+        IEnumerable<UserAdmiBorrowDto> ToDealWithBorrows();
+        DateTime? Zurueckgeben(int id, bool state);
     }
 
     public class AdminBorrowService : IAdminBorrowService
@@ -52,5 +56,27 @@ namespace ZID.Automat.Application.Admin
             bor!.entschuldigt = state;
             _repositoryWrite.Update(bor);
         }
+
+        public IEnumerable<UserAdmiBorrowDto> AllBorrows()
+        {
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>());
+        }
+
+        public IEnumerable<UserAdmiBorrowDto> ToDealWithBorrows()
+        {
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 0);
+        }
+
+        public IEnumerable<UserAdmiBorrowDto> OpenBorrows()
+        {
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 1);
+        }
+
+        public IEnumerable<UserAdmiBorrowDto> FinishedBorrows()
+        {
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 2);
+        }
+
+
     }
 }

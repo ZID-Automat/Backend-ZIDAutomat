@@ -32,5 +32,33 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             return _adminBorrowService.Zurueckgeben(ob.Id,ob.Value);
         }
+
+
+
+        [HttpGet("AllBorrows")]
+        public IEnumerable<UserAdmiBorrowDto> AllBorrows()
+        {
+            return _adminBorrowService.AllBorrows();
+        }
+
+        [HttpGet("ToDealWithBorrows")]
+        public IEnumerable<UserAdmiBorrowDto> ToDealWithBorrows()
+        {
+            return _adminBorrowService.ToDealWithBorrows();
+        }
+
+        [HttpGet("FinishedBorrows")]
+        public IEnumerable<UserAdmiBorrowDto> FinishedBorrows()
+        {
+            return _adminBorrowService.FinishedBorrows();
+        }
+
+        [HttpGet("OpenBorrows")]
+        public IEnumerable<UserAdmiBorrowDto> OpenBorrows()
+        {
+            return _adminBorrowService.OpenBorrows();
+        }
+
+
     }
 }
