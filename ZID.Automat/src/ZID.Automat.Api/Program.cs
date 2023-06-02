@@ -158,6 +158,8 @@ builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
 builder.Services.AddScoped<IAdminBorrowService, AdminBorrowService>();
+
+builder.Services.AddScoped<IAdminItemService, AdminItemService>();
 #endregion
 
 
