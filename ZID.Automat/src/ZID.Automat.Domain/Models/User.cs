@@ -14,6 +14,7 @@ namespace ZID.Automat.Domain.Models
         public string Name { get; set; } = string.Empty;
         
         public DateTime Joined { get; set  ; }
+        public DateTime LastLogin { get; set; }
 
         public virtual List<Borrow> Borrow { get; set; } = new List<Borrow>();
 

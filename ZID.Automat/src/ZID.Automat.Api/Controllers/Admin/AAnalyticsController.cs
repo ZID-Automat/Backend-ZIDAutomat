@@ -28,5 +28,17 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             return _analyticsService.GesammtBorrows();
         }
+
+        [HttpGet("WievielZuspat")]
+        public IEnumerable<WieVielZuspaetDto> WievielZuspat()
+        {
+            return _analyticsService.WievielZuspat();
+        }
+
+        [HttpGet("TaeglicheUser")]
+        public IEnumerable<TaeglicheUserDto> TaeglicheUser()
+        {
+            return _analyticsService.TaeglicheUser();
+        }
     }
 }

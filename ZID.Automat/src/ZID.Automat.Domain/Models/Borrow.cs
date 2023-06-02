@@ -46,5 +46,25 @@ namespace ZID.Automat.Domain.Models
                 return 2;
             }
         }
+
+        public int StatusEntschuldigt()
+        {
+            if (entschuldigt)
+            {
+                return 3;
+            }
+            if (PredictedReturnDate < ReturnDate || PredictedReturnDate < DateTime.Now)
+            {
+                return 0;
+            }
+            else if (ReturnDate == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
     }
 }

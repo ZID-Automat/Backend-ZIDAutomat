@@ -47,10 +47,15 @@ namespace ZID.Automat.Application
             var userDb = _readRepo.FindByName<User>(UserLogin.Username);
             if (userDb == null)
             {
-                _writeRepo.Add(new User() { Name = UserLogin.Username, Vorname = user.Firstname, Nachname=user.Lastname, Joined = DateTime.Now });
+                userDb = new User() { Name = UserLogin.Username, Vorname = user.Firstname, Nachname = user.Lastname, Joined = DateTime.Now };
+                _writeRepo.Add(userDb);
             }
 
-            if (userDb?.Blockiert==false)
+            userDb.LastLogin = DateTime.Now;
+            _writeRepo.Update(userDb);
+            
+
+            if (userDb?.Blockiert==true)
             {
                 throw new UserBlockedException();
             }

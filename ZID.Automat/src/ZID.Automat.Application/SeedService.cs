@@ -10,7 +10,7 @@ namespace ZID.Automat.Application
         public const int CATE = 20;
         public const int ITEMS = 10;
         public const int ITEMSINSTANCE = 100;
-        public const int USERS = 20;
+        public const int USERS = 200;
         public const int BORROWS = 80;
         public const int ADMONTYPE = 20;
         public const int ADMON = 0;
@@ -80,11 +80,12 @@ namespace ZID.Automat.Application
         private List<User> SeedUsers(int count)
         {
             return new Faker<User>()
-                    .RuleFor(u => u.Id, f => f.Random.Int(0,100000))
+                    .RuleFor(u => u.Id, f => f.Random.Int(0, 100000))
                     .RuleFor(u => u.Name, f => f.Internet.UserName())
                     .RuleFor(u => u.Vorname, f => f.Name.FirstName())
                     .RuleFor(u => u.Nachname, f => f.Name.LastName())
                     .RuleFor(u => u.Joined, f => f.Date.Past())
+                    .RuleFor(u => u.LastLogin, f => f.Date.Between(DateTime.Now, DateTime.Now.AddDays(-40)))
                     .Generate(count);
         }   
 
