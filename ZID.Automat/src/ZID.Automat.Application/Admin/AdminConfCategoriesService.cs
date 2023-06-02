@@ -12,8 +12,10 @@ namespace ZID.Automat.Application.Admin
 {
     public interface IConfCategoriesService
     {
-        IEnumerable<CategoryDto> AllCategories();
-        void UpdateCategoryDescription(int categoryId, string newDescription);
+        IEnumerable<CategoryUpdateDto> AllCategories();
+        void UpdateCategory(CategoryUpdateDto category);
+        void AddCategory(CategoryAddDto category);
+
 
     }
 
@@ -32,23 +34,29 @@ namespace ZID.Automat.Application.Admin
 
         }
 
-        public void UpdateCategoryDescription(int categoryId, string newDescription)
+       public IEnumerable<CategoryUpdateDto> AllCategories()
         {
-            var category = _repositoryRead.FindById<Categorie>(categoryId);
+            return _mapper.Map<IEnumerable<Categorie>, IEnumerable<CategoryUpdateDto>>(_repositoryRead.GetAll<Categorie>());
+        }
+
+        public void UpdateCategory(CategoryUpdateDto categoryi)
+        {
+            var category = _repositoryRead.FindById<Categorie>(categoryi.Id);
 
             if (category != null)
             {
-                category.Description = newDescription;
+                category.Description = categoryi.Description ?? category.Description;
+                category.Name = categoryi.Name ?? category.Name;
                 _repositoryWrite.Update(category);
             }
         }
 
-
-
-
-       public IEnumerable<CategoryDto> AllCategories()
+        public void AddCategory(CategoryAddDto category)
         {
-            return _mapper.Map<IEnumerable<Categorie>, IEnumerable<CategoryDto>>(_repositoryRead.GetAll<Categorie>());
+            if(_repositoryRead.FindByName<Categorie>(category.Name) == null)
+            {
+                _repositoryWrite.Add(new Categorie() { Name = category.Name, Description = category.Description});
+            }
         }
     }
 }

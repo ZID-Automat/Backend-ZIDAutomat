@@ -17,15 +17,21 @@ namespace ZID.Automat.Api.Controllers.Admin
         }
 
         [HttpGet("GetConfCategories")]
-        public IEnumerable<CategoryDto> getConfCategories()
+        public IEnumerable<CategoryUpdateDto> getConfCategories()
         {
             return _confCategoriesService.AllCategories();
         }
 
-        [HttpPost("UpdateConfCategory")]
-        public void AddConfCategory([FromBody] CategoryDto category)
+        [HttpPatch("UpdateConfCategory")]
+        public void UpdateCategory([FromBody] CategoryUpdateDto category)
         {
-            _confCategoriesService.UpdateCategoryDescription(category.Id,category.Name);
+            _confCategoriesService.UpdateCategory(category);
+        }
+
+        [HttpPost("AddCategory")]
+        public void AddCategory([FromBody] CategoryAddDto category)
+        {
+            _confCategoriesService.AddCategory(category);
         }
     }
 }

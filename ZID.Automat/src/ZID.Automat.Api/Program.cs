@@ -129,6 +129,9 @@ builder.Services.AddAutoMapper(c => {
     c.AddProfile<BorrowProfile>();
     c.AddProfile<ItemProfile>();
     c.AddProfile<UserProfile>();
+    c.AddProfile<CategoryProfile>();
+    c.AllowNullDestinationValues = true;
+    c.AllowNullCollections = true;
 });
 #endregion
 
