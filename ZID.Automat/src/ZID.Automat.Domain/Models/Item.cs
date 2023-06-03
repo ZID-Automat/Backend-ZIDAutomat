@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZID.Automat.Domain.Interfaces;
 
 namespace ZID.Automat.Domain.Models
-{
+{   
     public class Item : HasName
     {
         public int Id { get; set; }

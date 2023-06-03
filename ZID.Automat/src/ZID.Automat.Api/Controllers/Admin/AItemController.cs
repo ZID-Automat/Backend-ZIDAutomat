@@ -25,5 +25,24 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             _adminItemService.SetItemPosition(itemChangeLocationDto);
         }
+
+        [HttpGet("ItemAdminDetailed")]
+        public ItemAdminDetailedDto ItemDetailedAdmin(int id)
+        {
+            return _adminItemService.ItemDetailedGet(id);
+        }
+
+
+        [HttpPost("ItemDetailedAdminAdd")]
+        public void ItemDetailedAdminAdd(ItemAdminUpdateAdd data)
+        {
+            _adminItemService.AddItemDetailed(data);
+        }
+
+        [HttpPatch("ItemDetailedAdminUpdate")]
+        public void ItemDetailedAdminUpdate(ItemAdminUpdateAdd data)
+        {
+            _adminItemService.UpdateItemDetailed(data);
+        }
     }
 }

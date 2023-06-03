@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZID.Automat.Domain.Models;
+using ZID.Automat.Dto.Models.Analytics.User;
 using ZID.Automat.Dto.Models.Items;
 using ZID.Automat.Exceptions;
 using ZID.Automat.Repository;
@@ -13,8 +14,11 @@ namespace ZID.Automat.Application.Admin
 {
     public interface IAdminItemService
     {
+        void AddItemDetailed(ItemAdminUpdateAdd data);
         IEnumerable<ItemGetAllDto> GetAllItems();
+        ItemAdminDetailedDto ItemDetailedGet(int id);
         void SetItemPosition(ItemChangeLocationDto data);
+        void UpdateItemDetailed(ItemAdminUpdateAdd data);
     }
 
     public class AdminItemService : IAdminItemService
@@ -41,9 +45,44 @@ namespace ZID.Automat.Application.Admin
             var items = _repositoryRead.GetAll<Item>();
             items.ToList().ForEach(i =>
             {
-                i.LocationImAutomat= data.ItemLocations.FirstOrDefault(itemloc => itemloc.Id == i.Id)?.Location ?? "";
+                i.LocationImAutomat = data.ItemLocations.FirstOrDefault(itemloc => itemloc.Id == i.Id)?.Location ?? "";
             });
             _repositoryWrite.Update(items);
+        }
+
+        public ItemAdminDetailedDto ItemDetailedGet(int id)
+        {
+            var item = _repositoryRead.FindById<Item>(id);
+            var mapped = _mapper.Map<Item, ItemAdminDetailedDto>(item);
+
+            var borrows = _repositoryRead.GetAll<Borrow>();
+            var bi = borrows.Where(b => b.ItemInstance?.ItemId == item?.Id);
+                mapped.Borrows = _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(bi);
+            return mapped;
+        }
+
+        public void UpdateItemDetailed(ItemAdminUpdateAdd data)
+        {
+            var item = _repositoryRead.FindById<Item>(data.Id);
+            item.SubName = data.SubName;
+            item.Price = data.Price;
+            item.CategorieId = data.CategorieId;
+            item.Description = data.Description;
+            item.Image = data.Image;
+            item.Name = data.Name;
+            _repositoryWrite.Update(item);
+        }
+
+        public void AddItemDetailed(ItemAdminUpdateAdd data)
+        {
+            var item = new Item();
+            item.SubName = data.SubName;
+            item.Price = data.Price;
+            item.CategorieId = data.CategorieId;
+            item.Description = data.Description;
+            item.Image = data.Image;
+            item.Name = data.Name;
+            _repositoryWrite.Add(item);
         }
     }
 }
