@@ -129,6 +129,9 @@ builder.Services.AddAutoMapper(c => {
     c.AddProfile<BorrowProfile>();
     c.AddProfile<ItemProfile>();
     c.AddProfile<UserProfile>();
+    c.AddProfile<CategoryProfile>();
+    c.AllowNullDestinationValues = true;
+    c.AllowNullCollections = true;
 });
 #endregion
 
@@ -158,6 +161,7 @@ builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 
 builder.Services.AddScoped<IAdminBorrowService, AdminBorrowService>();
+builder.Services.AddScoped<IConfCategoriesService, ConfCategoriesService>();
 
 builder.Services.AddScoped<IAdminItemService, AdminItemService>();
 #endregion
