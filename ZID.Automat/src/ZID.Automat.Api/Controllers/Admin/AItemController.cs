@@ -19,5 +19,11 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             return _adminItemService.GetAllItems();
         }
+
+        [HttpPost("SetItemPosition")]
+        public void SetItemPosition(ItemChangeLocationDto itemChangeLocationDto)
+        {
+            _adminItemService.SetItemPosition(itemChangeLocationDto);
+        }
     }
 }
