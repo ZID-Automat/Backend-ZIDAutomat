@@ -8,7 +8,7 @@ namespace ZID.Automat.Api.Controllers.User
     [ApiController]
     [Authorize(Roles = "User")]
     [Route("[controller]")]
-    public class UQrCodeController
+    public class UQrCodeController:ControllerBase
     {
         private readonly IQrCodeUService _qrCodeUService;
         public UQrCodeController(IQrCodeUService qrCodeUService)
@@ -19,20 +19,22 @@ namespace ZID.Automat.Api.Controllers.User
         [HttpGet("ActiveQrCodes")]
         public IEnumerable<BorrowDto> getActiveQrCodes()
         {
-            return _qrCodeUService.OpenQrCodes();
+            var username = User.Claims.First(c => c.Type == "Name");
+            return _qrCodeUService.OpenQrCodes(username.Value);
         }
 
         [HttpGet("AllQrCodes")]
         public IEnumerable<BorrowDto> getAllQrCodes()
         {
-            return _qrCodeUService.AllQrCodes();
+            var username = User.Claims.First(c => c.Type == "Name");
+            return _qrCodeUService.AllQrCodes(username.Value);
         }
 
         [HttpGet("ActiveQrCodesCount")]
         public int getActiveQrCodesCount()
         {
-            return _qrCodeUService.OpenQrCodesCount();
-
+            var username = User.Claims.First(c => c.Type == "Name");
+            return _qrCodeUService.OpenQrCodesCount(username.Value);
         }
     }
 }

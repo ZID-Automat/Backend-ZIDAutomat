@@ -33,7 +33,7 @@ namespace ZID.Automat.Domain.Models
             {
                 return 2;
             }
-            if (PredictedReturnDate < ReturnDate || PredictedReturnDate < DateTime.Now)
+            if (PredictedReturnDate < ReturnDate || (PredictedReturnDate < DateTime.Now && ReturnDate == null))
             {
                 return 0;
             }
