@@ -44,6 +44,8 @@ namespace ZID.Automat.Application
             var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException())?.ItemInstance?.Item;
             return _mapper.Map<ItemDetailedDto>(item);
         }
+
+     
     }
     
     public interface IItemService
@@ -52,5 +54,6 @@ namespace ZID.Automat.Application
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
         public ItemDetailedDto DetailedItem(int ItemId);
         public ItemDetailedDto DetailedItem(Guid QrCode);
+        
     }
 }
