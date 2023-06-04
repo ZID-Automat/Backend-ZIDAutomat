@@ -147,10 +147,10 @@
     "Name": "Persian Cat",
     "SubName": "Elegant Persian cat",
     "Description": "Own a beautiful Persian cat known for its long and luxurious fur",
-    "Image": "persian_cat.jpg",
+    "Image": "./../ItemPicturesSeed/persian_cat.jpg",
     "Price": 499.99,
     "LocationImAutomat": "N/A",
-    "CategorieId": 3
+    "CategorieId": 4
   },
   {
     "Name": "Siamese Cat",
@@ -159,7 +159,7 @@
     "Image": "./../ItemPicturesSeed/siamese_cat.jpg",
     "Price": 399.99,
     "LocationImAutomat": "N/A",
-    "CategorieId": 3
+    "CategorieId": 4
   },
   {
     "Name": "Maine Coon Cat",
@@ -168,7 +168,7 @@
     "Image": "./../ItemPicturesSeed/maine_coon_cat.jpg",
     "Price": 599.99,
     "LocationImAutomat": "N/A",
-    "CategorieId": 3
+    "CategorieId": 4
   },
   {
     "Name": "Bengal Cat",
@@ -177,7 +177,7 @@
     "Image": "./../ItemPicturesSeed/bengal_cat.jpg",
     "Price": 699.99,
     "LocationImAutomat": "N/A",
-    "CategorieId": 3
+    "CategorieId": 4
   }
 
 ]
