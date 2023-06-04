@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZID.Automat.Application.Admin;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Dto.Models.Analytics.User;
@@ -7,6 +8,7 @@ namespace ZID.Automat.Api.Controllers.Admin
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class AConfCategoriesController: ControllerBase
     {
         private readonly IConfCategoriesService _confCategoriesService;

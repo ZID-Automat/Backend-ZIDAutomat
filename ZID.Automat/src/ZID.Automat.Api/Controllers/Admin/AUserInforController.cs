@@ -9,6 +9,7 @@ namespace ZID.Automat.Api.Controllers.Admin
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class AUserInforController : ControllerBase
     {
         private readonly IAdminUserService _adminUserService;
