@@ -33,22 +33,25 @@ namespace ZID.Automat.Application
             }
             );
 
-
-
-            DbITems.ToList().ForEach(item =>
+            var ii = new List<ItemInstance>();
+            foreach (var item in DbITems)
             {
                 for (int j = 0; j < 20; j++)
                 {
-                    item.ItemInstances.Add(new ItemInstance()
+                    ii.Add(new ItemInstance()
                     {
-                        Item = item,
-                        FirstAdded = DateTime.Now.AddDays(new Random().NextDouble() * -10 - 10)
+                        ItemId = item.Id,
+                        FirstAdded = DateTime.Now.AddDays(new Random().NextDouble() * -10 - 10),
                     });
                 }
-            });
+            }
+            _context.ItemInstances.AddRange(ii);
+
+
             _context.Items.AddRange(DbITems);
 
             _context.SaveChanges();
+
 
             var Users = new Faker<User>()
                 .RuleFor(u=>u.Id,f=>f.IndexFaker+1)
@@ -92,7 +95,7 @@ namespace ZID.Automat.Application
                             ItemInstance = new ItemInstance()
                             {
                                 ItemId = f.PickRandom(DbITems).Id,
-                                FirstAdded = borrowDate.AddDays(-f.Random.Int(4,10))
+                                FirstAdded = borrowDate.AddDays(-f.Random.Int(4,10)),
                             },
                             entschuldigt = entsch,
                             BorrowDate = borrowDate,
@@ -110,8 +113,6 @@ namespace ZID.Automat.Application
 
 
             _context.SaveChanges();
-
-
         }
 
         DateTime GenerateRandomDate(Faker faker)

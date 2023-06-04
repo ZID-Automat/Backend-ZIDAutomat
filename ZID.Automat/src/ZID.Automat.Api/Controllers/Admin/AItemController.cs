@@ -44,5 +44,17 @@ namespace ZID.Automat.Api.Controllers.Admin
         {
             _adminItemService.UpdateItemDetailed(data);
         }
+
+        [HttpPost("AddItemInstace")]
+        public void AddItemInstace([FromQuery]int id)
+        {
+            _adminItemService.AddItemInstace(id);
+        }
+
+        [HttpGet("GetItemInstances")]
+        public int GetItemInstances([FromQuery] int id)
+        {
+            return _adminItemService.GetItemInstances(id);
+        }
     }
 }

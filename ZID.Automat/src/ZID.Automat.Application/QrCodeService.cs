@@ -38,21 +38,21 @@ namespace ZID.Automat.Application
             _repositoryWrite.Update(borrow);
         } 
         
-        public IEnumerable<BorrowDto> OpenQrCodes()
+        public IEnumerable<BorrowDto> OpenQrCodes(string cn)
         {
-            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.ReturnDate == null);
+            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.ReturnDate == null && b.User.Name == cn);
             return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
         }
 
-        public IEnumerable<BorrowDto> AllQrCodes()
+        public IEnumerable<BorrowDto> AllQrCodes(string  cn)
         {
-            var borrows = _repositoryRead.GetAll<Borrow>();
+            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.User.Name == cn);
             return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
         }
 
-        public int OpenQrCodesCount()
+        public int OpenQrCodesCount(string cn)
         {
-            return _repositoryRead.GetAll<Borrow>().Count();
+            return _repositoryRead.GetAll<Borrow>().Where(b=>b.User.Name == cn).Count();
         }
 
         public ControllerItemLocationDto ItemLocation(int itemId)
@@ -72,8 +72,8 @@ namespace ZID.Automat.Application
         
     public interface IQrCodeUService
     {
-        public IEnumerable<BorrowDto> OpenQrCodes();
-        public IEnumerable<BorrowDto> AllQrCodes();
-        public int OpenQrCodesCount();
+        public IEnumerable<BorrowDto> OpenQrCodes(string cn);
+        public IEnumerable<BorrowDto> AllQrCodes(string cn);
+        public int OpenQrCodesCount(string cn);
     }
 }

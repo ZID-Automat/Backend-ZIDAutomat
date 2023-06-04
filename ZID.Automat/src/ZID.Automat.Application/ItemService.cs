@@ -23,14 +23,14 @@ namespace ZID.Automat.Application
 
         public IEnumerable<ItemDisplayDto> AllDisplayItems()
         {
-            IEnumerable<Item> Items = _repositoryRead.GetAll<Item>();
+            IEnumerable<Item> Items = _repositoryRead.GetAll<Item>().Where(i => i.LocationImAutomat != "");
             return _mapper.Map<IEnumerable<Item>, IEnumerable<ItemDisplayDto>>(Items);
         }
 
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {   
             IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
-            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct();
+            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct().Where(i => i.LocationImAutomat != "");
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
@@ -44,6 +44,8 @@ namespace ZID.Automat.Application
             var item = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException())?.ItemInstance?.Item;
             return _mapper.Map<ItemDetailedDto>(item);
         }
+
+     
     }
     
     public interface IItemService
@@ -52,5 +54,6 @@ namespace ZID.Automat.Application
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
         public ItemDetailedDto DetailedItem(int ItemId);
         public ItemDetailedDto DetailedItem(Guid QrCode);
+        
     }
 }

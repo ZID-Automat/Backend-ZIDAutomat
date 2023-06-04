@@ -19,6 +19,10 @@ namespace ZID.Automat.Application.Admin
         ItemAdminDetailedDto ItemDetailedGet(int id);
         void SetItemPosition(ItemChangeLocationDto data);
         void UpdateItemDetailed(ItemAdminUpdateAdd data);
+        public int GetItemInstances(int itemId);
+        public void AddItemInstace(int itemId);
+
+
     }
 
     public class AdminItemService : IAdminItemService
@@ -83,6 +87,20 @@ namespace ZID.Automat.Application.Admin
             item.Image = data.Image;
             item.Name = data.Name;
             _repositoryWrite.Add(item);
+        }
+
+        public int GetItemInstances(int itemId)
+        {
+            var item = _repositoryRead.FindById<Item>(itemId);
+            var count = item.ItemInstances.Count(II => II.borrow == null);
+            return count;
+        }
+
+        public void AddItemInstace(int itemId)
+        {
+            var item = _repositoryRead.FindById<Item>(itemId);
+            item.ItemInstances.Add(new ItemInstance() { FirstAdded = DateTime.Now });
+            _repositoryWrite.Update(item);
         }
     }
 }
