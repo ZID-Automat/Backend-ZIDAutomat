@@ -27,8 +27,8 @@ namespace ZID.Automat.Application
             var DBCats = categories.Select((c, index) => new Categorie() { Id=index +1,Name = c.Name, Description = c.Description });
             _context.Categories.AddRange(DBCats);
             var DbITems = items.Select((i,index) => {
-                string image = i.Image.Substring(6);
-               return new Item() { Id = index + 1, CategorieId = i.CategorieId, Description = i.Description, Image = "https://github.com/ZID-Automat/Backend-ZIDAutomat/tree/main/ZID.Automat/src/ZID.Automat.Api/"+image, LocationImAutomat = "", SubName = i.SubName, Price = i.Price, Name = i.Name };
+                string image = i.Image.Substring(5);
+               return new Item() { Id = index + 1, CategorieId = i.CategorieId, Description = i.Description, Image = "https://raw.githubusercontent.com/ZID-Automat/Backend-ZIDAutomat/main/ZID.Automat/src/ZID.Automat.Api/" + image+"?raw", LocationImAutomat = "", SubName = i.SubName, Price = i.Price, Name = i.Name };
 
             }
             );
