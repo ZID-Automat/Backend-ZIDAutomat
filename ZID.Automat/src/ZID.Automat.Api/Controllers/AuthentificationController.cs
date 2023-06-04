@@ -21,10 +21,14 @@ namespace ZID.Automat.Api.Controllers
     {
         private readonly IUserAuthService _userAuth;
         private readonly IControllerAuthService _controllerAuthService;
-        public AuthentificationController(IUserAuthService userAuth, IControllerAuthService controllerAuthService)
+        private readonly IAdminAuthService _adminAuth;
+
+        public AuthentificationController(IUserAuthService userAuth, IControllerAuthService controllerAuthService, IAdminAuthService adminAuth)
         {
             _userAuth = userAuth;
             _controllerAuthService = controllerAuthService;
+            _adminAuth = adminAuth;
+
         }
 
         [HttpPost("UserLogin")]
@@ -38,6 +42,12 @@ namespace ZID.Automat.Api.Controllers
         {
             return _controllerAuthService.AuthController(ControllerLogin);
 
+        }
+
+        [HttpPost("AdminLogin")]
+        public string? AdminLogin([FromBody] AdminLoginDto AdminLogin)
+        {
+            return _adminAuth.AuthAdmin(AdminLogin);
         }
     }
 }

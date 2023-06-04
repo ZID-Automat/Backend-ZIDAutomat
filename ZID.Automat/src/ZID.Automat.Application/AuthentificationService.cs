@@ -12,21 +12,23 @@ using System.Net;
 
 namespace ZID.Automat.Application
 {
-    public class AuthentificationService : IUserAuthService, IControllerAuthService
+    public class AuthentificationService : IUserAuthService, IControllerAuthService, IAdminAuthService
     {
 
         private readonly JWTCo _jwtCo;
         private readonly TestUserCo _testUserCo;
         private readonly AutomatCo _automatCo;
+        private readonly AdminCo _adminCo;
         private readonly IRepositoryRead _readRepo;
         private readonly IRepositoryWrite _writeRepo;
 
 
-        public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, AutomatCo automatCo, IRepositoryRead readRepo, IRepositoryWrite writeRepo)
+        public AuthentificationService(JWTCo jwtCo, TestUserCo testUserCo, AutomatCo automatCo, AdminCo adminCo, IRepositoryRead readRepo, IRepositoryWrite writeRepo)
         {
             _jwtCo = jwtCo;
             _testUserCo = testUserCo;
             _automatCo = automatCo;
+            _adminCo = adminCo;
             _readRepo = readRepo;
             _writeRepo = writeRepo;
         }
@@ -80,6 +82,18 @@ namespace ZID.Automat.Application
                         new Claim(ClaimTypes.Role, "Controller"),
                 }));
         }
+        
+        public string AuthAdmin(AdminLoginDto adminLoginDto)
+        {
+            if (adminLoginDto.Hall != _adminCo.Hall)
+            {
+                throw new PasswordWrongException();
+            }
+
+            return GenJWT(new ClaimsIdentity(new Claim[] {
+                        new Claim(ClaimTypes.Role, "Admin"),
+                }));
+        }
 
         private string GenJWT(ClaimsIdentity claimsIdentity)
         {
@@ -102,6 +116,11 @@ namespace ZID.Automat.Application
     public interface IUserAuthService
     {
         public string AuthUser(UserLoginDto userLoginDto);
+    }
+
+    public interface IAdminAuthService
+    {
+        public string AuthAdmin(AdminLoginDto adminLoginDto);
     }
 
     public interface IControllerAuthService

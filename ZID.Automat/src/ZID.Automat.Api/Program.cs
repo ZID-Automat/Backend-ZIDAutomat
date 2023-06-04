@@ -55,6 +55,8 @@ string JWTSecret = JWTConfSection.GetValue<string>("JWTSecret");
 
 string AutomatPassword = AuthConfSection.GetValue<string>("AutomatPassword");
 
+string AdminHall = AuthConfSection.GetValue<string>("AdminHall");
+
 bool UseDebug = DebugConfSection.GetValue<bool>("useDebug");
 string TestUserName = TestUserConfSection.GetValue<string>("TestUserName");
 string TestUserPassword = TestUserConfSection.GetValue<string>("TestUserPassword");
@@ -122,6 +124,7 @@ builder.Services.AddSingleton(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSe
 builder.Services.AddSingleton(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
 builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
+builder.Services.AddSingleton(new AdminCo() { Hall = AdminHall });
 #endregion
 
 #region
@@ -148,6 +151,7 @@ builder.Services.AddScoped<ISeedService, SeedService>();
 
 builder.Services.AddScoped<IUserAuthService, AuthentificationService>();
 builder.Services.AddScoped<IControllerAuthService, AuthentificationService>();
+builder.Services.AddScoped<IAdminAuthService, AuthentificationService>();
 
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IBorrowService, BorrowService>();
