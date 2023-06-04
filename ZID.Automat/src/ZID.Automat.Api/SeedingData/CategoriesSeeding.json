@@ -1,0 +1,21 @@
+[
+  {
+    "Name": "Computerzubehör",
+    "Description": "Kategorie für Computer-Peripheriegeräte und Zubehör"
+  },
+  {
+    "Name": "Netzwerk",
+    "Description": "Kategorie für Computer-Netzwerkkabel"
+  },
+  {
+    "Name": "Speicher",
+    "Description": "Kategorie für Computer-Speichergeräte"
+  },
+
+  {
+    "Name": "Cats",
+    "Description": "Kategorie für Katzen"
+  }
+
+]
+

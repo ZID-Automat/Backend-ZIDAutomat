@@ -52,15 +52,16 @@ namespace ZID.Automat.Application
                 .Take(3)
                 .ToList();
 
+            var doct = new Dictionary<string, int>();
+
             var result1 = resultRoh.Select(e =>
             {
                 var monthsi = new List<AnalyticItemMonth>();
-                for (int i = 0; i < months; i++)
+                for (int i = months-1; i >= 0; i--)
                 {
                     var dati = DateTime.Now.AddMonths(-i);
                     monthsi.Add(new AnalyticItemMonth() { Name = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dati.Month), Value = e.ItemInstances.Where(joe => joe.borrow != null && joe.borrow.BorrowDate.Month == dati.Month && joe.borrow.BorrowDate.Year == dati.Year).Count() });
                 }
-
                 return new AnalyticItemDto()
                 {
                     Name = e.Name,
@@ -72,7 +73,7 @@ namespace ZID.Automat.Application
 
         public IEnumerable<WieVielZuspaetDto> WievielZuspat()
         {
-            return _repositoryRead.GetAll<Borrow>().GroupBy(b => b.StatusEntschuldigt()).Select(b => new WieVielZuspaetDto() { num = b.Count(), label = b.Key });
+            return _repositoryRead.GetAll<Borrow>().GroupBy(b => b.StatusEntschuldigt()).Select(b => new WieVielZuspaetDto() { num = b.Count(), label = b.Key }).OrderBy(w => w.label);
         }
 
         public IEnumerable<TaeglicheUserDto> TaeglicheUser()
