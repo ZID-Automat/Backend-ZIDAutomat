@@ -1,0 +1,183 @@
+[
+  {
+    "Name": "HDMI-Kabel",
+    "SubName": "HDMI-Kabel mit hoher Geschwindigkeit",
+    "Description": "Verbinden Sie Ihre Geräte mit diesem hochwertigen HDMI-Kabel",
+    "Image": "./../ItemPicturesSeed/hdmi_kabel.jpg",
+    "Price": 9.99,
+    "LocationImAutomat": "AA",
+    "CategorieId": 1
+  },
+  {
+    "Name": "USB-C Adapter",
+    "SubName": "Multiport-USB-C-Adapter",
+    "Description": "Erweitern Sie die Konnektivität Ihres USB-C-Geräts mit diesem Adapter",
+    "Image": "./../ItemPicturesSeed/usb_c_adapter.jpg",
+    "Price": 19.99,
+    "LocationImAutomat": "BB",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Micro-USB-Kabel",
+    "SubName": "Robustes Micro-USB-Kabel",
+    "Description": "Laden und synchronisieren Sie Ihre Geräte mit diesem zuverlässigen Micro-USB-Kabel",
+    "Image": "./../ItemPicturesSeed/micro_usb_kabel.jpg",
+    "Price": 4.99,
+    "LocationImAutomat": "CC",
+    "CategorieId": 1
+  },
+  {
+    "Name": "USB-Flash-Laufwerk",
+    "SubName": "Tragbares USB-Flash-Laufwerk",
+    "Description": "Speichern und übertragen Sie Ihre Dateien mit diesem praktischen USB-Flash-Laufwerk",
+    "Image": "./../ItemPicturesSeed/usb_flash_laufwerk.jpg",
+    "Price": 14.99,
+    "LocationImAutomat": "AB",
+    "CategorieId": 3
+  },
+  {
+    "Name": "Ethernet-Kabel",
+    "SubName": "Cat-6-Ethernet-Kabel",
+    "Description": "Verbinden Sie Ihre Geräte mit einem Netzwerk mit diesem zuverlässigen Ethernet-Kabel",
+    "Image": "./../ItemPicturesSeed/ethernet_kabel.jpg",
+    "Price": 7.99,
+    "LocationImAutomat": "FF",
+    "CategorieId": 2
+  },
+  {
+    "Name": "Wireless-USB-Adapter",
+    "SubName": "USB-WLAN-Adapter",
+    "Description": "Fügen Sie Ihrem Computer mit diesem USB-Adapter eine drahtlose Verbindung hinzu",
+    "Image": "./../ItemPicturesSeed/wireless_usb_adapter.jpg",
+    "Price": 12.99,
+    "LocationImAutomat": "EE",
+    "CategorieId": 2
+  },
+  {
+    "Name": "DisplayPort-Kabel",
+    "SubName": "Hochwertiges DisplayPort-Kabel",
+    "Description": "Verbinden Sie Ihren Monitor mit diesem zuverlässigen DisplayPort-Kabel",
+    "Image": "./../ItemPicturesSeed/displayport_kabel.jpg",
+    "Price": 8.99,
+    "LocationImAutomat": "DD",
+    "CategorieId": 1
+  },
+  {
+    "Name": "USB-Verlängerungskabel",
+    "SubName": "Langes USB-Verlängerungskabel",
+    "Description": "Erweitern Sie die Reichweite Ihrer USB-Geräte mit diesem Verlängerungskabel",
+    "Image": "./../ItemPicturesSeed/usb_verlaengerungskabel.jpg",
+    "Price": 5.99,
+    "LocationImAutomat": "EF",
+    "CategorieId": 1
+  },
+  {
+    "Name": "USB-Hub",
+    "SubName": "Multiport-USB-Hub",
+    "Description": "Erweitern Sie die USB-Anschlüsse Ihres Computers mit diesem praktischen USB-Hub",
+    "Image": "./../ItemPicturesSeed/usb_hub.jpg",
+    "Price": 14.99,
+    "LocationImAutomat": "CD",
+    "CategorieId": 1
+  },
+  {
+    "Name": "USB-Stick",
+    "SubName": "Tragbarer USB-Stick",
+    "Description": "Speichern und transportieren Sie Ihre Daten mit diesem USB-Stick",
+    "Image": "./../ItemPicturesSeed/usb_stick.jpg",
+    "Price": 9.99,
+    "LocationImAutomat": "AC",
+    "CategorieId": 3
+  },
+  {
+    "Name": "Thunderbolt-Kabel",
+    "SubName": "Thunderbolt 3-Kabel",
+    "Description": "Verbinden Sie Ihre Geräte mit diesem hochwertigen Thunderbolt-Kabel",
+    "Image": "./../ItemPicturesSeed/thunderbolt_kabel.jpg",
+    "Price": 24.99,
+    "LocationImAutomat": "DC",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Kartenleser",
+    "SubName": "USB-Kartenleser",
+    "Description": "Lesen Sie Ihre Speicherkarten mit diesem praktischen USB-Kartenleser",
+    "Image": "./../ItemPicturesSeed/kartenleser.jpg",
+    "Price": 12.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 3
+  },
+  {
+    "Name": "USB-Ladeadapter",
+    "SubName": "Schnellladefähiger USB-Ladeadapter",
+    "Description": "Laden Sie Ihre Geräte schnell und effizient mit diesem USB-Ladeadapter",
+    "Image": "./../ItemPicturesSeed/usb_ladeadapter.jpg",
+    "Price": 14.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "DVI-Kabel",
+    "SubName": "DVI-Dual-Link-Kabel",
+    "Description": "Verbinden Sie Ihren Monitor mit diesem DVI-Kabel für optimale Bildqualität",
+    "Image": "./../ItemPicturesSeed/dvi_kabel.jpg",
+    "Price": 7.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Mauspad",
+    "SubName": "Standard Mauspad",
+    "Description": "Erleben Sie präzises und reibungsloses Gleiten mit diesem Gaming-Mauspad",
+    "Image": "./../ItemPicturesSeed/mauspad.jpg",
+    "Price": 8.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Bluetooth-Adapter",
+    "SubName": "USB-Bluetooth-Adapter",
+    "Description": "Fügen Sie Ihrem Computer Bluetooth-Konnektivität mit diesem Adapter hinzu",
+    "Image": "./../ItemPicturesSeed/bluetooth_adapter.jpg",
+    "Price": 9.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Persian Cat",
+    "SubName": "Elegant Persian cat",
+    "Description": "Own a beautiful Persian cat known for its long and luxurious fur",
+    "Image": "persian_cat.jpg",
+    "Price": 499.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 3
+  },
+  {
+    "Name": "Siamese Cat",
+    "SubName": "Graceful Siamese cat",
+    "Description": "Adopt a Siamese cat known for its striking blue eyes and distinctive color points",
+    "Image": "./../ItemPicturesSeed/siamese_cat.jpg",
+    "Price": 399.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 3
+  },
+  {
+    "Name": "Maine Coon Cat",
+    "SubName": "Gentle Maine Coon cat",
+    "Description": "Bring home a Maine Coon cat, one of the largest domesticated cat breeds",
+    "Image": "./../ItemPicturesSeed/maine_coon_cat.jpg",
+    "Price": 599.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 3
+  },
+  {
+    "Name": "Bengal Cat",
+    "SubName": "Exotic Bengal cat",
+    "Description": "Experience the beauty of a Bengal cat known for its distinctive leopard-like spots",
+    "Image": "./../ItemPicturesSeed/bengal_cat.jpg",
+    "Price": 699.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 3
+  }
+
+]
