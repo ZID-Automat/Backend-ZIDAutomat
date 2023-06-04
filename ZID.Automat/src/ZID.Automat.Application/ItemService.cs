@@ -23,14 +23,14 @@ namespace ZID.Automat.Application
 
         public IEnumerable<ItemDisplayDto> AllDisplayItems()
         {
-            IEnumerable<Item> Items = _repositoryRead.GetAll<Item>();
+            IEnumerable<Item> Items = _repositoryRead.GetAll<Item>().Where(i => i.LocationImAutomat != "");
             return _mapper.Map<IEnumerable<Item>, IEnumerable<ItemDisplayDto>>(Items);
         }
 
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {   
             IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
-            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct();
+            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct().Where(i => i.LocationImAutomat != "");
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
