@@ -143,41 +143,44 @@
     "LocationImAutomat": "N/A",
     "CategorieId": 1
   },
+
   {
-    "Name": "Persian Cat",
-    "SubName": "Elegant Persian cat",
-    "Description": "Own a beautiful Persian cat known for its long and luxurious fur",
-    "Image": "./../ItemPicturesSeed/persian_cat.jpg",
-    "Price": 499.99,
+    "Name": "Kabellose Maus",
+    "SubName": "Kompakte kabellose Maus",
+    "Description": "Genießen Sie kabellose Freiheit und präzises Tracking mit dieser kompakten und ergonomischen kabellosen Maus",
+    "Image": "./../ItemPicturesSeed/wireless_mouse.jpg",
+    "Price": 19.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Bildschirmreinigungsset",
+    "SubName": "LCD-Bildschirmreinigungsset",
+    "Description": "Halten Sie Ihre Bildschirme sauber und frei von Fingerabdrücken mit diesem praktischen Bildschirmreinigungsset",
+    "Image": "./../ItemPicturesSeed/screen_cleaning_kit.jpg",
+    "Price": 7.99,
     "LocationImAutomat": "N/A",
     "CategorieId": 4
   },
   {
-    "Name": "Siamese Cat",
-    "SubName": "Graceful Siamese cat",
-    "Description": "Adopt a Siamese cat known for its striking blue eyes and distinctive color points",
-    "Image": "./../ItemPicturesSeed/siamese_cat.jpg",
-    "Price": 399.99,
+    "Name": "Tastaturschutz",
+    "SubName": "Silikon-Tastaturschutz",
+    "Description": "Schützen Sie Ihre Tastatur vor Staub und Verschüttungen mit diesem langlebigen Silikon-Tastaturschutz",
+    "Image": "./../ItemPicturesSeed/keyboard_cover.jpg",
+    "Price": 8.99,
     "LocationImAutomat": "N/A",
     "CategorieId": 4
   },
   {
-    "Name": "Maine Coon Cat",
-    "SubName": "Gentle Maine Coon cat",
-    "Description": "Bring home a Maine Coon cat, one of the largest domesticated cat breeds",
-    "Image": "./../ItemPicturesSeed/maine_coon_cat.jpg",
-    "Price": 599.99,
-    "LocationImAutomat": "N/A",
-    "CategorieId": 4
-  },
-  {
-    "Name": "Bengal Cat",
-    "SubName": "Exotic Bengal cat",
-    "Description": "Experience the beauty of a Bengal cat known for its distinctive leopard-like spots",
-    "Image": "./../ItemPicturesSeed/bengal_cat.jpg",
-    "Price": 699.99,
+    "Name": "Staubsauger für Tastaturen",
+    "SubName": "Mini-USB-Staubsauger für Tastaturen",
+    "Description": "Halten Sie Ihre Tastatur sauber von Krümeln und Staub mit diesem handlichen Mini-USB-Staubsauger",
+    "Image": "./../ItemPicturesSeed/keyboard_vacuum.jpg",
+    "Price": 9.99,
     "LocationImAutomat": "N/A",
     "CategorieId": 4
   }
+
+
 
 ]
