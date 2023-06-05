@@ -9,7 +9,6 @@ namespace ZID.Automat.Api.Controllers.Admin
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
     public class AAnalyticsController : ControllerBase
     {
         private readonly IAnalyticsService _analyticsService;
