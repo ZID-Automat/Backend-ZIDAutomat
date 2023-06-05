@@ -179,8 +179,34 @@
     "Price": 9.99,
     "LocationImAutomat": "N/A",
     "CategorieId": 4
+  },
+  {
+    "Name": "Kopfhörer",
+    "SubName": "In-Ear-Kopfhörer",
+    "Description": "In Ear Kopfhörer mit guter Soundqualität",
+    "Image": "./../ItemPicturesSeed/inear_kopfhörer.jpg",
+    "Price": 9.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Batterien",
+    "SubName": "Batterien",
+    "Description": "Was halt Batterien machen",
+    "Image": "./../ItemPicturesSeed/batterien.jpg",
+    "Price": 5.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
+  },
+  {
+    "Name": "Powerbank",
+    "SubName": "Portable Powerbank",
+    "Description": "Zum Laden von deiner Endgeräte",
+    "Image": "./../ItemPicturesSeed/portable_powerbank.jpg",
+    "Price": 12.99,
+    "LocationImAutomat": "N/A",
+    "CategorieId": 1
   }
-
 
 
 ]
