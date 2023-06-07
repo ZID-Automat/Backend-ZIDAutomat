@@ -7,8 +7,9 @@ using ZID.Automat.Dto.Models.Analytics.User;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
-    [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+    [Route("[controller]")]
     public class AUserInforController : ControllerBase
     {
         private readonly IAdminUserService _adminUserService;

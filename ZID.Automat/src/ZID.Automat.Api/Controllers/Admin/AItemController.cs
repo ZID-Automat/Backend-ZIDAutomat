@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ZID.Automat.Application.Admin;
 using ZID.Automat.Dto.Models.Items;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
-    [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+    [Route("[controller]")]
     public class AItemController : ControllerBase
     {
         private readonly IAdminItemService _adminItemService;

@@ -4,8 +4,9 @@ using ZID.Automat.Application;
 
 namespace ZID.Automat.Api.Controllers.Admin
 {
-    [Route("[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
+    [Route("[controller]")]
     public class DebugController : ControllerBase
     {
         private readonly ISeedService SeedService;

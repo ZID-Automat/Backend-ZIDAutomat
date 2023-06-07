@@ -6,6 +6,7 @@ using ZID.Automat.Dto.Models;
 namespace ZID.Automat.Api.Controllers.Controller
 {
     [ApiController]
+    [Authorize(Roles = "Controller")]
     [Route("[controller]")]
     public class CLoggingController: ControllerBase
     {
