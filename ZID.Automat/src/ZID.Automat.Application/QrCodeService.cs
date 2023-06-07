@@ -17,25 +17,44 @@ namespace ZID.Automat.Application
         private readonly IRepositoryRead _repositoryRead;
         private readonly IRepositoryWrite _repositoryWrite;
         private readonly IMapper _mapper;
+        private readonly IAutomatLoggingService _automatLoggingService;
 
-        public QrCodeService(IRepositoryRead repositoryRead, IRepositoryWrite repositoryWrite, IMapper mapper)
+        public QrCodeService(IRepositoryRead repositoryRead, IRepositoryWrite repositoryWrite, IMapper mapper, IAutomatLoggingService automatLoggingService)
         {
             _repositoryRead = repositoryRead;
             _repositoryWrite = repositoryWrite;
             _mapper = mapper;
+            _automatLoggingService = automatLoggingService;
         }
 
         public ValidQrCodeDto IsValidQrCode(QrCodeDto qrCode)
         {
-            var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == qrCode.QRCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
-            return new ValidQrCodeDto() { valid = borrow.CollectDate == null, ItemId = borrow?.ItemInstance.Item.Id??0 };
+            Guid guid;
+            Borrow? borrow = null;
+            if (Guid.TryParse(qrCode.QRCode, out guid))
+            {
+                borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == guid).SingleOrDefault());
+                bool? valid = borrow?.IsValid();
+                if (!(valid ?? false))
+                {
+                    _automatLoggingService.LogInvaldScannedQrCode(qrCode.QRCode, borrow);
+                }
+                if (borrow == null)
+                {
+                    throw new QrCodeNotExistingException();
+                }
+            }
+            _automatLoggingService.LogScannedQrCode(qrCode.QRCode,borrow);
+            return new ValidQrCodeDto() { valid = borrow?.IsValid()??false, ItemId = borrow?.ItemInstance.Item.Id??0 };
         }
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)
         {   
-            var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == InvalidateQrCode.QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
+            var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID.ToString()== InvalidateQrCode.QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
             borrow.CollectDate = DateTime.Now;
             _repositoryWrite.Update(borrow);
+
+            _automatLoggingService.EjectedItem(InvalidateQrCode.QrCode, borrow);
         } 
         
         public IEnumerable<BorrowDto> OpenQrCodes(string cn)

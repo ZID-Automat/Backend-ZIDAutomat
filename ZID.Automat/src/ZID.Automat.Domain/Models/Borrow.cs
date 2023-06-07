@@ -26,6 +26,10 @@ namespace ZID.Automat.Domain.Models
 
         public bool entschuldigt { get; set; }
         
+        public bool IsValid()
+        {
+            return CollectDate == null;
+        }
 
         public int Status()
         {

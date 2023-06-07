@@ -31,6 +31,8 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret =JwtSecreti},
                 testUserConf,
                 new AutomatCo(),
+                new AdminCo(),
+
                 readmock.Object,
                 writemock.Object
                 );
@@ -74,6 +76,7 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret = JwtSecreti },
                 testUserConf,
                 new AutomatCo(),
+                new AdminCo(),
                 readmock.Object,
                 writemock.Object
                 );
@@ -118,6 +121,8 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret = JwtSecreti },
                 testUserConf,
                 new AutomatCo(),
+                new AdminCo(),
+
                 readmock.Object,
                 writemock.Object
                 );
@@ -149,6 +154,7 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret = JwtSecreti },
                 testUserConf,
                 new AutomatCo(),
+                new AdminCo(),
                 readmock.Object,
                 writemock.Object
                 );
@@ -182,6 +188,7 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret = JwtSecreti },
                 new TestUserCo(),
                 aut,
+                new AdminCo(),
                 readmock.Object,
                 writemock.Object
                 );
@@ -220,6 +227,7 @@ namespace ZID.Automat.Application.Test
                 new JWTCo() { JWTExpireTime = 3, JWTSecret = JwtSecreti },
                 new TestUserCo(),
                 aut,
+                new AdminCo(),
                 readmock.Object,
                 writemock.Object
                 );

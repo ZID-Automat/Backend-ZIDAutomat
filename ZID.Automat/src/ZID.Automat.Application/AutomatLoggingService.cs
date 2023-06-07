@@ -9,6 +9,13 @@ using ZID.Automat.Repository;
 
 namespace ZID.Automat.Application
 {
+    public interface IAutomatLoggingService
+    {
+        void EjectedItem(string guidString, Borrow borrow);
+        void LogInvaldScannedQrCode(string guidString, Borrow borrow);
+        void LogScannedQrCode(string guidString, Borrow borrow);
+    }
+
     public class AutomatLoggingService : IAutomatLoggingService
     {
         private readonly IRepositoryRead _repositoryRead;
@@ -19,42 +26,29 @@ namespace ZID.Automat.Application
             _repositoryWrite = repositoryWrite;
         }
 
-        public void LogScannedQrCode(string guidString)
+        public void LogScannedQrCode(string guidString, Borrow borrow)
         {
-            _repositoryWrite.Add((ScannedQRCodeLog)LogQrCode(new ScannedQRCodeLog(), guidString));
+            _repositoryWrite.Add((ScannedQRCodeLog)LogQrCode(new ScannedQRCodeLog(), guidString, borrow));
         }
 
-        public void LogInvaldScannedQrCode(string guidString)
+        public void LogInvaldScannedQrCode(string guidString, Borrow borrow)
         {
-            _repositoryWrite.Add((InvalidQRCodeLog)LogQrCode(new InvalidQRCodeLog(), guidString));
+            _repositoryWrite.Add((InvalidQRCodeLog)LogQrCode(new InvalidQRCodeLog(), guidString, borrow));
         }
 
-        public void EjectedItem(string guidString)
+        public void EjectedItem(string guidString, Borrow borrow)
         {
-            _repositoryWrite.Add((EjectedItemLog)LogQrCode(new EjectedItemLog(), guidString));
+            _repositoryWrite.Add((EjectedItemLog)LogQrCode(new EjectedItemLog(), guidString, borrow));
         }
 
-        private BaseLogQrCode LogQrCode(BaseLogQrCode ob, string guidString)
+        private BaseLogQrCode LogQrCode(BaseLogQrCode ob, string guidString, Borrow borrow)
         {
             ob.Scanned = guidString;
             ob.DateTime = DateTime.Now;
-
-
-            Guid guid;
-            if (Guid.TryParse(guidString, out guid))
-            {
-                var borrowOb = _repositoryRead.FindByGuid<Borrow>(guid);
-                ob.Borrow = borrowOb;
-            }
+            ob.Borrow = borrow;
             return ob;
         }
     }
 
 
-    public interface IAutomatLoggingService
-    {
-        void EjectedItem(string guidString);
-        void LogInvaldScannedQrCode(string guidString);
-        void LogScannedQrCode(string guidString);
-    }
 }

@@ -25,7 +25,7 @@ namespace ZID.Automat.Api.Controllers.User
         {
             var username = User.Claims.First(c => c.Type == "Name");    
             Guid qrCode = _borrowService.Borrow(borrowData, username.Value, DateTime.Now);
-            return new QrCodeDto() { QRCode = qrCode };
+            return new QrCodeDto() { QRCode = qrCode.ToString() };
         }
     }
 }
