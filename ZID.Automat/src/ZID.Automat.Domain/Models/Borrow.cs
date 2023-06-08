@@ -20,6 +20,9 @@ namespace ZID.Automat.Domain.Models
         public int? ItemInstanceId { get; set; }
         public virtual ItemInstance? ItemInstance { get; set; } = null!;
 
+
+
+
         public int UserId { get; set; }
         public virtual User User { get; set; } = null!;
 
@@ -28,7 +31,7 @@ namespace ZID.Automat.Domain.Models
         
         public bool IsValid()
         {
-            return CollectDate == null;
+            return CollectDate == null && BorrowDate.AddHours(1) >= DateTime.Now;
         }
 
         public int Status()
