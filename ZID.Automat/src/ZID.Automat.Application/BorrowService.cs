@@ -31,10 +31,9 @@ namespace ZID.Automat.Application
         public Guid Borrow(BorrowDataDto BData, string UserName, DateTime now)
         {
             var item = _repositoryRead.FindById<Item>(BData.ItemId) ?? throw new NotFoundException("Item");
-            var ItemInstances = item.ItemInstances;
-            var Count = ItemInstances.Count(I => I.borrow is null);
+            var ItemI = item.GetItemInstance();
 
-            if (Count == 0)
+            if (ItemI == null)
             {
                 throw new NoItemAvailable();
             }
@@ -53,6 +52,20 @@ namespace ZID.Automat.Application
                 throw new BorrowDueTimeInvalidException();
             }
 
+            if(user.Borrow.Count(b => b.Status() == 0) >= 2)
+            {
+                throw new ZuVielUnbehandelteBorros();
+            }
+
+
+            if (ItemI.borrow != null)
+            {
+                var borrowi = ItemI.borrow;
+                ItemI.borrow = null;
+                _repositoryWrite.Update(ItemI);
+                _repositoryWrite.Delete(borrowi);
+            }
+
 
             var borrow = new Borrow()
             {
@@ -61,7 +74,7 @@ namespace ZID.Automat.Application
                 BorrowDate = now,
                 User = user,
                 ReturnDate = null,
-                ItemInstance = ItemInstances.Where(I => I.borrow is null).First()
+                ItemInstance = ItemI
             };
 
             _repositoryWrite.Add(borrow);

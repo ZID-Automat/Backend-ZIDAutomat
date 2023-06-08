@@ -87,7 +87,7 @@ namespace ZID.Automat.Application
         {
             if (adminLoginDto.Hall != _adminCo.Hall)
             {
-                throw new PasswordWrongException();
+                    throw new PasswordWrongException();
             }
 
             return GenJWT(new ClaimsIdentity(new Claim[] {

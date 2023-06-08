@@ -10,11 +10,11 @@ namespace ZID.Automat.AutoMapper
         public ItemProfile()
         {
             CreateMap<Item, ItemDisplayDto>()
-             .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.ItemInstances.Any(item => item.borrow == null)));
+             .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.Avaliable()));
 
 
             CreateMap<Item, Dto.Models.ItemDetailedDto>()
-              .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.ItemInstances.Any(item => item.borrow == null)))
+              .ForMember(dest => dest.Available, opt => opt.MapFrom(src => src.Avaliable()))
               .ForMember(dest => dest.Categorie, opt => opt.MapFrom(src => src.Categorie.Name));
 
 

@@ -34,6 +34,12 @@ namespace ZID.Automat.Application
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
         }
 
+        public IEnumerable<ItemDisplayDto> PopularItems()
+        {
+            var Borrows = _repositoryRead.GetAll<Borrow>().Where(i => i.ItemInstance?.Item.LocationImAutomat != "").GroupBy(b => b.ItemInstance?.Item).OrderByDescending(b=>b.Key?.Id).OrderByDescending(b => b.Count(b => b.BorrowDate > DateTime.Now.AddDays(-7))).Take(10).Select(b => b.FirstOrDefault()?.ItemInstance?.Item);
+            return _mapper.Map<IEnumerable<ItemDisplayDto>>(Borrows);
+        }
+
         public ItemDetailedDto DetailedItem(int ItemId)
         {
             var item = _repositoryRead.FindById<Item>(ItemId);
@@ -54,6 +60,6 @@ namespace ZID.Automat.Application
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName);
         public ItemDetailedDto DetailedItem(int ItemId);
         public ItemDetailedDto DetailedItem(Guid QrCode);
-        
+        public IEnumerable<ItemDisplayDto> PopularItems();
     }
 }

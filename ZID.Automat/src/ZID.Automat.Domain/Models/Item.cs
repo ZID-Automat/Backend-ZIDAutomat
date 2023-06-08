@@ -24,5 +24,15 @@ namespace ZID.Automat.Domain.Models
         public int CategorieId { get; set; }
 
         public virtual List<ItemInstance> ItemInstances { get; set; } = new List<ItemInstance>();
+
+        public bool Avaliable()
+        {
+            return ItemInstances.Any(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) > DateTime.Now));
+        }
+
+        public ItemInstance? GetItemInstance()
+        {
+            return ItemInstances.FirstOrDefault(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) > DateTime.Now));
+        }
     }
 }

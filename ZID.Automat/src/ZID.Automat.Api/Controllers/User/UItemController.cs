@@ -33,6 +33,13 @@ namespace ZID.Automat.Api.Controllers.User
             return _itemService.PrevBorrowedDisplayItemsUser(cl.Value);
         }
 
+        [HttpGet("getPopularItems")]
+        public IEnumerable<ItemDisplayDto> getPopularItems()
+        {
+            return _itemService.PopularItems();
+        }
+
+
         [HttpGet("getDetailedItem")]
         public ItemDetailedDto getDetailedItem(int ItemId)
         {

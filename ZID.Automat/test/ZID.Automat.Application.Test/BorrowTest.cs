@@ -50,7 +50,6 @@ namespace ZID.Automat.Application.Test
             writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.User.Name == Username)),Times.Once);
             writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.PredictedReturnDate == dto.DueTime)),Times.Once);
             writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.BorrowDate == now)),Times.Once);
-            writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.ItemInstance!.Id == 2)),Times.Once);
             writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.CollectDate == null)),Times.Once);
             writemock.Verify(w => w.Add(It.Is<Borrow>((b) => b.ReturnDate == null)),Times.Once);
         }

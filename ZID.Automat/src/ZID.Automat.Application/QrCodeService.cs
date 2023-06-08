@@ -45,7 +45,7 @@ namespace ZID.Automat.Application
                 }
             }
             _automatLoggingService.LogScannedQrCode(qrCode.QRCode,borrow);
-            return new ValidQrCodeDto() { valid = borrow?.IsValid()??false, ItemId = borrow?.ItemInstance.Item.Id??0 };
+            return new ValidQrCodeDto() { valid = borrow?.IsValid()??false, ItemId = borrow?.ItemInstance?.Item.Id??0 };
         }
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)
@@ -53,13 +53,12 @@ namespace ZID.Automat.Application
             var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID.ToString()== InvalidateQrCode.QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
             borrow.CollectDate = DateTime.Now;
             _repositoryWrite.Update(borrow);
-
             _automatLoggingService.EjectedItem(InvalidateQrCode.QrCode, borrow);
         } 
         
         public IEnumerable<BorrowDto> OpenQrCodes(string cn)
         {
-            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.ReturnDate == null && b.User.Name == cn);
+            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.IsValid() && b.User.Name == cn);
             return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
         }
 
@@ -71,7 +70,7 @@ namespace ZID.Automat.Application
 
         public int OpenQrCodesCount(string cn)
         {
-            return _repositoryRead.GetAll<Borrow>().Where(b=>b.User.Name == cn).Count();
+            return _repositoryRead.GetAll<Borrow>().Where(b=>b.User.Name == cn && b.IsValid()).Count();
         }
 
         public ControllerItemLocationDto ItemLocation(int itemId)

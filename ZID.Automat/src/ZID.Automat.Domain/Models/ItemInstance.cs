@@ -15,5 +15,8 @@ namespace ZID.Automat.Domain.Models
         public virtual Item Item { get; set; } = null!;
 
         public virtual Borrow? borrow { get; set; } = default;
-    }
+
+
+        public virtual List<ItemInstance> OldItemInstances { get; set; } = new List<ItemInstance>();
+    } 
 }
