@@ -27,12 +27,12 @@ namespace ZID.Automat.Domain.Models
 
         public bool Avaliable()
         {
-            return ItemInstances.Any(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) > DateTime.Now));
+            return ItemInstances.Any(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) < DateTime.Now));
         }
 
         public ItemInstance? GetItemInstance()
         {
-            return ItemInstances.FirstOrDefault(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) > DateTime.Now));
+            return ItemInstances.FirstOrDefault(II => II.borrow == null || (II.borrow.CollectDate == null && II.borrow.BorrowDate.AddHours(1) < DateTime.Now));
         }
     }
 }

@@ -12,7 +12,12 @@ namespace ZID.Automat.AutoMapper
             CreateMap<Borrow, BorrowDto>()
                 .ForMember(dest => dest.ItemInstanceId, opt => opt.MapFrom(src => src.ItemInstance!.Id))
                 .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.ItemInstance!.Item.Id))
-                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.ItemInstance!.Item.Name));
+                .ForMember(dest => dest.ItemName, opt => opt.MapFrom(src => src.ItemInstance!.Item.Name))
+                .ForMember(dest => dest.ReturnDate, opt => opt.MapFrom(src => src.ReturnDate))
+                .ForMember(dest => dest.CollectDate, opt => opt.MapFrom(src => src.CollectDate))
+                .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.PredictedReturnDate))
+                .ForMember(dest => dest.BorrowDate, opt => opt.MapFrom(src => src.BorrowDate));
+
 
 
             CreateMap<Borrow, UserAdmiBorrowDto>()

@@ -71,6 +71,12 @@ namespace ZID.Automat.Repository
             _context.Set<T>().Remove(ent);
             _context.SaveChanges();
         }
+
+        public void Delete<T>(IEnumerable<T> ent) where T : class
+        {
+            _context.Set<T>().RemoveRange(ent);
+            _context.SaveChanges();
+        }
     }
 
     public interface IRepositoryRead
@@ -88,6 +94,9 @@ namespace ZID.Automat.Repository
         void Add<T>(T entity) where T : class;
         void Update<T>(T ent) where T : class;
         void Update<T>(IEnumerable<T> ent) where T : class;
+
+
+        void Delete<T>(IEnumerable<T> ent) where T : class;
 
         void Delete<T>(T ent) where T : class;
     }

@@ -24,6 +24,10 @@ namespace ZID.Automat.Api.ExceptionFilters
             {
                 context.Result = new BadRequestObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 400 });
             }
+            else if (context.Exception is ZuVielUnbehandelteBorros)
+            {
+                context.Result = new BadRequestObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 400 });
+            }
             else
             {
                 throw context.Exception;

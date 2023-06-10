@@ -52,7 +52,7 @@ namespace ZID.Automat.Application
                 throw new BorrowDueTimeInvalidException();
             }
 
-            if(user.Borrow.Count(b => b.Status() == 0) >= 2)
+            if(user.Borrow.Count(b => b.Status() == 0 || b.Status()==1) >= 2)
             {
                 throw new ZuVielUnbehandelteBorros();
             }

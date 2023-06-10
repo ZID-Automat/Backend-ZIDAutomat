@@ -72,7 +72,7 @@ int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
 #region ASPIntern
 builder.Services.AddControllers((register) =>
 {
-   // register.Filters.Add<ExceptionFilter>();
+    register.Filters.Add<ExceptionFilter>();
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

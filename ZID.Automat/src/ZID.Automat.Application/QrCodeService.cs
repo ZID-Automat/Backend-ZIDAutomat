@@ -64,7 +64,15 @@ namespace ZID.Automat.Application
 
         public IEnumerable<BorrowDto> AllQrCodes(string  cn)
         {
-            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.User.Name == cn);
+            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.User.Name == cn).ToList();
+            var toRemove = borrows.Where(b => b.CollectDate == null && b.BorrowDate.AddHours(1) < DateTime.Now).ToList();
+            _repositoryWrite.Delete<Borrow>(toRemove);
+           
+            foreach(var b in toRemove)
+            {
+                borrows.Remove(b);
+            }
+
             return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
         }
 
