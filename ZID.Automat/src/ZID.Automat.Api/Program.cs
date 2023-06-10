@@ -168,6 +168,8 @@ builder.Services.AddScoped<IAdminBorrowService, AdminBorrowService>();
 builder.Services.AddScoped<IConfCategoriesService, ConfCategoriesService>();
 
 builder.Services.AddScoped<IAdminItemService, AdminItemService>();
+
+builder.Services.AddScoped<IAdminLogShowSerivice, AdminLogShowSerivice>();
 #endregion
 
 

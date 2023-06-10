@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using ZID.Automat.Domain.Models;
+using ZID.Automat.Domain.Models.Logging;
 using ZID.Automat.Dto.Models;
+using ZID.Automat.Dto.Models.Analytics;
 using ZID.Automat.Dto.Models.Analytics.User;
 
 namespace ZID.Automat.AutoMapper
@@ -35,6 +37,16 @@ namespace ZID.Automat.AutoMapper
                 .ForMember(dest => dest.ItemId, opt => opt.MapFrom(src => src.ItemInstance.ItemId))
                 .ForMember(dest => dest.late, opt => opt.MapFrom(b => b.PredictedReturnDate < b.ReturnDate || b.PredictedReturnDate < DateTime.Now));
 
+
+            CreateMap<BaseLogQrCode, LogQrCodeAdminDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.BorrowId, opt => {
+                    opt.MapFrom(src => src.Borrow.Id);
+                    opt.Condition(src => src.Borrow != null);
+                 });
+
+
+            
         }
     }
 }
