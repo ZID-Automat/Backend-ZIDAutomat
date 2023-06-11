@@ -20,7 +20,7 @@ namespace ZID.Automat.Api.ExceptionFilters
             {
                 context.Result = new NotFoundObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 404 });
             }
-            else if (context.Exception is BorrowDueTimeInvalidException || context.Exception is NoItemAvailable || context.Exception is QrCodeNotExistingException)
+            else if (context.Exception is BorrowDueTimeInvalidException || context.Exception is QrCodeNotExistingException)
             {
                 context.Result = new BadRequestObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 400 });
             }
@@ -31,6 +31,10 @@ namespace ZID.Automat.Api.ExceptionFilters
             else if (context.Exception is UserBlockedException)
             {
                 context.Result = new UnauthorizedObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 401 });
+            }
+            else if ( context.Exception is NoItemAvailable)
+            {
+                context.Result = new UnauthorizedObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 499 });
             }
             else
             {
