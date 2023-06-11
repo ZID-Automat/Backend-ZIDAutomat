@@ -1,0 +1,51 @@
+version: "3"
+
+networks:
+  MainNetwork:
+
+services:
+  ZIDAutomatBackend:
+    image: zid_automat_backend:0.0.8
+    ports:
+      - 7141:7141
+    depends_on:
+      - MySqlServer
+    volumes:
+      - ./Certificates:/Certificates
+      - ./properties:/app/properties
+    environment:
+      - Connectionstring=Server=MySqlServer;Database=AutomatDatabase2;Uid=your_username;Pwd=your_password;
+      - CertificatPassword=Password1
+      - AdminHall=KrassesAdminPasswort
+      - AutomatPassword=AutomatPasswort
+      - JWTSecret=JWTSecretJAJAJAJAJA
+      - CorsOrigin=https://localhost:4200;https://localhost:4201
+      - Urls=https://localhost:7141
+    networks:
+      - MainNetwork
+
+  MySqlServer:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_root_password
+      - MYSQL_DATABASE=your_database_name
+      - MYSQL_USER=your_username
+      - MYSQL_PASSWORD=your_password
+    networks:
+      - MainNetwork
+    volumes:
+      - ./Database:/var/lib/mysql
+
+
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - MySqlServer
+    restart: always
+    ports:
+      - 8085:80
+    environment:
+            PMA_HOST: MySqlServer
+            PMA_PORT: 3306
+    networks:
+      - MainNetwork

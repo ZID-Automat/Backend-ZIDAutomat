@@ -21,26 +21,18 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics;
+using System.Security.Policy;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
+var bui = builder.Configuration.AddEnvironmentVariables();
+
 #region configure IP address
-/*
-var ipAddresses = NetworkInterface.GetAllNetworkInterfaces()
-    .Where(i => i.OperationalStatus == OperationalStatus.Up)
-    .ToList();
-var urls = new List<string>();
-ipAddresses.ForEach(i => {
-    i.GetIPProperties().UnicastAddresses
-    .Where(u => u.Address.AddressFamily == AddressFamily.InterNetwork)
-    .ToList().ForEach(u =>
-    {
-        urls.Add($"https://{u.Address}:7141");
-    });
-  });
-builder.WebHost.UseUrls(urls.ToArray());
-*/
+
+var urlsi = Environment.GetEnvironmentVariable("Urls")?.Split(";");
+builder.WebHost.UseUrls(urlsi?.ToArray() ?? new string[] { "https://localhost:7141" });
 
 
 #endregion
@@ -48,8 +40,12 @@ builder.WebHost.UseUrls(urls.ToArray());
 #region Conf Vars
 var Conf = builder.Configuration;
 
-string[] CorsOrigins = Conf.GetSection("CorsOrigin").Get<string[]>();
-string JWT = Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
+
+var corsis = Environment.GetEnvironmentVariable("CorsOrigin")?.Split(";");
+string[] CorsOrigins = corsis??Conf.GetSection("CorsOrigin").Get<string[]>();
+
+
+string JWT = Environment.GetEnvironmentVariable("JWTSecret") ?? Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
 var DBSection = Conf.GetSection("Database");
 var AuthConfSection = Conf.GetSection("AuthConf");
@@ -57,30 +53,46 @@ var JWTConfSection = AuthConfSection.GetSection("JWT");
 var DebugConfSection = Conf.GetSection("Debug");
 var TestUserConfSection = DebugConfSection.GetSection("UserAuth").GetSection("TestUser");
 
-float JWTExpireTime = JWTConfSection.GetValue<int>("JWTExpireTime");
-string JWTSecret = JWTConfSection.GetValue<string>("JWTSecret");
 
-string AutomatPassword = AuthConfSection.GetValue<string>("AutomatPassword");
+var je = Environment.GetEnvironmentVariable("JWTExpireTime");
+int? jeint = null;
+if (je != null)
+{
+    jeint = int.Parse(je);
+}
+float JWTExpireTime = jeint??JWTConfSection.GetValue<int>("JWTExpireTime");
+string JWTSecret = Environment.GetEnvironmentVariable("JWTSecret") ?? JWTConfSection.GetValue<string>("JWTSecret");
 
-string AdminHall = AuthConfSection.GetValue<string>("AdminHall");
+string AutomatPassword = Environment.GetEnvironmentVariable("AutomatPassword") ?? AuthConfSection.GetValue<string>("AutomatPassword");
+
+string AdminHall = Environment.GetEnvironmentVariable("AdminHall") ?? AuthConfSection.GetValue<string>("AdminHall");
 
 bool UseDebug = DebugConfSection.GetValue<bool>("useDebug");
 string TestUserName = TestUserConfSection.GetValue<string>("TestUserName");
 string TestUserPassword = TestUserConfSection.GetValue<string>("TestUserPassword");
 
 string UseDb = DBSection.GetValue<string>("UseDatabase");
-string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
+string DbConnString = Environment.GetEnvironmentVariable("ConnectionString") ?? DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
 
 var Borrow = Conf.GetSection("Borrow");
-int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
+
+var bt =Environment.GetEnvironmentVariable("MaxBorrowTime");
+int? btint = null;
+if (bt != null)
+{
+    btint = int.Parse(bt);
+}
+int MaxBorrowTime = btint??Borrow.GetValue<int>("MaxBorrowTime");
 
 var HttpsConf = Conf.GetSection("HttpsConf");
-string CertPass = HttpsConf.GetValue<string>("CertificatPassword");
-string CertPath = HttpsConf.GetValue<string>("CertificatPath");
+string CertPass = Environment.GetEnvironmentVariable("CertificatPassword")?? HttpsConf.GetValue<string>("CertificatPassword");
+string CertPath = Environment.GetEnvironmentVariable("CertificatPath") ?? HttpsConf.GetValue<string>("CertificatPath");
+
+Console.WriteLine($"database {UseDb}");
+
 
 #endregion
-
-    var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
+var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
     {
         SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         ClientCertificateMode = ClientCertificateMode.AllowCertificate,
