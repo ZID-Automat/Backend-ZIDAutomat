@@ -17,11 +17,16 @@ using System.Net.NetworkInformation;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Sockets;
 using ZID.Automat.Application.Admin;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
+using Microsoft.Extensions.Options;
+using System.Security.Cryptography.X509Certificates;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region configure IP address
+/*
 var ipAddresses = NetworkInterface.GetAllNetworkInterfaces()
     .Where(i => i.OperationalStatus == OperationalStatus.Up)
     .ToList();
@@ -31,11 +36,13 @@ ipAddresses.ForEach(i => {
     .Where(u => u.Address.AddressFamily == AddressFamily.InterNetwork)
     .ToList().ForEach(u =>
     {
-        urls.Add($"http://{u.Address}:5141");
         urls.Add($"https://{u.Address}:7141");
     });
   });
 builder.WebHost.UseUrls(urls.ToArray());
+*/
+
+
 #endregion
 
 #region Conf Vars
@@ -67,7 +74,26 @@ string DbConnString = DBSection.GetSection(UseDb).GetValue<string>("ConnectionSt
 var Borrow = Conf.GetSection("Borrow");
 int MaxBorrowTime = Borrow.GetValue<int>("MaxBorrowTime");
 
+var HttpsConf = Conf.GetSection("HttpsConf");
+string CertPass = HttpsConf.GetValue<string>("CertificatPassword");
+string CertPath = HttpsConf.GetValue<string>("CertificatPath");
+
 #endregion
+
+    var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
+    {
+        SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
+        ClientCertificateMode = ClientCertificateMode.AllowCertificate,
+        ServerCertificate = new X509Certificate2(CertPath, CertPass)
+
+    };
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ConfigureEndpointDefaults(list =>
+        {
+            list.UseHttps(httpsConnectionAdapterOptions);
+        });
+    });
 
 #region ASPIntern
 builder.Services.AddControllers((register) =>
