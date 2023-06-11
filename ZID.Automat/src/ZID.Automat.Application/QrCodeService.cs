@@ -31,7 +31,8 @@ namespace ZID.Automat.Application
         {
             Guid guid;
             Borrow? borrow = null;
-            if (Guid.TryParse(qrCode.QRCode, out guid))
+            bool isGuid = Guid.TryParse(qrCode.QRCode, out guid);
+            if (isGuid)
             {
                 borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID == guid).SingleOrDefault());
                 bool? valid = borrow?.IsValid();
@@ -41,11 +42,56 @@ namespace ZID.Automat.Application
                 }
                 if (borrow == null)
                 {
-                    throw new QrCodeNotExistingException();
+
                 }
             }
-            _automatLoggingService.LogScannedQrCode(qrCode.QRCode,borrow);
-            return new ValidQrCodeDto() { valid = borrow?.IsValid()??false, ItemId = borrow?.ItemInstance?.Item.Id??0 };
+
+            _automatLoggingService.LogScannedQrCode(qrCode.QRCode, borrow);
+
+            if (!isGuid)
+            {
+                return new ValidQrCodeDto()
+                {
+                    valid = false,
+                    ItemId = 0,
+                    Message="QRCode",
+                    Message2="nicht valid"
+
+                };
+            }
+            if (borrow == null)
+            {
+                return new ValidQrCodeDto()
+                {
+                    valid = false,
+                    ItemId = 0,
+                    Message = "Keine Ausleihe",
+                    Message2 = "mit diesem QRCode"
+                };
+            }
+            if(!(borrow.BorrowDate.AddHours(1) >= DateTime.Now))
+            {
+                return new ValidQrCodeDto()
+                {
+                    valid = false,
+                    ItemId = 0,
+                    Message = "Qr Code",
+                    Message2 = "abgelaufen"
+                };
+            }
+            if ((borrow.CollectDate != null))
+            {
+                return new ValidQrCodeDto()
+                {
+                    valid = false,
+                    ItemId = 0,
+                    Message = "Qr Code",
+                    Message2 = "breits verwended"
+                };
+            }
+
+
+            return new ValidQrCodeDto() { valid = borrow?.IsValid() ?? false, ItemId = borrow?.ItemInstance?.Item.Id ?? 0 };
         }
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)

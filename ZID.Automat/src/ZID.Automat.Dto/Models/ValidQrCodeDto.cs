@@ -10,5 +10,9 @@ namespace ZID.Automat.Dto.Models
     {
         public bool valid { get; set; }
         public int ItemId { get; set; }
+
+        public string Message { get; set; } = string.Empty;
+        public string Message2 { get; set; } = string.Empty;
+
     }
 }
