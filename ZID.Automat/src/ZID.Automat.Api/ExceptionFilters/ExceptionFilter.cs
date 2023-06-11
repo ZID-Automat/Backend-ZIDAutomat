@@ -28,11 +28,16 @@ namespace ZID.Automat.Api.ExceptionFilters
             {
                 context.Result = new BadRequestObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 400 });
             }
+            else if (context.Exception is UserBlockedException)
+            {
+                context.Result = new UnauthorizedObjectResult(new ErrorResponseDto() { Message = context.Exception.Message, StatusCode = 401 });
+            }
             else
             {
                 throw context.Exception;
             }
         }
-    }
-}
 
+    }
+
+}

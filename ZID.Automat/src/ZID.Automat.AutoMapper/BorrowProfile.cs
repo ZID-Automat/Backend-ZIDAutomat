@@ -18,8 +18,9 @@ namespace ZID.Automat.AutoMapper
                 .ForMember(dest => dest.ReturnDate, opt => opt.MapFrom(src => src.ReturnDate))
                 .ForMember(dest => dest.CollectDate, opt => opt.MapFrom(src => src.CollectDate))
                 .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.PredictedReturnDate))
-                .ForMember(dest => dest.BorrowDate, opt => opt.MapFrom(src => src.BorrowDate));
-
+                .ForMember(dest => dest.BorrowDate, opt => opt.MapFrom(src => src.BorrowDate))
+                .ForMember(dest => dest.status, opt => opt.MapFrom(src => src.Status()));
+            
 
 
             CreateMap<Borrow, UserAdmiBorrowDto>()
