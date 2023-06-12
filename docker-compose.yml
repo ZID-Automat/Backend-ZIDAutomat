@@ -5,8 +5,10 @@ networks:
 
 services:
   ZIDAutomatBackend:
-    image: zid_automat_backend:0.0.8
+    image: zidautomatapi:latest
     ports:
+      - 800:80
+      - 4430:443
       - 7141:7141
     depends_on:
       - MySqlServer
@@ -20,7 +22,7 @@ services:
       - AutomatPassword=AutomatPasswort
       - JWTSecret=JWTSecretJAJAJAJAJA
       - CorsOrigin=https://localhost:4200;https://localhost:4201
-      - Urls=https://localhost:7141
+      - Urls=http://localhost:7141;
     networks:
       - MainNetwork
 
@@ -49,3 +51,4 @@ services:
             PMA_PORT: 3306
     networks:
       - MainNetwork
+

@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 USER root
 WORKDIR /app
-
+EXPOSE 80
 RUN apt-get update && apt-get install -y git
 
 COPY . . 

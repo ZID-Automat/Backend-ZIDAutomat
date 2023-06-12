@@ -92,21 +92,22 @@ Console.WriteLine($"database {UseDb}");
 
 
 #endregion
+/*
 var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
     {
         SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         ClientCertificateMode = ClientCertificateMode.AllowCertificate,
         ServerCertificate = new X509Certificate2(CertPath, CertPass)
 
-    };
-    builder.WebHost.ConfigureKestrel(options =>
+    };*/
+ /*  builder.WebHost.ConfigureKestrel(options =>
     {
         options.ConfigureEndpointDefaults(list =>
         {
             list.UseHttps(httpsConnectionAdapterOptions);
         });
     });
-
+ */
 #region ASPIntern
 builder.Services.AddControllers((register) =>
 {
@@ -214,7 +215,7 @@ builder.Services.AddScoped<IAdminLogShowSerivice, AdminLogShowSerivice>();
 var app = builder.Build();
 
 #region Development Config  
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() &&true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -236,6 +237,7 @@ app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 app.Run();
