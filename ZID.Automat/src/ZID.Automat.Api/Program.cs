@@ -48,7 +48,7 @@ string[] CorsOrigins = corsis??Conf.GetSection("CorsOrigin").Get<string[]>();
 string JWT = Environment.GetEnvironmentVariable("JWTSecret") ?? Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
 
 var DBSection = Conf.GetSection("Database");
-var AuthConfSection = Conf.GetSection("AuthConf");
+var AuthConfSection = Conf.GetSection("UserLoginConf");
 var JWTConfSection = AuthConfSection.GetSection("JWT");
 var DebugConfSection = Conf.GetSection("Debug");
 var TestUserConfSection = DebugConfSection.GetSection("UserAuth").GetSection("TestUser");
