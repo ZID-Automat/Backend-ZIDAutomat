@@ -7,22 +7,21 @@ services:
   ZIDAutomatBackend:
     image: zidautomatapi:latest
     ports:
-      - 800:80
-      - 4430:443
-      - 7141:7141
+      - 801:80
     depends_on:
       - MySqlServer
     volumes:
       - ./Certificates:/Certificates
       - ./properties:/app/properties
     environment:
-      - Connectionstring=Server=MySqlServer;Database=AutomatDatabase2;Uid=your_username;Pwd=your_password;
-      - CertificatPassword=Password1
-      - AdminHall=KrassesAdminPasswort
-      - AutomatPassword=AutomatPasswort
-      - JWTSecret=JWTSecretJAJAJAJAJA
-      - CorsOrigin=https://localhost:4200;https://localhost:4201
-      - Urls=http://localhost:7141;
+      - UseDatabase=MySql
+      - ConnectionString=Server=MySqlServer;Port=3306;Database=AutoamtDatabase4;Uid=root;Pwd=your_root_password;
+      - CertificatPassword=${CertificatPassword}
+      - AdminHall=${AdminHall}
+      - AutomatPassword=${AutomatPassword}
+      - JWTSecret=${JWTSecret}
+      - CorsOrigin=https://localhost:4200;https://localhost:4201;http://localhost:4201;http://localhost:4200
+      - Urls=http://*:80
     networks:
       - MainNetwork
 
@@ -30,25 +29,11 @@ services:
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=your_root_password
-      - MYSQL_DATABASE=your_database_name
+      - MYSQL_DATABASE=AutoamtDatabase4
       - MYSQL_USER=your_username
       - MYSQL_PASSWORD=your_password
+    
     networks:
       - MainNetwork
     volumes:
       - ./Database:/var/lib/mysql
-
-
-  phpmyadmin:
-    image: phpmyadmin
-    depends_on:
-      - MySqlServer
-    restart: always
-    ports:
-      - 8085:80
-    environment:
-            PMA_HOST: MySqlServer
-            PMA_PORT: 3306
-    networks:
-      - MainNetwork
-

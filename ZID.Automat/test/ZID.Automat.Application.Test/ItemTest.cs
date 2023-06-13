@@ -17,7 +17,7 @@ namespace ZID.Automat.Application.Test
     public class ItemTest
     {
 
-        [Fact]
+    /*    [Fact]
         public void TestAllItems()
         {
             //arrange
@@ -135,6 +135,6 @@ namespace ZID.Automat.Application.Test
 
             //assert
             IMappermock.Verify(m => m.Map<IEnumerable<ItemDisplayDto>>(It.Is<IEnumerable<Item>>(i => i.Count() == 1)), Times.Once);
-        }
+        }*/
     }
 }

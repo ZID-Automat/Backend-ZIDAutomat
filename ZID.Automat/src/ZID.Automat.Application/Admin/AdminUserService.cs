@@ -34,7 +34,7 @@ namespace ZID.Automat.Application.Admin
         public IEnumerable<UserAdminGetAll> GetAllUsers()
         {
             var Users = _repositoryRead.GetAll<User>();
-            return Users.Select((m =>
+            return Users.ToList().Select((m =>
             {
                 var mapi = _mapper.Map<User, UserAdminGetAll>(m);
                 mapi.BorrowCount = m.Borrow.Count();

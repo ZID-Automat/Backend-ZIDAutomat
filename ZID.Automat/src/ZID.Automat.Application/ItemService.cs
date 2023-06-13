@@ -5,6 +5,7 @@ using System.Linq;
 using ZID.Automat.Dto.Models;
 using AutoMapper;
 using ZID.Automat.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace ZID.Automat.Application
 {
@@ -24,19 +25,20 @@ namespace ZID.Automat.Application
         public IEnumerable<ItemDisplayDto> AllDisplayItems()
         {
             IEnumerable<Item> Items = _repositoryRead.GetAll<Item>().Where(i => i.LocationImAutomat != "");
-            return _mapper.Map<IEnumerable<Item>, IEnumerable<ItemDisplayDto>>(Items);
+            return _mapper.Map<IEnumerable<Item>, IEnumerable<ItemDisplayDto>>(Items.ToList());
         }
 
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {   
-            IEnumerable<Borrow> Borrows = _repositoryRead.GetAll<Borrow>();
-            IEnumerable<Item> items = Borrows.Where(b => b.User.Name == UserName).Select(b => b?.ItemInstance?.Item!).Distinct().Where(i => i.LocationImAutomat != "");
-            return _mapper.Map<IEnumerable<ItemDisplayDto>>(items);
+            IEnumerable<Item> items = _repositoryRead.GetAll<Borrow>().Include(b=>b.User).Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).Where(b => b.User.Name == UserName).Select(b => b.ItemInstance.Item).Distinct().Where(i => i.LocationImAutomat != "");
+            return _mapper.Map<IEnumerable<ItemDisplayDto>>(items.ToList());
         }
 
         public IEnumerable<ItemDisplayDto> PopularItems()
         {
-            var Borrows = _repositoryRead.GetAll<Borrow>().Where(i => i.ItemInstance?.Item.LocationImAutomat != "").GroupBy(b => b.ItemInstance?.Item).OrderByDescending(b=>b.Key?.Id).OrderByDescending(b => b.Count(b => b.BorrowDate > DateTime.Now.AddDays(-7))).Take(10).Select(b => b.FirstOrDefault()?.ItemInstance?.Item);
+            var Borrows = _repositoryRead.GetAll<Borrow>().Include(i => i.ItemInstance).Include(i => i.ItemInstance.Item).Where(i => i.ItemInstance.Item.LocationImAutomat != "").ToList().GroupBy(b => b.ItemInstance.Item).OrderByDescending(b => b.Key.Id).OrderByDescending(b => b.Count(b => b.BorrowDate > DateTime.Now.AddDays(-7))).Take(10).Select(b => b.FirstOrDefault().ItemInstance.Item);
+            var rest = _repositoryRead.GetAll<Item>().Where(i => i.LocationImAutomat != "").ToList().Except(Borrows);
+            Borrows = Borrows.Concat(rest).ToList();
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(Borrows);
         }
 

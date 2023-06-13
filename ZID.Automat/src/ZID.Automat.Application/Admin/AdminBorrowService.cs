@@ -59,22 +59,22 @@ namespace ZID.Automat.Application.Admin
 
         public IEnumerable<UserAdmiBorrowDto> AllBorrows()
         {
-            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>());
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>().ToList());
         }
 
         public IEnumerable<UserAdmiBorrowDto> ToDealWithBorrows()
         {
-            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 0);
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>().ToList()).Where(b => b.Stati == 0);
         }
 
         public IEnumerable<UserAdmiBorrowDto> OpenBorrows()
         {
-            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 1);
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>().ToList()).Where(b => b.Stati == 1);
         }
 
         public IEnumerable<UserAdmiBorrowDto> FinishedBorrows()
         {
-            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>()).Where(b => b.Stati == 2);
+            return _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(_repositoryRead.GetAll<Borrow>().ToList()).Where(b => b.Stati == 2);
         }
 
 

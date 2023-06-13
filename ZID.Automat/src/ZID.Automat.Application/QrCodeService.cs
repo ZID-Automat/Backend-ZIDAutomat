@@ -9,6 +9,7 @@ using ZID.Automat.Domain.Models;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Exceptions;
 using ZID.Automat.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace ZID.Automat.Application
 {
@@ -104,8 +105,8 @@ namespace ZID.Automat.Application
         
         public IEnumerable<BorrowDto> OpenQrCodes(string cn)
         {
-            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => b.IsValid() && b.User.Name == cn);
-            return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
+            var borrows = _repositoryRead.GetAll<Borrow>().Where(b => (b.CollectDate == null && b.BorrowDate.AddHours(1) >= DateTime.Now )&& b.User.Name == cn);
+            return _mapper.Map<IEnumerable<BorrowDto>>(borrows.ToList());
         }
 
         public IEnumerable<BorrowDto> AllQrCodes(string  cn)
@@ -119,12 +120,13 @@ namespace ZID.Automat.Application
                 borrows.Remove(b);
             }
 
-            return _mapper.Map<IEnumerable<BorrowDto>>(borrows);
+            return _mapper.Map<IEnumerable<BorrowDto>>(borrows.ToList());
         }
 
         public int OpenQrCodesCount(string cn)
         {
-            return _repositoryRead.GetAll<Borrow>().Where(b=>b.User.Name == cn && b.IsValid()).Count();
+            //is valid
+            return _repositoryRead.GetAll<Borrow>().Include(b=>b.User).Where(b=>b.User.Name == cn && (b.CollectDate == null && b.BorrowDate.AddHours(1) >= DateTime.Now)).ToList().Count();
         }
 
         public ControllerItemLocationDto ItemLocation(int itemId)

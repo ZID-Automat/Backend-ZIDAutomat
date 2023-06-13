@@ -13,9 +13,14 @@ namespace ZID.Automat.DatabaseExtension
             {
                 if (!options.IsConfigured)
                 {
-                    if (useDb == "MySQL")
+                    if (useDb == "MySql")
                     {
                         options.UseMySQL(connectionString);
+                    }
+                    else if (useDb == "SqlServer")
+                    {
+                        options.UseSqlServer(connectionString);
+
                     }
                     else if (useDb == "SQLite")
                     {

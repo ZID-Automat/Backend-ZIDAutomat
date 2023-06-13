@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace ZID.Automat.Application.Admin
 
         public IEnumerable<ItemGetAllDto> GetAllItems()
         {
-            return _repositoryRead.GetAll<Item>().Select(i => new ItemGetAllDto() { Id = i.Id, Image = i.Image, LocationImAutomat = i.LocationImAutomat, Name = i.Name });
+            return _repositoryRead.GetAll<Item>().ToList().Select(i => new ItemGetAllDto() { Id = i.Id, Image = i.Image, LocationImAutomat = i.LocationImAutomat, Name = i.Name });
         }
 
         public void SetItemPosition(ItemChangeLocationDto data)
@@ -59,8 +60,8 @@ namespace ZID.Automat.Application.Admin
             var item = _repositoryRead.FindById<Item>(id);
             var mapped = _mapper.Map<Item, ItemAdminDetailedDto>(item);
 
-            var borrows = _repositoryRead.GetAll<Borrow>();
-            var bi = borrows.Where(b => b.ItemInstance?.ItemId == item?.Id);
+            var borrows = _repositoryRead.GetAll<Borrow>().Include(i => i.ItemInstance).Include(i => i.ItemInstance.Item);
+            var bi = borrows.Where(b => b.ItemInstance.ItemId == item.Id).ToList();
                 mapped.Borrows = _mapper.Map<IEnumerable<Borrow>, IEnumerable<UserAdmiBorrowDto>>(bi);
             return mapped;
         }

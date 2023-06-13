@@ -53,7 +53,7 @@ namespace ZID.Automat.Application
         private IEnumerable<LogQrCodeAdminDto> getLogs<T>() where T : BaseLogQrCode
         {
             IEnumerable<T> data = _read.GetAll<T>();
-            return _mapper.Map<IEnumerable<BaseLogQrCode>, IEnumerable<LogQrCodeAdminDto>>(data);
+            return _mapper.Map<IEnumerable<BaseLogQrCode>, IEnumerable<LogQrCodeAdminDto>>(data.ToList());
         }
     }
 

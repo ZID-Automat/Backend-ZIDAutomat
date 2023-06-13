@@ -23,7 +23,7 @@ namespace ZID.Automat.Repository
             return _context.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll<T>() where T : class
+        public Microsoft.EntityFrameworkCore.DbSet<T> GetAll<T>() where T : class
         {
             return _context.Set<T>();
         }
@@ -41,7 +41,7 @@ namespace ZID.Automat.Repository
         public void Add<T>(T entity) where T : class
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public T? FindByName<T>(string name) where T : class, HasName
@@ -57,32 +57,32 @@ namespace ZID.Automat.Repository
         public void Update<T>(T ent) where T : class
         {
             _context.Set<T>().Update(ent);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void Update<T>(IEnumerable<T> ent) where T : class
         {
             _context.Set<T>().UpdateRange(ent);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void Delete<T>(T ent) where T : class
         {
             _context.Set<T>().Remove(ent);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
 
         public void Delete<T>(IEnumerable<T> ent) where T : class
         {
             _context.Set<T>().RemoveRange(ent);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 
     public interface IRepositoryRead
     {
         T? FindById<T>(int id) where T : class;
-        IEnumerable<T> GetAll<T>() where T : class;
+        Microsoft.EntityFrameworkCore.DbSet<T> GetAll<T>() where T : class;
         T? FindByGuid<T>(Guid guid) where T : class, HasGuid;
         IEnumerable<T> FindAllByGuid<T>(Guid guid) where T : class, HasGuid;
         T? FindByName<T>(string name) where T : class, HasName;

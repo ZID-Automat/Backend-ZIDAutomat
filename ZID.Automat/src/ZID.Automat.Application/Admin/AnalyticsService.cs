@@ -2,6 +2,7 @@
 using Castle.Core.Internal;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -48,7 +49,9 @@ namespace ZID.Automat.Application
 
             var resultRoh = _repositoryRead
                 .GetAll<Item>()
-                .OrderByDescending(i => i.ItemInstances.Where(el => el?.borrow?.BorrowDate > date).Count())
+                .Include(i=>i.ItemInstances)
+                .Include(i => i.ItemInstances.Select(i => i.borrow))
+                .OrderByDescending(i => i.ItemInstances.Where(el => el.borrow.BorrowDate > date).Count())
                 .Take(3)
                 .ToList();
 
@@ -73,7 +76,7 @@ namespace ZID.Automat.Application
 
         public IEnumerable<WieVielZuspaetDto> WievielZuspat()
         {
-            return _repositoryRead.GetAll<Borrow>().GroupBy(b => b.StatusEntschuldigt()).Select(b => new WieVielZuspaetDto() { num = b.Count(), label = b.Key }).OrderBy(w => w.label);
+            return _repositoryRead.GetAll<Borrow>().ToList().GroupBy(b => b.StatusEntschuldigt()).ToList().Select(b => new WieVielZuspaetDto() { num = b.Count(), label = b.Key }).OrderBy(w => w.label);
         }
 
         public IEnumerable<TaeglicheUserDto> TaeglicheUser()
@@ -89,8 +92,9 @@ namespace ZID.Automat.Application
 
             };
             var data = _repositoryRead.GetAll<User>()
+                .ToList()
                 .GroupBy(u => cats.First(c => c.Item2 <= DateOnly.FromDateTime(u.LastLogin)).Item1)
-                .OrderByDescending(u=>cats.First(c=>c.Item1 == u.Key).Item2)
+                .OrderByDescending(u=>cats.First(c=>c.Item1 == u.Key).Item2).ToList()
                 .Select(u => new TaeglicheUserDto() { Label = u.Key, Value = u.Count() });
             return data;
         }

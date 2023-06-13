@@ -36,7 +36,7 @@ namespace ZID.Automat.Application.Admin
 
        public IEnumerable<CategoryUpdateDto> AllCategories()
         {
-            return _mapper.Map<IEnumerable<Categorie>, IEnumerable<CategoryUpdateDto>>(_repositoryRead.GetAll<Categorie>());
+            return _mapper.Map<IEnumerable<Categorie>, IEnumerable<CategoryUpdateDto>>(_repositoryRead.GetAll<Categorie>().ToList());
         }
 
         public void UpdateCategory(CategoryUpdateDto categoryi)

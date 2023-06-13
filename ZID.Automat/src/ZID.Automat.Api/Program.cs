@@ -42,7 +42,7 @@ var Conf = builder.Configuration;
 
 
 var corsis = Environment.GetEnvironmentVariable("CorsOrigin")?.Split(";");
-string[] CorsOrigins = corsis??Conf.GetSection("CorsOrigin").Get<string[]>();
+string[] CorsOrigins = corsis ?? Conf.GetSection("CorsOrigin").Get<string[]>();
 
 
 string JWT = Environment.GetEnvironmentVariable("JWTSecret") ?? Conf.GetSection("UserLoginConf").GetSection("JWT").GetValue<string>("JWTSecret");
@@ -60,7 +60,7 @@ if (je != null)
 {
     jeint = int.Parse(je);
 }
-float JWTExpireTime = jeint??JWTConfSection.GetValue<int>("JWTExpireTime");
+float JWTExpireTime = jeint ?? JWTConfSection.GetValue<int>("JWTExpireTime");
 string JWTSecret = Environment.GetEnvironmentVariable("JWTSecret") ?? JWTConfSection.GetValue<string>("JWTSecret");
 
 string AutomatPassword = Environment.GetEnvironmentVariable("AutomatPassword") ?? AuthConfSection.GetValue<string>("AutomatPassword");
@@ -71,43 +71,46 @@ bool UseDebug = DebugConfSection.GetValue<bool>("useDebug");
 string TestUserName = TestUserConfSection.GetValue<string>("TestUserName");
 string TestUserPassword = TestUserConfSection.GetValue<string>("TestUserPassword");
 
-string UseDb = DBSection.GetValue<string>("UseDatabase");
+string UseDb = Environment.GetEnvironmentVariable("UseDatabase") ?? DBSection.GetValue<string>("UseDatabase");
 string DbConnString = Environment.GetEnvironmentVariable("ConnectionString") ?? DBSection.GetSection(UseDb).GetValue<string>("ConnectionString");
 
 var Borrow = Conf.GetSection("Borrow");
 
-var bt =Environment.GetEnvironmentVariable("MaxBorrowTime");
+var bt = Environment.GetEnvironmentVariable("MaxBorrowTime");
 int? btint = null;
 if (bt != null)
 {
     btint = int.Parse(bt);
 }
-int MaxBorrowTime = btint??Borrow.GetValue<int>("MaxBorrowTime");
+int MaxBorrowTime = btint ?? Borrow.GetValue<int>("MaxBorrowTime");
 
 var HttpsConf = Conf.GetSection("HttpsConf");
-string CertPass = Environment.GetEnvironmentVariable("CertificatPassword")?? HttpsConf.GetValue<string>("CertificatPassword");
+string CertPass = Environment.GetEnvironmentVariable("CertificatPassword") ?? HttpsConf.GetValue<string>("CertificatPassword");
 string CertPath = Environment.GetEnvironmentVariable("CertificatPath") ?? HttpsConf.GetValue<string>("CertificatPath");
 
 Console.WriteLine($"database {UseDb}");
 
 
 #endregion
-/*
-var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
+
+if (bool.Parse(Environment.GetEnvironmentVariable("UseSSL") ?? "false"))
+{
+
+    var httpsConnectionAdapterOptions = new HttpsConnectionAdapterOptions
     {
         SslProtocols = System.Security.Authentication.SslProtocols.Tls12,
         ClientCertificateMode = ClientCertificateMode.AllowCertificate,
         ServerCertificate = new X509Certificate2(CertPath, CertPass)
 
-    };*/
- /*  builder.WebHost.ConfigureKestrel(options =>
+    };
+    builder.WebHost.ConfigureKestrel(options =>
     {
         options.ConfigureEndpointDefaults(list =>
         {
             list.UseHttps(httpsConnectionAdapterOptions);
         });
     });
- */
+}
 #region ASPIntern
 builder.Services.AddControllers((register) =>
 {
@@ -160,7 +163,7 @@ builder.Services.AddAuthentication(auth =>
 
 #region Configuration
 builder.Services.AddSingleton(new JWTCo() { JWTExpireTime = JWTExpireTime, JWTSecret = JWTSecret });
-builder.Services.AddSingleton(new TestUserCo() {UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword});
+builder.Services.AddSingleton(new TestUserCo() { UseDebug = UseDebug, TestUserName = TestUserName, TestUserPassword = TestUserPassword });
 builder.Services.AddSingleton(new BorrowCo() { MaxBorrowTime = MaxBorrowTime });
 builder.Services.AddSingleton(new AutomatCo() { Password = AutomatPassword });
 builder.Services.AddSingleton(new AdminCo() { Hall = AdminHall });
@@ -178,10 +181,10 @@ builder.Services.AddAutoMapper(c => {
 #endregion
 
 #region Repositories
-builder.Services.AddScoped<IRepositoryRead,GenericRepository>();
+builder.Services.AddScoped<IRepositoryRead, GenericRepository>();
 builder.Services.AddScoped<IRepositoryWrite, GenericRepository>();
 
-builder.Services.AddScoped <IAnalyticsRepository, AnalyticsRepository>();
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 
 #endregion
 
@@ -215,7 +218,7 @@ builder.Services.AddScoped<IAdminLogShowSerivice, AdminLogShowSerivice>();
 var app = builder.Build();
 
 #region Development Config  
-if (app.Environment.IsDevelopment() &&true)
+if (app.Environment.IsDevelopment() && true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -228,7 +231,7 @@ app.UseExceptionHandler(c => c.Run(async context =>
     var exception = context.Features
         .Get<IExceptionHandlerPathFeature>()
         ?.Error;
-    var response = new { error = exception?.Message ??"Error" };
+    var response = new { error = exception?.Message ?? "Error" };
     await context.Response.WriteAsJsonAsync(response);
 }));
 #endregion
@@ -241,4 +244,3 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.Run();
-    

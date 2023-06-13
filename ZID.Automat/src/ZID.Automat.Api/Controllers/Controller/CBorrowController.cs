@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Ubiety.Dns.Core;
 using ZID.Automat.Application;
 using ZID.Automat.Dto.Models;
 using ZID.Automat.Repository;
