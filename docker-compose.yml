@@ -5,7 +5,7 @@ networks:
 
 services:
   ZIDAutomatBackend:
-    image: zidautomatapi:latest
+    image: maxi1324/zidautomatapi:latest
     ports:
       - 801:80
     depends_on:
