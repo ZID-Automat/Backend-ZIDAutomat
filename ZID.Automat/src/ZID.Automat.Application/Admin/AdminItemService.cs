@@ -52,7 +52,7 @@ namespace ZID.Automat.Application.Admin
             {
                 i.LocationImAutomat = data.ItemLocations.FirstOrDefault(itemloc => itemloc.Id == i.Id)?.Location ?? "";
             });
-            _repositoryWrite.Update(items);
+            _repositoryWrite.Update<Item>(items);
         }
 
         public ItemAdminDetailedDto ItemDetailedGet(int id)
