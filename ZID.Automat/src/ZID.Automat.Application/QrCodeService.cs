@@ -97,7 +97,7 @@ namespace ZID.Automat.Application
         
         public void InvalidateQrCode(InvalidateQrCodeDto InvalidateQrCode,DateTime now)
         {   
-            var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID.ToString()== InvalidateQrCode.QrCode).SingleOrDefault() ?? throw new QrCodeNotExistingException());
+            var borrow = (_repositoryRead.GetAll<Borrow>().Where(b => b.GUID== Guid.Parse(InvalidateQrCode.QrCode)).SingleOrDefault() ?? throw new QrCodeNotExistingException());
             borrow.CollectDate = DateTime.Now;
             _repositoryWrite.Update(borrow);
             _automatLoggingService.EjectedItem(InvalidateQrCode.QrCode, borrow);

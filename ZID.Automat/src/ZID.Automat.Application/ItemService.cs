@@ -30,13 +30,13 @@ namespace ZID.Automat.Application
 
         public IEnumerable<ItemDisplayDto> PrevBorrowedDisplayItemsUser(string UserName)
         {   
-            IEnumerable<Item> items = _repositoryRead.GetAll<Borrow>().Include(b=>b.User).Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).Where(b => b.User.Name == UserName).Select(b => b.ItemInstance.Item).Distinct().Where(i => i.LocationImAutomat != "");
+            IEnumerable<Item> items = _repositoryRead.GetAll<Borrow>().Include(b=>b.User).Include(b=>b.ItemInstance).Include(b=>b.ItemInstance.Item).Where(b => b.ItemInstance != null && b.ItemInstance.Item != null && b.User.Name == UserName).Select(b => b.ItemInstance.Item).Distinct().Where(i => i.LocationImAutomat != "");
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(items.ToList());
         }
 
         public IEnumerable<ItemDisplayDto> PopularItems()
         {
-            var Borrows = _repositoryRead.GetAll<Borrow>().Include(i => i.ItemInstance).Include(i => i.ItemInstance.Item).Where(i => i.ItemInstance.Item.LocationImAutomat != "").ToList().GroupBy(b => b.ItemInstance.Item).OrderByDescending(b => b.Key.Id).OrderByDescending(b => b.Count(b => b.BorrowDate > DateTime.Now.AddDays(-7))).Take(10).Select(b => b.FirstOrDefault().ItemInstance.Item);
+            var Borrows = _repositoryRead.GetAll<Borrow>().Include(i => i.ItemInstance).Include(i => i.ItemInstance.Item).Where(i =>i.ItemInstance != null && i.ItemInstance.Item!= null && i.ItemInstance.Item.LocationImAutomat != "").ToList().GroupBy(b => b.ItemInstance.Item).OrderByDescending(b => b.Key.Id).OrderByDescending(b => b.Count(b => b.BorrowDate > DateTime.Now.AddDays(-7))).Take(10).Select(b => b.FirstOrDefault().ItemInstance.Item);
             var rest = _repositoryRead.GetAll<Item>().Where(i => i.LocationImAutomat != "").ToList().Except(Borrows);
             Borrows = Borrows.Concat(rest).ToList();
             return _mapper.Map<IEnumerable<ItemDisplayDto>>(Borrows);
